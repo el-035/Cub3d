@@ -9,21 +9,16 @@ library (-lm man man 3 math).
 library. */
 
 //all stuff to include
-# include <stdlib.h>
+// # include <stdlib.h>
 //# include <errno.h>
 //# include <stdio.h>
 //# include <mlx.h>
-# include "minilibx-linux/mlx.h"
+// # include "minilibx-linux/mlx.h"
 //# include <unistd.h>
 //# include <fcntl.h>
 //# include "libft/libft.h"
 
-typedef struct s_mlx
-{
-	void	*mlx;
-	void	*window;
-	char	**map;
-}			t_mlx;
+#include "cub3d.h"
 
 int	destroy_everything(t_mlx *data)
 {
@@ -55,6 +50,9 @@ int main (void)
 	//parsing();
 	//execution();
 }
+
+
+
 
 
 // TO COMPILE SO FAR
