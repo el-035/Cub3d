@@ -9,8 +9,8 @@
 # include "mlx_linux/mlx.h"
 # include <sys/time.h>
 # include <unistd.h>
-//# include <mlx.h>
-//# include "libft/libft.h"
+# include <mlx.h>
+# include "libft/libft.h"
 
 typedef struct s_input
 {
