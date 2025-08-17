@@ -32,8 +32,10 @@ typedef struct s_mlx
     t_input *input;
 	void	*mlx;
 	void	*window;
-	char	**map;
 }			t_mlx;
 
+
+//destroy and errors
+int	destroy_everything(t_mlx *data);
 
 #endif
