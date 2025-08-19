@@ -1,9 +1,9 @@
 NAME = cub3D
 
 CC = cc
-CFLAGS = -Wall -Wextra -Werror -g -O3 -I/usr/include -Imlx_linux
+CFLAGS = -Wall -Werror -Wextra -g -O0 -I/usr/include -Imlx_linux
 
-SRC = main.c destroy_error.c
+SRC = main.c destroy_error.c exit.c parse/parse.c 
 OBJ = $(patsubst %.c,obj/%.o,$(SRC))
 
 LIBFT = libft/libft.a
@@ -26,11 +26,11 @@ obj/%.o: %.c
 	@mkdir -p obj
 	$(CC) $(CFLAGS) -c $< -o $@
 
-obj/exec/%.o: src/exec/%.c 
+obj/exec/%.o: exec/%.c 
 	@mkdir -p obj/exec
 	$(CC) $(CFLAGS) -c $< -o $@
 
-obj/parse/%.o: src/parse/%.c 
+obj/parse/%.o: parse/%.c 
 	@mkdir -p obj/parse
 	$(CC) $(CFLAGS) -c $< -o $@
 

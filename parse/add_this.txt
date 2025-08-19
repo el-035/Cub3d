@@ -1,0 +1,1 @@
+in check line: whitespace before text in any section other than map
