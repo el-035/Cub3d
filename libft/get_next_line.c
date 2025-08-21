@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nrumpfhu <nrumpfhu@student.42.fr>          +#+  +:+       +#+        */
+/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/15 12:57:04 by codespace         #+#    #+#             */
-/*   Updated: 2024/11/14 12:33:02 by nrumpfhu         ###   ########.fr       */
+/*   Updated: 2025/08/21 00:18:43 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -116,7 +116,12 @@ char	*get_next_line(int fd)
 
 	buf = NULL;
 	if (fd < 0 || BUFFER_SIZE <= 0)
+	{
+		if (dest)
+			free(dest);
+		dest = NULL;
 		return (NULL);
+	}
 	if (!dest)
 	{
 		dest = ft_strdup("");

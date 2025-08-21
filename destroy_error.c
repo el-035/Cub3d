@@ -11,8 +11,8 @@ int	destroy_everything(t_mlx *data)
 		mlx_destroy_display(data->mlx);
 		//free(data->mlx);
 	}
-/* 	if (data->map)
-		free_map(data->map); */
+/* 	if (data->input->map)
+		free_map(data->input->map); */
 	exit (0);
 }
 
