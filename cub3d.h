@@ -24,7 +24,7 @@ typedef struct s_input
 	int c_color; // in hex
 	int		player_x;
 	int		player_y;
-	char	direction[2];
+	char	direction;
 	int		line_length;
 	int		line_count;
 	char 	**file;
@@ -43,14 +43,14 @@ int			destroy_everything(t_mlx *data);
 
 // PARSING
 // init
-void	init(t_mlx *data, int filelines);
+void	init(t_mlx *data, char *argv[]);
 void    process_line(t_mlx *data, t_input *input, char *line, int type);
 void	fill_struct(t_mlx *data);
 
 // parse
 void    check_line(t_mlx *data, char *line);
 void    process_file(t_mlx *data, t_input *input);
-int    read_file(char *path, t_mlx *data, int process);
+void    read_file(char *path, t_mlx *data, int process);
 
 
 // map
@@ -60,14 +60,21 @@ void    alloc_map(t_mlx *data);
 
 
 // validation
-void	validate_map(char *argv[]);
+void	validate_map(t_mlx *data, char **map);
 void	check_filename(t_mlx *data, char *file);
 void	validate_input(int argc, char *argv[], t_mlx *data);
 
+// parsing
+void    parsing(t_mlx *data, int argc, char *argv[]);
+void parse_texture(t_mlx *data, t_input *input, char *line, int type);
+void parse_color(t_mlx *data, t_input *input, char *line, int type);
+
 // helpers
 int     ft_isspace(int c);
+int empty_line(char *line);
 char *skip_whitespace(char *line);
 void    print_map(char **map);
+int     find_start(char *s);
 
 // free & errors
 void		parse_error(t_mlx *data, char *msg);
@@ -75,29 +82,26 @@ void		free_exit(t_mlx *data, int errnum);
 void		free_arr(char **arr);
 
 
-
-
 // define errors
+
 # define ERR_FILENAME "File must end with '.cub'" // 1
 # define ERR_CUB "Something must preceed '.cub'" // 1
 # define ERR_ARG_NB "Argument number invalid" // 1
+# define ERR_NO_COL "Floor or ceiling color missing" // 1
+# define ERR_INV_COL "Floor or ceiling color invalid" // 1
+# define ERR_NO_TEX "Texture path missing" // 1
+# define ERR_FILE_CONTENT "Invalid file content or layout" // 1
+# define ERR_INV_TEX "Texture path invalid"
 # define ERR_FILE "Input file does not exist"
 # define ERR_PERM "Input file cannot be opened"
 # define ERR_NO_MAP "Input file has no map contents"
-# define ERR_INFO "Input file misses texture information"
-# define ERR_EXTRA_CHAR	"Invalid char(s) after texture filename or F/C color"
-# define ERR_NO_COL "Floor or ceiling color missing"
-# define ERR_INV_COL "Floor or ceiling color invalid"
-# define ERR_NO_TEX "Texture path missing"
-# define ERR_INV_TEX "Texture path invalid"
-# define ERR_MAP_LOCATION "Map content must be last"
 
 # define ERR_INV_MAP "Invalid map character"
 # define ERR_MAP_SPACE "Invalid spaces in map"
 # define ERR_MAP_LINE "Empty line in map"
 # define ERR_START "Player surrounded by wall"
+# define ERR_PLAYER "Only 1 player allowed"
 # define ERR_NO_WALL "Map must be surrounded by walls"
-# define ERR_FILE_CONTENT "Invalid file content or layout"
 
 # define ERR_ALLOC "Allocation failure"
 # define ERR_READ "Read error"
