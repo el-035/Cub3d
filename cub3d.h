@@ -43,14 +43,14 @@ int			destroy_everything(t_mlx *data);
 
 // PARSING
 // init
-void	init(t_mlx *data, char *argv[]);
+void	init(t_mlx *data, int nb_lines);
 void    process_line(t_mlx *data, t_input *input, char *line, int type);
 void	fill_struct(t_mlx *data);
 
 // parse
 void    check_line(t_mlx *data, char *line);
 void    process_file(t_mlx *data, t_input *input);
-void    read_file(char *path, t_mlx *data, int process);
+int    read_file(char *path, t_mlx *data, int process);
 
 
 // map
@@ -96,7 +96,7 @@ void		free_arr(char **arr);
 # define ERR_PERM "Input file cannot be opened"
 # define ERR_NO_MAP "Input file has no map contents"
 
-# define ERR_INV_MAP "Invalid map character"
+# define ERR_INV_MAP "Invalid map character" // 1
 # define ERR_MAP_SPACE "Invalid spaces in map"
 # define ERR_MAP_LINE "Empty line in map"
 # define ERR_START "Player surrounded by wall"

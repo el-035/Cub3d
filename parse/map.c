@@ -12,7 +12,7 @@ void	check_map_dimensions(t_mlx *data, t_input *input, char **arr)
 	while (arr && arr[a])
 	{
 		b = 0;
-		while (arr && arr[a] && arr[a][b])
+		while (arr && arr[a] && arr[a][b] && arr[a][b] != '\n' && arr[a][b] != '\r')
 			b++;
 		if (b > input->line_length)
 			input->line_length = b;
@@ -24,17 +24,29 @@ void	check_map_dimensions(t_mlx *data, t_input *input, char **arr)
 
 void	fill_map(t_input *input, char **arr)
 {
-	int	len;
-	int	i;
+	int	b;
+	int	a;
 
-	i = 0;
-	while (arr && arr[i])
+	a = 0;
+	while (arr && arr[a])
 	{
-		len = ft_strlen(arr[i]);
-		if (len > 0 && arr[i][len - 1] == '\n')
-			len--;
-		ft_strlcpy(input->map[i], arr[i], len + 1);
-		i++;
+		// len = ft_strlen(arr[a]);
+		// if (len > 0 && arr[a][len - 1] == '\n')
+		// 	len--;
+		// ft_strlcpy(input->map[a], arr[a], len + 1);
+		b = 0;
+		while (arr && arr[a] && arr[a][b] && arr[a][b] != '\n' && arr[a][b] != '\r')
+		{
+			input->map[a][b] = arr[a][b];
+			b++;
+		}
+		while (b < input->line_length)
+		{
+			input->map[a][b] = ' ';
+			b++;
+		}
+		input->map[a][b] = 0;
+		a++;
 	}
 }
 

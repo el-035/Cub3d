@@ -31,7 +31,7 @@ void	print_map(char **map)
 	i = 0;
 	while (map && map[i] && map[i][0])
 	{
-		printf("%s\n", map[i]);
+		printf("[%s]\n", map[i]);
 		i++;
 	}
 }

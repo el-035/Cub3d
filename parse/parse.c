@@ -11,17 +11,6 @@
 // map has to be last
 // check textures exist and have permissions
 
-int	_line(char *s)
-{
-	int	i;
-
-	i = 0;
-	while (s && s[i] && ft_isspace(s[i]))
-		i++;
-	if (s && s[i] && s[i] != '\n')
-		return (0);
-	return (1);
-}
 
 int	add_line(t_mlx *data, char *next_line, int fd, int i)
 {
@@ -31,11 +20,12 @@ int	add_line(t_mlx *data, char *next_line, int fd, int i)
 	return (1);
 }
 
-void	read_file(char *path, t_mlx *data, int process)
+int	read_file(char *path, t_mlx *data, int process)
 {
 	int		fd;
 	int		i;
 	char	*next_line;
+	int		nb_lines = 0;
 
 	i = 0;
 	fd = open(path, O_RDONLY);
@@ -46,12 +36,13 @@ void	read_file(char *path, t_mlx *data, int process)
 		next_line = get_next_line(fd); // add flag
 		if (!next_line)
 			break ;
-		data->input->line_count++;
+		nb_lines++;
 		if (process)
 			i += add_line(data, next_line, fd, i);
 		free(next_line);
 	}
 	close(fd);
+	return (nb_lines);
 }
 
 int	process_pre_map(t_mlx *data, t_input *input, int i)
@@ -116,8 +107,10 @@ void	print_info(t_input *input)
 
 void    parsing(t_mlx *data, int argc, char *argv[])
 {
+	int nb_lines;
 	validate_input(argc, argv, data);
-	init(data, argv);
+	nb_lines = read_file(argv[1], data, 0);
+	init(data, nb_lines);
 	read_file(argv[1], data, 1);
 	process_file(data, data->input);
 	validate_map(data, data->input->map);

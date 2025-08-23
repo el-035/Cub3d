@@ -1,9 +1,12 @@
 #include "../cub3d.h"
 
-void	init(t_mlx *data, char *argv[])
+void	init(t_mlx *data, int nb_lines)
 {
 	data->input = malloc(sizeof(t_input));
 	if (!data->input)
+		parse_error(data, ERR_ALLOC);
+	data->input->file = ft_calloc(nb_lines + 1, sizeof(char *));
+	if (!data->input->file)
 		parse_error(data, ERR_ALLOC);
 	data->input->map = NULL;
 	data->input->map = NULL;
@@ -16,8 +19,5 @@ void	init(t_mlx *data, char *argv[])
 	data->input->line_length = 0;
 	data->input->info_count = 0;
     data->input->line_count = 0;
-	read_file(argv[1], data, 0);
-	data->input->file = ft_calloc(data->input->line_count + 1, sizeof(char *));
-	if (!data->input->file)
-		parse_error(data, ERR_ALLOC);
+
 }
