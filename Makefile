@@ -3,7 +3,7 @@ NAME = cub3D
 CC = cc
 CFLAGS = -Wall -Wextra -Werror -g -O3 -I/usr/include -Imlx_linux
 
-SRC = main.c destroy_error.c
+SRC = main.c destroy_error.c test.c
 OBJ = $(patsubst %.c,obj/%.o,$(SRC))
 
 LIBFT = libft/libft.a

@@ -10,7 +10,16 @@
 # include <sys/time.h>
 # include <unistd.h>
 # include <mlx.h>
+# include <math.h>
 # include "libft/libft.h"
+
+#define WINDOW_WIDTH 1280
+#define WINDOW_HEIGHT 720
+#define TILE_SIZE 90	//change
+#define FOV 66	//change
+#define PLANE 0,66	//change
+
+
 
 typedef struct s_input
 {
@@ -23,19 +32,42 @@ typedef struct s_input
     int c_color; // in hex
     int player_x;
     int player_y;
+	char direction;
     int line_length;
     int line_count;
 }           t_input;
 
+typedef struct s_game
+{
+	double pos_x;
+	double pos_y;
+
+	double dir_x;
+	double dir_y;
+
+	double plane_x;
+	double plane_y;
+
+	//char **map;
+
+}			t_game;
+
 typedef struct s_mlx
 {
     t_input *input;
+	t_game	*game;
 	void	*mlx;
 	void	*window;
 }			t_mlx;
 
 
+
+
 //destroy and errors
 int	destroy_everything(t_mlx *data);
+
+
+//testing to be deleted afterwards
+t_input *create_hardcoded_map(void);
 
 #endif
