@@ -19,6 +19,11 @@
 #define FOV 66	//change
 #define PLANE 0,66	//change
 
+//THESE TO BE DELETED
+#define COLOR_WALL     0xFFFFFF
+#define COLOR_FLOOR    0x000000
+#define COLOR_PLAYER   0xFF0000
+#define COLOR_RAY      0x00FF00
 
 
 typedef struct s_input

@@ -111,8 +111,6 @@ int events(int key, t_mlx *data)
 }
 
 
-
-
 int main (void)
 {
 	t_mlx		data;
