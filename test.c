@@ -32,9 +32,9 @@ t_input *create_hardcoded_map(void)
     // Simple rectangular hardcoded map
     char *map_lines[] = {
         "1111111111",
+        "1110011111",
+        "1100000011",
         "1000000001",
-        "1000000001",
-        "1000N00001",
         "1000000001",
         "1111111111",
     };
@@ -78,3 +78,117 @@ t_input *create_hardcoded_map(void)
     return input;
 }
 
+
+// Main function to draw the 2D map (simplified version)
+void draw_2d_map_simple(t_mlx *mlx)
+{
+    int tile_w, tile_h;
+    
+    // Load the tile image
+    mlx->test_tile = mlx_xpm_file_to_image(mlx->mlx, "test_images/tile.xpm", &tile_w, &tile_h);
+    if (!mlx->test_tile)
+        printf("CULO") ;// handle error if needed
+
+    // Loop through each row and column of the map
+    for (int y = 0; y < mlx->input->line_count; y++)
+    {
+        for (int x = 0; x < mlx->input->line_length; x++)
+        {
+            // Only put the tile if the map has '1' at this position
+            if (mlx->input->input_map[y][x] == '1')
+            {
+                mlx_put_image_to_window(mlx->mlx, mlx->test_window, mlx->test_tile,
+                                        x * TILE_SIZE, y * TILE_SIZE);
+            }
+        }
+    }
+}
+
+void draw_back(t_mlx *mlx)
+{
+    int tile_w, tile_h;
+    
+    // Load the tile image
+    mlx->test_back = mlx_xpm_file_to_image(mlx->mlx, "test_images/back.xpm", &tile_w, &tile_h);
+    if (!mlx->test_tile)
+        printf("CULO") ;// handle error if needed
+
+    // Loop through each row and column of the map
+    for (int y = 0; y < mlx->input->line_count; y++)
+    {
+        for (int x = 0; x < mlx->input->line_length; x++)
+        {
+            // Only put the tile if the map has '1' at this position
+            if (mlx->input->input_map[y][x] == '0')
+            {
+                mlx_put_image_to_window(mlx->mlx, mlx->test_window, mlx->test_back,
+                                        x * TILE_SIZE, y * TILE_SIZE);
+            }
+        }
+    }
+}
+
+
+void	draw_ray(t_mlx *mlx, t_ray *ray, int color, double dir_x, double dir_y)
+{
+
+	// Start point: player position in pixels
+	double start_x = mlx->game->pos_x * TILE_SIZE;
+	double start_y = mlx->game->pos_y * TILE_SIZE;
+
+	// End point: extend in player direction by ray->distance * 24 pixels
+	double end_x = start_x + dir_x * (ray->distance * TILE_SIZE);
+	double end_y = start_y + dir_y * (ray->distance * TILE_SIZE);
+
+	// Compute deltas
+	double dx = end_x - start_x;
+	double dy = end_y - start_y;
+
+	// Determine number of steps based on the longest axis
+	double steps = fabs(dx) > fabs(dy) ? fabs(dx) : fabs(dy);
+
+	// Compute incremental steps for each pixel
+	double x_inc = dx / steps;
+	double y_inc = dy / steps;
+
+	// Draw the ray pixel by pixel
+	double x = start_x;
+	double y = start_y;
+	for (int i = 0; i <= steps; i++)
+	{
+		mlx_pixel_put(mlx->mlx, mlx->test_window, (int)x, (int)y, color);
+		x += x_inc;
+		y += y_inc;
+	}
+}
+
+void	draw_grid(t_mlx *mlx, int win_width, int win_height)
+{
+	int x, y;
+
+	// vertical lines
+	x = 0;
+	while (x < win_width)
+	{
+		y = 0;
+		while (y < win_height)
+		{
+			mlx_pixel_put(mlx->mlx, mlx->test_window, x, y, GRAY);
+			y++;
+		}
+		x += TILE_SIZE;
+	}
+
+	// horizontal lines
+	y = 0;
+	while (y < win_height)
+	{
+		x = 0;
+		while (x < win_width)
+		{
+			mlx_pixel_put(mlx->mlx, mlx->test_window, x, y, GRAY);
+			x++;
+		}
+		y += TILE_SIZE;
+	}
+}
