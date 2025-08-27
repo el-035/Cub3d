@@ -13,11 +13,11 @@
 # include <math.h>
 # include "libft/libft.h"
 
-#define WINDOW_WIDTH 1300//1280
-#define WINDOW_HEIGHT 800//720
+#define WINDOW_WIDTH 1280
+#define WINDOW_HEIGHT 720
 #define TILE_SIZE 100// 90	//change
-#define FOV 66	//change
-#define PLANE 0,66	//change
+#define FOV 66	//change		//NOT USED SO FAR
+#define PLANE 0,66	//change	//NOT USED SO FAR
 #define M_PI 3.14159265358979323846
 #define FOV_HALF_RAD 0.57596
 //KEYS
@@ -32,7 +32,8 @@
 
 //delete
 #define GRAY 0x808080
-
+#define T_WINDOW_WIDTH 1300 //1280
+#define T_WINDOW_HEIGHT 800 //720
 
 typedef struct s_input
 {
@@ -104,7 +105,14 @@ typedef struct s_mlx
 }			t_mlx;
 
 
+//calculations
+int test_start(t_mlx *mlx);
+int calculate_rays(t_mlx *mlx);	//probably to be deleted
+double calculate_dir(t_game *game, t_input *input, double dir_x, double dir_y);
 
+
+//movements
+int events(int key, t_mlx *mlx);
 
 //destroy and errors
 int	destroy_everything(t_mlx *data);
