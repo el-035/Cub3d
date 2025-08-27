@@ -8,7 +8,7 @@
 
 double calculate_dir(t_game *game, t_input *input, double dir_x, double dir_y)
 {
-	printf("ray dir x %f, ray dir y %f\n", dir_x, dir_y);
+	//printf("ray dir x %f, ray dir y %f\n", dir_x, dir_y);
 	game->ray->step_x = 0;
 	game->ray->step_y = 0;
 
@@ -21,11 +21,11 @@ double calculate_dir(t_game *game, t_input *input, double dir_x, double dir_y)
 	else if (dir_x > 0)
 		game->ray->step_x = 1;
 
-	printf("stepx %d, stepy%d\n", game->ray->step_x, game->ray->step_y);
+	//printf("stepx %d, stepy%d\n", game->ray->step_x, game->ray->step_y);
 
 	game->ray->delta_dist_x = fabs(1 / dir_x);
 	game->ray->delta_dist_y = fabs(1 / dir_y);
-	printf("deltax %f, deltay%f\n", game->ray->delta_dist_x, game->ray->delta_dist_y);
+	//printf("deltax %f, deltay%f\n", game->ray->delta_dist_x, game->ray->delta_dist_y);
 
 	game->ray->dist_y = 0;
 	game->ray->dist_x = 0;
@@ -38,7 +38,7 @@ double calculate_dir(t_game *game, t_input *input, double dir_x, double dir_y)
 		game->ray->dist_x = game->pos_x - (int)floor(game->pos_x);
 	if (dir_x > 0)
 		game->ray->dist_x = (int)ceil(game->pos_x) - game->pos_x;
-	printf("distx %f, disty%f\n", game->ray->dist_x, game->ray->dist_y);
+	//printf("distx %f, disty%f\n", game->ray->dist_x, game->ray->dist_y);
 
 	game->ray->side_dist_y = game->ray->delta_dist_y;
 	game->ray->side_dist_x = game->ray->delta_dist_x;
@@ -48,11 +48,11 @@ double calculate_dir(t_game *game, t_input *input, double dir_x, double dir_y)
 	if (game->ray->dist_y != 0)
 		game->ray->side_dist_y = game->ray->dist_y * game->ray->delta_dist_y;
 
-	printf("sidex %f, sidey%f\n", game->ray->side_dist_x, game->ray->side_dist_y);
+	//printf("sidex %f, sidey%f\n", game->ray->side_dist_x, game->ray->side_dist_y);
 
 	game->ray->y = (int)game->pos_y /* - game->ray->side_dist_y */;
 	game->ray->x = (int)game->pos_x /* - game->ray->side_dist_x */;
-	printf("x %d, y%d\n", game->ray->x, game->ray->y);
+	//printf("x %d, y%d\n", game->ray->x, game->ray->y);
 	if (game->pos_y == (int)game->pos_y && dir_y < 0)
 	    game->ray->y -= 1;
 	if (game->pos_x == (int)game->pos_x && dir_x < 0)
@@ -65,8 +65,8 @@ double calculate_dir(t_game *game, t_input *input, double dir_x, double dir_y)
 		if (game->ray->side_dist_x <= game->ray->side_dist_y)
 		{
 			game->ray->x += game->ray->step_x;
-			printf("x smaller: sidex %f, sidey%f\n", game->ray->side_dist_x, game->ray->side_dist_y);
-			printf("map [%d][%d] = %c\n", game->ray->y, game->ray->x, input->input_map[game->ray->y][game->ray->x]);
+			//printf("x smaller: sidex %f, sidey%f\n", game->ray->side_dist_x, game->ray->side_dist_y);
+			//printf("map [%d][%d] = %c\n", game->ray->y, game->ray->x, input->input_map[game->ray->y][game->ray->x]);
 			if (input->input_map[game->ray->y][game->ray->x] == '1')
 			{
 				game->ray->distance = game->ray->side_dist_x;
@@ -78,8 +78,8 @@ double calculate_dir(t_game *game, t_input *input, double dir_x, double dir_y)
 		{
 			game->ray->y += game->ray->step_y;
 			
-			printf("y smaller: sidex %f, sidey%f\n", game->ray->side_dist_x, game->ray->side_dist_y);
-			printf("map [%d][%d] = %c\n", game->ray->y, game->ray->x, input->input_map[game->ray->y][game->ray->x]);
+			//printf("y smaller: sidex %f, sidey%f\n", game->ray->side_dist_x, game->ray->side_dist_y);
+			//printf("map [%d][%d] = %c\n", game->ray->y, game->ray->x, input->input_map[game->ray->y][game->ray->x]);
 			if (input->input_map[game->ray->y][game->ray->x] == '1')
 			{
 				game->ray->distance = game->ray->side_dist_y;
@@ -91,13 +91,11 @@ double calculate_dir(t_game *game, t_input *input, double dir_x, double dir_y)
 		if (!input->input_map[game->ray->y][game->ray->x])
 			break;
 	}	
-	printf("direction: %f\n", game->ray->distance);
+	//printf("direction: %f\n", game->ray->distance);
     return (game->ray->distance);
 }
 
 
-#define M_PI 3.14159265358979323846
-#define FOV_HALF_RAD 0.57596
 
 
 int calculate_rays(t_mlx *mlx)
@@ -108,9 +106,9 @@ int calculate_rays(t_mlx *mlx)
 	double rad = FOV_HALF_RAD;
 
 	int i = 1;
-	while (i < 20)
+	while (i < 40)
 	{
-		rad = -FOV_HALF_RAD + i * ((2 * FOV_HALF_RAD) / (20 - 1));
+		rad = -FOV_HALF_RAD + i * ((2 * FOV_HALF_RAD) / (40 - 1));
 		mlx->game->ray->ray_dir_x = mlx->game->dir_x * cos(rad) - mlx->game->dir_y * sin(rad);
 		mlx->game->ray->ray_dir_y = mlx->game->dir_x * sin(rad) + mlx->game->dir_y * cos(rad);
 		calculate_dir(mlx->game, mlx->input, mlx->game->ray->ray_dir_x, mlx->game->ray->ray_dir_y);
@@ -142,6 +140,7 @@ int test_start(t_mlx *mlx)
 	mlx->game->pos_y = 4.0;
 	mlx->game->dir_x = 0;
 	mlx->game->dir_y = -1;
+	mlx->game->angle = atan2(mlx->game->dir_y, mlx->game->dir_x);
 	calculate_rays(mlx);
 	return (0);
 }
@@ -152,10 +151,54 @@ int events(int key, t_mlx *mlx)
 		destroy_everything(mlx);
 	if (key == LEFT)
 	{
+		mlx->game->angle -= 0.1;
 		draw_back(mlx);
 		draw_grid(mlx, WINDOW_WIDTH, WINDOW_HEIGHT);
-		calculate_dir(mlx->game, mlx->input, mlx->game->ray->ray_dir_x, mlx->game->ray->ray_dir_y);
-		draw_ray(mlx, mlx->game->ray, 0x000FF, mlx->game->ray->ray_dir_x, mlx->game->ray->ray_dir_y);
+		mlx->game->dir_x = cos(mlx->game->angle);
+		mlx->game->dir_y = sin(mlx->game->angle);
+		calculate_rays(mlx);
+	}
+	if (key == RIGHT)
+	{
+		mlx->game->angle += 0.1;
+		draw_back(mlx);
+		draw_grid(mlx, WINDOW_WIDTH, WINDOW_HEIGHT);
+		mlx->game->dir_x = cos(mlx->game->angle);
+		mlx->game->dir_y = sin(mlx->game->angle);
+		calculate_rays(mlx);
+	}
+	if (key == W)
+	{
+		draw_back(mlx);
+		draw_grid(mlx, WINDOW_WIDTH, WINDOW_HEIGHT);
+		mlx->game->pos_x += mlx->game->dir_x * 0.15;
+    	mlx->game->pos_y += mlx->game->dir_y * 0.15;
+		calculate_rays(mlx);
+	}
+	if (key == S)
+	{
+		draw_back(mlx);
+		draw_grid(mlx, WINDOW_WIDTH, WINDOW_HEIGHT);
+		mlx->game->pos_x -= mlx->game->dir_x * 0.15;
+    	mlx->game->pos_y -= mlx->game->dir_y * 0.15;
+		calculate_rays(mlx);
+	}
+	if (key == A)
+	{
+		draw_back(mlx);
+		draw_grid(mlx, WINDOW_WIDTH, WINDOW_HEIGHT);
+		mlx->game->pos_x -=  (-mlx->game->dir_y) * 0.15;
+		mlx->game->pos_y -= mlx->game->dir_x * 0.15;
+		//mlx->game->pos_y = mlx->game->dir_y * 0.15;
+		calculate_rays(mlx);
+	}
+	if (key == D)
+	{
+		draw_back(mlx);
+		draw_grid(mlx, WINDOW_WIDTH, WINDOW_HEIGHT);
+		mlx->game->pos_x += (-mlx->game->dir_y) * 0.15;
+		mlx->game->pos_y += mlx->game->dir_x * 0.15;
+		calculate_rays(mlx);
 	}
 
 
@@ -181,9 +224,15 @@ int main (void)
 	data.test_window = mlx_new_window(data.mlx, WINDOW_WIDTH, WINDOW_HEIGHT, "2d test");
 	test_start(&data);
 	mlx_hook(data.test_window, 17, 0, destroy_everything, &data);
-	mlx_key_hook(data.test_window, &events, &data);
+	mlx_hook(data.test_window, 2, 1L<<0, &events, &data);
+	mlx_hook(data.test_window, 3, 1L<<1, &events, &data);
+	//mlx_key_hook(data.test_window, &events, &data);
+
+
+	
 	mlx_hook(data.window, 17, 0, destroy_everything, &data);
-	mlx_key_hook(data.window, &events, &data);
+	// mlx_hook(data.window, 2, 1L<<0, &events, &data);
+	// mlx_hook(data.window, 2, 1L<<1, &events, &data);
 	mlx_loop(data.mlx);
 	//parsing();
 	//execution();

@@ -31,18 +31,20 @@ t_input *create_hardcoded_map(void)
     
     // Simple rectangular hardcoded map
     char *map_lines[] = {
-        "1111111111",
-        "1110011111",
-        "1100000011",
-        "1000000001",
-        "1000000001",
-        "1111111111",
+        "1111111111XXX",
+        "1000101001111",
+        "1000100000011",
+        "1100000000001",
+        "1000000001111",
+		"1001001001111",
+		"1000000001111",
+        "1111111111XXX",
     };
 
 	input->direction = 'N';
 
-    input->line_count = 6;
-    input->line_length = 10;
+    input->line_count = 8;
+    input->line_length = 14;
     
     // Allocate memory for input_map array
     input->input_map = malloc(sizeof(char *) * (input->line_count + 1));

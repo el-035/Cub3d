@@ -13,16 +13,15 @@
 # include <math.h>
 # include "libft/libft.h"
 
-#define WINDOW_WIDTH 1000//1280
-#define WINDOW_HEIGHT 600//720
+#define WINDOW_WIDTH 1300//1280
+#define WINDOW_HEIGHT 800//720
 #define TILE_SIZE 100// 90	//change
 #define FOV 66	//change
 #define PLANE 0,66	//change
-
+#define M_PI 3.14159265358979323846
+#define FOV_HALF_RAD 0.57596
 //KEYS
-#define ESC 65307
-#define UP 65362
-#define DOWN 65364  
+#define ESC 65307  
 #define LEFT 65361  
 #define RIGHT 65363 
 #define W 119       
@@ -84,6 +83,8 @@ typedef struct s_game
 
 	double plane_x;
 	double plane_y;
+
+	double angle;
 
 	t_ray *ray;
 	//char **map;
