@@ -3,34 +3,39 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
+/*   By: nrumpfhu <nrumpfhu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/15 12:57:04 by codespace         #+#    #+#             */
-/*   Updated: 2025/08/21 00:18:43 by marvin           ###   ########.fr       */
+/*   Updated: 2025/08/29 17:37:43 by nrumpfhu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-char	*ft_free(char *dest, char *buf, int join_temp)
+char	*ft_freejoin(char *dest, char *buf, int *flag)
 {
-	char	*temp;
-
-	if (join_temp == 1)
+	char *temp;
+	temp = ft_strjoin(dest, buf);
+	if (!temp)
 	{
-		temp = ft_strjoin(dest, buf);
-		if (!temp)
-		{
-			free(buf);
-			return (NULL);
-		}
-		free(dest);
-		return (temp);
+		free(buf);
+		buf = NULL;
+		*flag = 1;
+		return (NULL);
 	}
+	free(dest);
+	dest = NULL;
+	return (temp);
+}
+
+char	*ft_free(char *dest, char *buf)
+{
 	if (dest)
 		free(dest);
 	if (buf)
 		free(buf);
+	dest = NULL;
+	buf = NULL;
 	return (NULL);
 }
 
@@ -45,15 +50,15 @@ char	*ft_remainder(char *dest)
 	while (dest[i] && dest[i] != '\n')
 		i++;
 	if (dest[i] == '\0')
-		return (ft_free(dest, NULL, 0));
+		return (ft_free(dest, NULL));
 	i++;
 	rem = malloc(ft_strlen(dest) - i + 1);
 	if (!rem)
-		return (ft_free(dest, NULL, 0));
+		return (ft_free(dest, NULL));
 	while (dest[i])
 		rem[n++] = dest[i++];
 	rem[n] = '\0';
-	ft_free(dest, NULL, 0);
+	ft_free(dest, NULL);
 	return (rem);
 }
 
@@ -67,7 +72,7 @@ char	*create_line(char *dest)
 		i++;
 	temp = malloc(i + 2);
 	if (!temp)
-		return (ft_free(dest, NULL, 0));
+		return (ft_free(dest, NULL));
 	i = 0;
 	while (dest[i] && dest[i] != '\n')
 	{
@@ -80,35 +85,38 @@ char	*create_line(char *dest)
 	return (temp);
 }
 
-char	*read_lines(int fd, char *dest, char *buf)
+char	*read_lines(int fd, char *dest, char *buf, int *flag)
 {
 	int		check;
 
 	check = 1;
 	buf = malloc(BUFFER_SIZE + 1);
 	if (!buf)
-		return (ft_free(dest, NULL, 0));
+		return (ft_free(dest, NULL));
 	while (1)
 	{
 		check = read(fd, buf, BUFFER_SIZE);
 		if (check < 0)
-			return (ft_free(dest, buf, 0));
+		{
+			*flag = 1;
+			return (ft_free(dest, buf));
+		}
 		buf[check] = '\0';
 		if (check == 0)
 		{
 			if (*dest == '\0' || !dest)
-				return (ft_free(dest, buf, 0));
+				return (ft_free(dest, buf));
 			break ;
 		}
-		dest = ft_free(dest, buf, 1);
-		if (ft_strchr(buf, '\n') || (check < BUFFER_SIZE && *dest))
+		dest = ft_freejoin(dest, buf, flag);
+		if (!dest || ft_strchr(buf, '\n') || (check < BUFFER_SIZE && *dest))
 			break ;
 	}
 	free(buf);
 	return (dest);
 }
 
-char	*get_next_line(int fd)
+char	*get_next_line(int fd, int *flag)
 {
 	static char	*dest;
 	char		*ret_line;
@@ -120,6 +128,7 @@ char	*get_next_line(int fd)
 		if (dest)
 			free(dest);
 		dest = NULL;
+		*flag = 1;
 		return (NULL);
 	}
 	if (!dest)
@@ -128,12 +137,12 @@ char	*get_next_line(int fd)
 		if (!dest)
 			return (NULL);
 	}
-	dest = read_lines(fd, dest, buf);
+	dest = read_lines(fd, dest, buf, flag);
 	if (!dest)
 		return (NULL);
 	ret_line = create_line(dest);
 	if (!ret_line)
-		return (ft_free(dest, NULL, 0));
+		return (ft_free(dest, NULL));
 	dest = ft_remainder(dest);
 	return (ret_line);
 }

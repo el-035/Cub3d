@@ -28,7 +28,7 @@ void	check_walls(t_mlx *data, char **map, int a, int b)
 	(b - 1 >= 0 && map[a][b-1] == ' ') || \
 	(b + 1 < data->input->line_length && map[a][b+1] == ' ') || \
 	(b == 0 || a == data->input->line_length))
-		parse_error(data, ERR_NO_WALL);
+		parse_error(data, ERR_NO_WALL, 1);
 }
 
 void	flood_fill()
@@ -55,12 +55,12 @@ void	check_chars(t_mlx *data, char **map)
 	while (map[++a])
 	{
 		if (empty_line(map[a]))
-			parse_error(data, ERR_MAP_LINE);
+			parse_error(data, ERR_MAP_LINE, 1);
 		b = -1;
 		while (map[a][++b])
 		{
 			if (map[a][b] && !is_validchar(map[a][b]))
-				parse_error(data, ERR_INV_MAP);
+				parse_error(data, ERR_INV_MAP, 1);
 				// (printf("char: [%c]\n%s\n", map[a][b], map[a]), parse_error(data, ERR_INV_MAP));
 			if (map[a][b] && is_direction(map[a][b]))
 				player_count += set_player_info(data, a, b);
@@ -69,7 +69,7 @@ void	check_chars(t_mlx *data, char **map)
 		}
 	}
 	if (player_count != 1)
-		parse_error(data, ERR_PLAYER);
+		parse_error(data, ERR_PLAYER, 1);
 }
 
 void	validate_map(t_mlx *data, char **map)
@@ -79,15 +79,15 @@ void	validate_map(t_mlx *data, char **map)
 void	check_filename(t_mlx *data, char *file)
 {
 	if (ft_strncmp(file, ".cub", 5) == 0)
-		parse_error(data, ERR_CUB);
+		parse_error(data, ERR_CUB, 1);
 	if (!ft_strrchr(file, '.') || ft_strncmp(ft_strrchr(file, '.'), ".cub",
 			1) != 0)
-		parse_error(data, ERR_FILENAME);
+		parse_error(data, ERR_FILENAME, 1);
 }
 
 void	validate_input(int argc, char *argv[], t_mlx *data)
 {
 	if (argc != 2)
-		parse_error(data, ERR_ARG_NB);
+		parse_error(data, ERR_ARG_NB, 1);
 	check_filename(data, argv[1]);
 }

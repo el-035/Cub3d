@@ -8,7 +8,7 @@ char	**check_hex_format(t_mlx *data, char *txt)
 
 	rgb = ft_split(txt, ',');
 	if (!rgb)
-		parse_error(data, ERR_ALLOC);
+		parse_error(data, ERR_ALLOC, 1);
 	a = 0;
 	while (rgb[a])
 	{
@@ -21,11 +21,11 @@ char	**check_hex_format(t_mlx *data, char *txt)
 		while (rgb[a][b] && ft_isspace(rgb[a][b]))
 			b++;
 		if (rgb[a][b])
-			(free_arr(rgb), parse_error(data, ERR_INV_COL));
+			(free_arr(rgb), parse_error(data, ERR_INV_COL, 1));
 		a++;
 	}
 	if (a != 3)
-		(free_arr(rgb), parse_error(data, ERR_INV_COL));
+		(free_arr(rgb), parse_error(data, ERR_INV_COL, 1));
 	return (rgb);
 }
 
@@ -35,7 +35,7 @@ char	**extract_color(t_mlx *data, char *line)
 
 	start = find_start(line);
 	if (start < 0)
-		parse_error(data, ERR_NO_COL);
+		parse_error(data, ERR_NO_COL, 1);
 	return (check_hex_format(data, line + start));
 }
 
@@ -56,7 +56,7 @@ int	rgb_to_hex(t_mlx *data, char **rgb)
 	while (i < 3)
 	{
 		if (hex[i] < 0 || hex[i] > 255)
-			(free_arr(rgb), parse_error(data, ERR_INV_COL));
+			(free_arr(rgb), parse_error(data, ERR_INV_COL, 1));
 		i++;
 	}
 	return (rgb_to_hex_conversion(hex[0], hex[1], hex[2]));

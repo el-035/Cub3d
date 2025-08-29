@@ -6,7 +6,7 @@
 /*   By: nrumpfhu <nrumpfhu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/19 17:43:02 by nrumpfhu          #+#    #+#             */
-/*   Updated: 2024/11/25 20:54:14 by nrumpfhu         ###   ########.fr       */
+/*   Updated: 2025/08/29 17:31:13 by nrumpfhu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,9 +91,7 @@ int					convert_ptr(void *deco);
 // get next line
 char				*ft_remainder(char *dest);
 char				*create_line(char *dest);
-char				*ft_free(char *dest, char *buf, int join_temp);
-char				*read_lines(int fd, char *dest, char *buf);
-char				*get_next_line(int fd);
+char	*get_next_line(int fd, int *flag);
 char				*get_next_line_bonus(int fd);
 
 #endif

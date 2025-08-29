@@ -4,10 +4,10 @@ void	init(t_mlx *data, int nb_lines)
 {
 	data->input = malloc(sizeof(t_input));
 	if (!data->input)
-		parse_error(data, ERR_ALLOC);
+		parse_error(data, ERR_ALLOC, 0);
 	data->input->file = ft_calloc(nb_lines + 1, sizeof(char *));
 	if (!data->input->file)
-		parse_error(data, ERR_ALLOC);
+		parse_error(data, ERR_ALLOC, 1);
 	data->input->map = NULL;
 	data->input->map = NULL;
 	data->input->n_texture = NULL;

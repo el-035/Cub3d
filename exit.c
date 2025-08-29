@@ -1,10 +1,11 @@
 #include "cub3d.h"
 
-void parse_error(t_mlx *data, char *msg)
+void parse_error(t_mlx *data, char *msg, int free_check)
 {
     ft_putendl_fd("Error", 2);
     ft_putendl_fd(msg, 2);
-    free_exit(data, 1);
+    if (free_check)
+        free_exit(data, 1);
     exit(1);
 }
 
@@ -28,7 +29,7 @@ void	free_arr(char **arr)
 
 void    free_exit(t_mlx *data, int errnum)
 {
-    if (!data || !data->input)
+    if (!data->input)
         exit(errnum);
     if (data->input->file)
         free_arr(data->input->file);

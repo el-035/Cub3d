@@ -1,7 +1,8 @@
 NAME = cub3D
 
 CC = cc
-CFLAGS = -Wall -Werror -Wextra -g -O0 -I/usr/include -Imlx_linux
+INCLUDES = -I libft -I .
+CFLAGS = -Wall -Werror -Wextra 
 
 SRC = main.c destroy_error.c exit.c parse/helpers.c \
 parse/init.c parse/map.c parse/parse.c parse/validation.c parse/parse_colors.c parse/parse_textures.c
@@ -13,7 +14,7 @@ RM = rm -rf
 all: $(NAME)
 
 $(NAME): $(OBJ) $(LIBFT)
-	$(CC) $(OBJ) -Lmlx_linux -lmlx_Linux -L/usr/lib -lXext -lX11 -lm -lz -o $(NAME) $(LIBFT)
+	$(CC) $(CFLAGS) $(OBJ) -g -L$(LIBFT_DIR) -lft -Lmlx_linux -Imlx_Linux -lmlx -lXext -lX11 -lm -lz -o $(NAME) $(LIBFT)
 
 $(LIBFT):
 	make -C libft
@@ -25,15 +26,15 @@ $(LIBFT):
 
 obj/%.o: %.c
 	@mkdir -p obj
-	$(CC) $(CFLAGS) -c $< -o $@
+	$(CC) $(CFLAGS) $(INCLUDES) -g -I/usr/include -Imlx_linux -O3 -c $< -o $@
 
 obj/exec/%.o: exec/%.c 
 	@mkdir -p obj/exec
-	$(CC) $(CFLAGS) -c $< -o $@
+	$(CC) $(CFLAGS) $(INCLUDES) -g -I/usr/include -Imlx_linux -O3 -c $< -o $@
 
 obj/parse/%.o: parse/%.c 
 	@mkdir -p obj/parse
-	$(CC) $(CFLAGS) -c $< -o $@
+	$(CC) $(CFLAGS) $(INCLUDES) -g -I/usr/include -Imlx_linux -O3 -c $< -o $@
 
 clean:
 	$(RM) $(OBJ)

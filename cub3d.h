@@ -2,7 +2,7 @@
 # define CUB3D_H
 
 # include "libft/libft.h"
-# include "mlx_linux/mlx.h"
+// # include "mlx_linux/mlx.h"
 # include <errno.h>
 # include <fcntl.h>
 # include <mlx.h>
@@ -77,7 +77,7 @@ void    print_map(char **map);
 int     find_start(char *s);
 
 // free & errors
-void		parse_error(t_mlx *data, char *msg);
+void		parse_error(t_mlx *data, char *msg, int free_check);
 void		free_exit(t_mlx *data, int errnum);
 void		free_arr(char **arr);
 

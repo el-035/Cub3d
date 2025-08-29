@@ -22,7 +22,7 @@ char	*middle_substr(t_mlx *data, char *s, int start, int len)
 
 	txt = ft_calloc(len + 1, sizeof(char));
 	if (!txt)
-		parse_error(data, ERR_ALLOC);
+		parse_error(data, ERR_ALLOC, 1);
 	ft_strlcpy(txt, s + start, len + 1);
 	return (txt);
 }
@@ -34,10 +34,10 @@ char	*extract_filename(t_mlx *data, char *line)
 
 	start = find_start(line);
 	if (start < 0)
-		parse_error(data, ERR_NO_TEX);
+		parse_error(data, ERR_NO_TEX, 1);
 	len = find_filename_len(line + start);
 	if (len < 0)
-		parse_error(data, ERR_INV_TEX);
+		parse_error(data, ERR_INV_TEX, 1);
 	return (middle_substr(data, line, start, len));
 }
 
