@@ -155,7 +155,7 @@ int test_start(t_mlx *mlx)
 	draw_2d_map_simple(mlx);
 	draw_back(mlx);
 	draw_grid(mlx, T_WINDOW_WIDTH, T_WINDOW_HEIGHT);
-	
+
 	mlx->game->pos_x = 5.0;
 	mlx->game->pos_y = 4.0;
 	mlx->game->dir_x = 0;

@@ -22,7 +22,7 @@ t_input *init_stuff(t_mlx *data)
 	return input;
 }
 
-int test(t_mlx *data)
+int save_img(t_mlx *data)
 {
 	data->input->n_texture->img = mlx_xpm_file_to_image(data->mlx, "test_images/beer.xpm", &data->input->n_texture->width, &data->input->n_texture->height); //delete
 	//protect
@@ -43,7 +43,7 @@ int main (void)
 	//parsing();
 	data.window = mlx_new_window(data.mlx, WINDOW_WIDTH, WINDOW_HEIGHT, "cub3d");
 	data.test_window = mlx_new_window(data.mlx, T_WINDOW_WIDTH, T_WINDOW_HEIGHT, "2d test");	//delete
-	test(&data);
+	save_img(&data);
 	test_start(&data); //delete
 	mlx_hook(data.test_window, 17, 0, destroy_everything, &data);
 	mlx_hook(data.test_window, 2, 1L<<0, &events, &data);
