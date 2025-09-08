@@ -15,33 +15,56 @@
 
 #define WINDOW_WIDTH 1280
 #define WINDOW_HEIGHT 720
-#define TILE_SIZE 100// 90	//change
-#define FOV 66	//change		//NOT USED SO FAR
-#define PLANE 0,66	//change	//NOT USED SO FAR
+#define TILE_SIZE 100	//change
+//#define FOV 66	//change		//NOT USED SO FAR
+//#define PLANE 0,66	//change	//NOT USED SO FAR
 #define M_PI 3.14159265358979323846
 #define FOV_HALF_RAD 0.57596
+#define ROTATION 0.04
+#define MOVEMENT 0.1
+
+#define V_WALL 0;
+#define H_WALL 1;
+
+
+
 //KEYS
 #define ESC 65307  
-#define LEFT 65361  
-#define RIGHT 65363 
-#define W 119       
-#define A 97        
-#define S 115       
-#define D 100       
+#define ROT_LEFT 65361  
+#define ROT_RIGHT 65363 
+#define UP 119       
+#define LEFT 97        
+#define DOWN 115       
+#define RIGHT 100       
 
 
 //delete
 #define GRAY 0x808080
 #define T_WINDOW_WIDTH 1300 //1280
 #define T_WINDOW_HEIGHT 800 //720
+#define T_TILE_SIZE 100// 90	//change
+
+
+typedef struct s_texture
+{
+	char 	*file_name; //idk if needed
+	void	*img;
+	char	*data;
+	int		width;
+	int		height;
+	int		bits_per_pixel;
+	int		size_line;
+	int		endian;
+}		t_texture;
+
 
 typedef struct s_input
 {
     char **input_map;
-    char *n_texture;
-    char *s_texture;
-    char *w_texture;
-    char *e_texture;
+    t_texture *n_texture;
+    t_texture *s_texture;
+    t_texture *w_texture;
+    t_texture *e_texture;
     int f_color; // in hex
     int c_color; // in hex
     int player_x;
@@ -71,7 +94,18 @@ typedef struct s_ray
 	int y;
 	int x;
 
+/* 	double pixel_x;
+	double pixel_y; */
+
+	int wall;
+
+	int side;
+
+	double ray_angle;
+
 	double distance;
+
+	double corr_dis;
 }			t_ray;
 
 typedef struct s_game
@@ -86,6 +120,8 @@ typedef struct s_game
 	double plane_y;
 
 	double angle;
+
+
 
 	t_ray *ray;
 	//char **map;
@@ -124,4 +160,5 @@ void draw_2d_map_simple(t_mlx *mlx);
 void	draw_ray(t_mlx *mlx, t_ray *ray, int color, double dir_x, double dir_y);
 void	draw_grid(t_mlx *mlx, int win_width, int win_height);
 void draw_back(t_mlx *mlx);
+
 #endif

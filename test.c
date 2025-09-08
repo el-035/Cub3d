@@ -31,14 +31,14 @@ t_input *create_hardcoded_map(void)
     
     // Simple rectangular hardcoded map
     char *map_lines[] = {
-        "1111111111XXX",
-        "1000101001111",
-        "1000100000011",
-        "1100000000001",
+        "1111111111111",
+        "1001111111111",
+        "1000000000011",
+        "1101000000001",
         "1000000001001",
 		"1001001001001",
 		"1000000000001",
-        "111111111111X",
+        "1111111111111",
     };
 
 	input->direction = 'N';
@@ -57,17 +57,16 @@ t_input *create_hardcoded_map(void)
     }
     input->input_map[input->line_count] = NULL; // Null terminate the array
     
-    // Allocate memory for texture paths
-    input->n_texture = malloc(strlen("./test_impages/purple_N.xpm") + 1);
-    input->s_texture = malloc(strlen("./test_impages/purple_N.xpm") + 1);
-    input->w_texture = malloc(strlen("./test_impages/purple_N.xpm") + 1);
-    input->e_texture = malloc(strlen("./test_impages/purple_N.xpm") + 1);
-    
-    // Copy texture paths
-    strcpy(input->n_texture, "./test_impages/purple_N.xpm");
-    strcpy(input->s_texture, "./test_impages/purple_N.xpm");
-    strcpy(input->w_texture, "./test_impages/purple_N.xpm");
-    strcpy(input->e_texture, "./test_impages/purple_N.xpm");
+	input->n_texture = malloc(sizeof(t_texture));
+    if (!input->n_texture)
+        return (NULL);
+    memset(input->n_texture, 0, sizeof(t_texture));
+    input->n_texture->file_name = strdup("./test_images/beer.xpm");
+
+    // Set unused textures to NULL
+    input->s_texture = NULL;
+    input->w_texture = NULL;
+    input->e_texture = NULL;
     
     // Set colors (random hex values)
     input->f_color = 0x654321; // Floor color (brownish)
@@ -100,7 +99,7 @@ void draw_2d_map_simple(t_mlx *mlx)
             if (mlx->input->input_map[y][x] == '1')
             {
                 mlx_put_image_to_window(mlx->mlx, mlx->test_window, mlx->test_tile,
-                                        x * TILE_SIZE, y * TILE_SIZE);
+                                        x * T_TILE_SIZE, y * T_TILE_SIZE);
             }
         }
     }
@@ -124,7 +123,7 @@ void draw_back(t_mlx *mlx)
             if (mlx->input->input_map[y][x] == '0')
             {
                 mlx_put_image_to_window(mlx->mlx, mlx->test_window, mlx->test_back,
-                                        x * TILE_SIZE, y * TILE_SIZE);
+                                        x * T_TILE_SIZE, y * T_TILE_SIZE);
             }
         }
     }
@@ -133,14 +132,14 @@ void draw_back(t_mlx *mlx)
 
 void	draw_ray(t_mlx *mlx, t_ray *ray, int color, double dir_x, double dir_y)
 {
-
+	
 	// Start point: player position in pixels
-	double start_x = mlx->game->pos_x * TILE_SIZE;
-	double start_y = mlx->game->pos_y * TILE_SIZE;
+	double start_x = mlx->game->pos_x * T_TILE_SIZE;
+	double start_y = mlx->game->pos_y * T_TILE_SIZE;
 
 	// End point: extend in player direction by ray->distance * 24 pixels
-	double end_x = start_x + dir_x * (ray->distance * TILE_SIZE);
-	double end_y = start_y + dir_y * (ray->distance * TILE_SIZE);
+	double end_x = start_x + dir_x * (ray->distance * T_TILE_SIZE);
+	double end_y = start_y + dir_y * (ray->distance * T_TILE_SIZE);
 
 	// Compute deltas
 	double dx = end_x - start_x;
@@ -178,7 +177,7 @@ void	draw_grid(t_mlx *mlx, int win_width, int win_height)
 			mlx_pixel_put(mlx->mlx, mlx->test_window, x, y, GRAY);
 			y++;
 		}
-		x += TILE_SIZE;
+		x += T_TILE_SIZE;
 	}
 
 	// horizontal lines
@@ -191,6 +190,6 @@ void	draw_grid(t_mlx *mlx, int win_width, int win_height)
 			mlx_pixel_put(mlx->mlx, mlx->test_window, x, y, GRAY);
 			x++;
 		}
-		y += TILE_SIZE;
+		y += T_TILE_SIZE;
 	}
 }
