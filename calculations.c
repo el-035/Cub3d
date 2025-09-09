@@ -1,7 +1,28 @@
 #include "cub3d.h"
 
-double calculate_dir(t_game *game, t_input *input, double dir_x, double dir_y)
+void	wall_calc(t_ray *ray)
 {
+	ray->wall_height = ( WINDOW_HEIGHT) / ray->corr_dis;
+	ray->wall_start = (WINDOW_HEIGHT - ray->wall_height) / 2;
+	if (ray->wall_start < 0)
+	{
+		ray->img_start = (abs(ray->wall_start)) / ray->wall_height;
+		ray->wall_start = 0;
+	} //else img start = 0 but should be memset
+	else
+		ray->img_start = 0;
+	ray->wall_end = (WINDOW_HEIGHT + ray->wall_height) / 2;
+	if (ray->wall_end > WINDOW_HEIGHT)
+		ray->wall_end = WINDOW_HEIGHT -1;
+/* 	printf("Distance: %f, Wall height: %d, Start: %d\n", 
+       ray->corr_dis, ray->wall_height, ray->wall_start);
+	printf("End: %d, Final start=%d, end=%d\n", 
+       ray->wall_end, ray->wall_start, ray->wall_end); */
+}
+
+double calculate_dir(t_game *game, t_input *input, double dir_x, double dir_y) // that should actually be ray dir directly
+{
+	//should i memset ray struct every time here? probably yes
 	//printf("ray dir x %f, ray dir y %f\n", dir_x, dir_y);
 	game->ray->step_x = 0;
 	game->ray->step_y = 0;
@@ -48,9 +69,9 @@ double calculate_dir(t_game *game, t_input *input, double dir_x, double dir_y)
 	game->ray->x = (int)game->pos_x /* - game->ray->side_dist_x */;
 	//printf("x %d, y%d\n", game->ray->x, game->ray->y);
 	if (game->pos_y == (int)game->pos_y && dir_y < 0)
-	    game->ray->y -= 1;
+		game->ray->y -= 1;
 	if (game->pos_x == (int)game->pos_x && dir_x < 0)
-	    game->ray->x -= 1;
+		game->ray->x -= 1;
 	game->ray->distance = 0;
 	while (game->ray->y >= 0 && game->ray->y < input->line_count && game->ray->x >= 0 && game->ray->x < input->line_length)
 	{
@@ -64,9 +85,14 @@ double calculate_dir(t_game *game, t_input *input, double dir_x, double dir_y)
 			if (input->input_map[game->ray->y][game->ray->x] == '1')
 			{
 				game->ray->distance = game->ray->side_dist_x;
-				game->ray->wall = V_WALL;
-				/* game->ray->pixel_x = (game->pos_x + dir_x * game->ray->distance) * T_TILE_SIZE;
-				game->ray->pixel_y = (game->pos_y + dir_y * game->ray->distance) * T_TILE_SIZE; */
+				if (/* game->ray-> */dir_x < 0)
+					game->ray->wall = W;
+				else
+					game->ray->wall = E;
+				game->ray->pixel_pos = (game->pos_y + dir_y * game->ray->distance);
+				game->ray->pixel_pos -= floor(game->ray->pixel_pos);
+				game->ray->pixel = (int)(game->ray->pixel_pos *TILE_SIZE);
+				//printf("%d pixel_pos  y  %d\n", game->ray->wall, game->ray->pixel);
 				break;
 			}
 			game->ray->side_dist_x += game->ray->delta_dist_x;
@@ -79,10 +105,17 @@ double calculate_dir(t_game *game, t_input *input, double dir_x, double dir_y)
 			//printf("map [%d][%d] = %c\n", game->ray->y, game->ray->x, input->input_map[game->ray->y][game->ray->x]);
 			if (input->input_map[game->ray->y][game->ray->x] == '1')
 			{
+				if (/* game->ray->ray_ */dir_y < 0)
+  					game->ray->wall = N;
+				else
+					game->ray->wall = S;
 				game->ray->distance = game->ray->side_dist_y;
-				game->ray->wall = H_WALL;
-/* 				game->ray->pixel_x = (game->pos_x + dir_x * game->ray->distance) * T_TILE_SIZE;
-				game->ray->pixel_y = (game->pos_y + dir_y * game->ray->distance) * T_TILE_SIZE; */
+				game->ray->pixel_pos = (game->pos_x + dir_x * game->ray->distance);
+
+				game->ray->pixel_pos -= floor(game->ray->pixel_pos);
+				game->ray->pixel = (int)(game->ray->pixel_pos *TILE_SIZE);
+				//printf("%d pixel_pos x %d\n", game->ray->wall, game->ray->pixel);
+
 				break;
 			}
 			game->ray->side_dist_y += game->ray->delta_dist_y;
@@ -91,13 +124,14 @@ double calculate_dir(t_game *game, t_input *input, double dir_x, double dir_y)
 		if (!input->input_map[game->ray->y][game->ray->x])
 			break;
 	}	
-	//printf("direction: %f\n", game->ray->distance);
-	game->ray->ray_angle = atan2(game->ray->ray_dir_y, game->ray->ray_dir_x);
-	game->ray->corr_dis = game->ray->distance * cos(game->ray->ray_angle - game->angle);
-    return (game->ray->distance);
+//	printf("direction: %f\n", game->ray->distance);
+	game->ray->corr_dis = game->ray->distance / (dir_x * game->dir_x + dir_y * game->dir_y);
+	//printf("%f\n\n", game->ray->corr_dis);
+
+	//CALCULATE WALL HEIGHT
+	wall_calc(game->ray);
+	return (game->ray->distance);
 }
-
-
 
 
 int calculate_rays(t_mlx *mlx)
@@ -109,22 +143,21 @@ int calculate_rays(t_mlx *mlx)
 	double rad = FOV_HALF_RAD;
 
 	int i = 1;
-	while (i < 80)
+	while (i < 8)
 	{
-		rad = -FOV_HALF_RAD + i * ((2 * FOV_HALF_RAD) / (80 - 1));
-		mlx->game->ray->ray_dir_x = mlx->game->dir_x * cos(rad) - mlx->game->dir_y * sin(rad);
-		mlx->game->ray->ray_dir_y = mlx->game->dir_x * sin(rad) + mlx->game->dir_y * cos(rad);
-		calculate_dir(mlx->game, mlx->input, mlx->game->ray->ray_dir_x, mlx->game->ray->ray_dir_y);
-		draw_ray(mlx, mlx->game->ray, 0x000FF, mlx->game->ray->ray_dir_x, mlx->game->ray->ray_dir_y);
-		
+		rad = -FOV_HALF_RAD + i * ((2 * FOV_HALF_RAD) / (8 - 1));
+/* 		mlx->game->ray->ray_dir_x = mlx->game->dir_x * cos(rad) - mlx->game->dir_y * sin(rad);
+		mlx->game->ray->ray_dir_y = mlx->game->dir_x * sin(rad) + mlx->game->dir_y * cos(rad); */
+		calculate_dir(mlx->game, mlx->input, mlx->game->dir_x * cos(rad) - mlx->game->dir_y * sin(rad), mlx->game->dir_x * sin(rad) + mlx->game->dir_y * cos(rad));
+		draw_ray(mlx, mlx->game->ray, 0x000FF, mlx->game->dir_x * cos(rad) - mlx->game->dir_y * sin(rad), mlx->game->dir_x * sin(rad) + mlx->game->dir_y * cos(rad));
 		i++;
 	}
 	rad = -FOV_HALF_RAD;
 
-	mlx->game->ray->ray_dir_x = mlx->game->dir_x * cos(rad) - mlx->game->dir_y * sin(rad);
-	mlx->game->ray->ray_dir_y = mlx->game->dir_x * sin(rad) + mlx->game->dir_y * cos(rad);
-	calculate_dir(mlx->game, mlx->input, mlx->game->ray->ray_dir_x, mlx->game->ray->ray_dir_y);
-	draw_ray(mlx, mlx->game->ray, 0xFF0000, mlx->game->ray->ray_dir_x, mlx->game->ray->ray_dir_y);
+/* 	mlx->game->ray->ray_dir_x = mlx->game->dir_x * cos(rad) - mlx->game->dir_y * sin(rad);
+	mlx->game->ray->ray_dir_y = mlx->game->dir_x * sin(rad) + mlx->game->dir_y * cos(rad); */
+	calculate_dir(mlx->game, mlx->input, mlx->game->dir_x * cos(rad) - mlx->game->dir_y * sin(rad), mlx->game->dir_x * sin(rad) + mlx->game->dir_y * cos(rad));
+	draw_ray(mlx, mlx->game->ray, 0xFF0000, mlx->game->dir_x * cos(rad) - mlx->game->dir_y * sin(rad), mlx->game->dir_x * sin(rad) + mlx->game->dir_y * cos(rad));
 	
 
 /* 	if (mlx->game->ray->wall == 0) // vertical wall
@@ -140,13 +173,13 @@ int calculate_rays(t_mlx *mlx)
 			mlx_pixel_put(mlx->mlx, mlx->test_window, (int)mlx->game->ray->pixel_x , (int)mlx->game->ray->pixel_y + (mlx->game->ray->step_y * i), 0xFF0000);
 	} */
 
-	
+	/* 
 	rad = FOV_HALF_RAD;
 
 	mlx->game->ray->ray_dir_x = mlx->game->dir_x * cos(rad) - mlx->game->dir_y * sin(rad);
 	mlx->game->ray->ray_dir_y = mlx->game->dir_x * sin(rad) + mlx->game->dir_y * cos(rad);
 	calculate_dir(mlx->game, mlx->input, mlx->game->ray->ray_dir_x, mlx->game->ray->ray_dir_y);
-	draw_ray(mlx, mlx->game->ray, 0xFF0000, mlx->game->ray->ray_dir_x, mlx->game->ray->ray_dir_y);
+	draw_ray(mlx, mlx->game->ray, 0xFF0000, mlx->game->ray->ray_dir_x, mlx->game->ray->ray_dir_y); */
 	return (0);
 }
 
@@ -157,10 +190,10 @@ int test_start(t_mlx *mlx)
 	draw_grid(mlx, T_WINDOW_WIDTH, T_WINDOW_HEIGHT);
 
 	mlx->game->pos_x = 5.0;
-	mlx->game->pos_y = 4.0;
+	mlx->game->pos_y = 7.0;
 	mlx->game->dir_x = 0;
 	mlx->game->dir_y = -1;
 	mlx->game->angle = atan2(mlx->game->dir_y, mlx->game->dir_x);
-	calculate_rays(mlx);
+	//calculate_rays(mlx);
 	return (0);
 }

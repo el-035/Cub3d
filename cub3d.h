@@ -15,16 +15,21 @@
 
 #define WINDOW_WIDTH 1280
 #define WINDOW_HEIGHT 720
-#define TILE_SIZE 100	//change
-//#define FOV 66	//change		//NOT USED SO FAR
+#define TILE_SIZE 128	//change
+#define FOV 66	//change		//NOT USED SO FAR
 //#define PLANE 0,66	//change	//NOT USED SO FAR
 #define M_PI 3.14159265358979323846
 #define FOV_HALF_RAD 0.57596
 #define ROTATION 0.04
 #define MOVEMENT 0.1
 
-#define V_WALL 0;
-#define H_WALL 1;
+//#define V_WALL 0;
+//#define H_WALL 1;
+
+#define N 0
+#define S 1
+#define W 2
+#define E 3
 
 
 
@@ -94,18 +99,21 @@ typedef struct s_ray
 	int y;
 	int x;
 
-/* 	double pixel_x;
-	double pixel_y; */
+	double	pixel_pos;	//those could be merged into one
+	int		pixel;
 
 	int wall;
 
-	int side;
-
-	double ray_angle;
-
 	double distance;
-
 	double corr_dis;
+
+	int		wall_height;
+	int		wall_start;
+	int		wall_end;
+	int		img_start;
+	
+	double		camera;
+
 }			t_ray;
 
 typedef struct s_game
@@ -119,9 +127,8 @@ typedef struct s_game
 	double plane_x;
 	double plane_y;
 
+
 	double angle;
-
-
 
 	t_ray *ray;
 	//char **map;
@@ -134,11 +141,18 @@ typedef struct s_mlx
 	t_game	*game;
 	void	*mlx;
 	void	*window;
+	t_texture *screen_data;
+
+
 	void 	*test_window;
 	void	*test_tile;
 	void	*test_back;
 
 }			t_mlx;
+
+
+//main
+void save_screen_buffer(t_mlx *data, t_ray *ray);
 
 
 //calculations
