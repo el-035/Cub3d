@@ -15,13 +15,13 @@
 
 #define WINDOW_WIDTH 1280
 #define WINDOW_HEIGHT 720
-#define TILE_SIZE 128	//change
+#define TILE_SIZE 128	//to be removed, use froom addr data
 #define FOV 66	//change		//NOT USED SO FAR
 //#define PLANE 0,66	//change	//NOT USED SO FAR
 #define M_PI 3.14159265358979323846
 #define FOV_HALF_RAD 0.57596
-#define ROTATION 0.04
-#define MOVEMENT 0.1
+#define ROTATION 0.03
+#define MOVEMENT 0.07
 
 //#define V_WALL 0;
 //#define H_WALL 1;
@@ -100,7 +100,7 @@ typedef struct s_ray
 	int x;
 
 	double	pixel_pos;	//those could be merged into one
-	int		pixel;
+	int		pixel;		//and directly calculate texture x
 
 	int wall;
 
@@ -111,7 +111,7 @@ typedef struct s_ray
 	int		wall_start;
 	int		wall_end;
 	int		img_start;
-	
+	//int		img_end;
 	double		camera;
 
 }			t_ray;

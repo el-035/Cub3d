@@ -4,20 +4,27 @@ void	wall_calc(t_ray *ray)
 {
 	ray->wall_height = ( WINDOW_HEIGHT) / ray->corr_dis;
 	ray->wall_start = (WINDOW_HEIGHT - ray->wall_height) / 2;
+	//printf("wall atart %d\n", ray->wall_start);
+
 	if (ray->wall_start < 0)
 	{
-		ray->img_start = (abs(ray->wall_start)) / ray->wall_height;
+
+		ray->img_start = (abs(ray->wall_start)) * TILE_SIZE / ray->wall_height;
+		//printf("img start %d\n", ray->img_start);
+		ray->wall_height += ray->wall_start;
 		ray->wall_start = 0;
-	} //else img start = 0 but should be memset
+	}
 	else
 		ray->img_start = 0;
 	ray->wall_end = (WINDOW_HEIGHT + ray->wall_height) / 2;
-	if (ray->wall_end > WINDOW_HEIGHT)
+	if (ray->wall_end >= WINDOW_HEIGHT)
+	{
 		ray->wall_end = WINDOW_HEIGHT -1;
-/* 	printf("Distance: %f, Wall height: %d, Start: %d\n", 
-       ray->corr_dis, ray->wall_height, ray->wall_start);
-	printf("End: %d, Final start=%d, end=%d\n", 
-       ray->wall_end, ray->wall_start, ray->wall_end); */
+	}
+	/* printf("Distance: %f, Wall height: %d, Start: %d, img start %d\n", 
+		ray->corr_dis, ray->wall_height, ray->wall_start, ray->img_start);
+	printf("End: %d, Final start=%d, end=%d, img end %d\n\n\n", 
+		ray->wall_end, ray->wall_start, ray->wall_end, ray->img_end); */
 }
 
 double calculate_dir(t_game *game, t_input *input, double dir_x, double dir_y) // that should actually be ray dir directly
@@ -143,9 +150,9 @@ int calculate_rays(t_mlx *mlx)
 	double rad = FOV_HALF_RAD;
 
 	int i = 1;
-	while (i < 8)
+	while (i < 80)
 	{
-		rad = -FOV_HALF_RAD + i * ((2 * FOV_HALF_RAD) / (8 - 1));
+		rad = -FOV_HALF_RAD + i * ((2 * FOV_HALF_RAD) / (80 - 1));
 /* 		mlx->game->ray->ray_dir_x = mlx->game->dir_x * cos(rad) - mlx->game->dir_y * sin(rad);
 		mlx->game->ray->ray_dir_y = mlx->game->dir_x * sin(rad) + mlx->game->dir_y * cos(rad); */
 		calculate_dir(mlx->game, mlx->input, mlx->game->dir_x * cos(rad) - mlx->game->dir_y * sin(rad), mlx->game->dir_x * sin(rad) + mlx->game->dir_y * cos(rad));
@@ -156,8 +163,8 @@ int calculate_rays(t_mlx *mlx)
 
 /* 	mlx->game->ray->ray_dir_x = mlx->game->dir_x * cos(rad) - mlx->game->dir_y * sin(rad);
 	mlx->game->ray->ray_dir_y = mlx->game->dir_x * sin(rad) + mlx->game->dir_y * cos(rad); */
-	calculate_dir(mlx->game, mlx->input, mlx->game->dir_x * cos(rad) - mlx->game->dir_y * sin(rad), mlx->game->dir_x * sin(rad) + mlx->game->dir_y * cos(rad));
-	draw_ray(mlx, mlx->game->ray, 0xFF0000, mlx->game->dir_x * cos(rad) - mlx->game->dir_y * sin(rad), mlx->game->dir_x * sin(rad) + mlx->game->dir_y * cos(rad));
+	/* calculate_dir(mlx->game, mlx->input, mlx->game->dir_x * cos(rad) - mlx->game->dir_y * sin(rad), mlx->game->dir_x * sin(rad) + mlx->game->dir_y * cos(rad));
+	draw_ray(mlx, mlx->game->ray, 0xFF0000, mlx->game->dir_x * cos(rad) - mlx->game->dir_y * sin(rad), mlx->game->dir_x * sin(rad) + mlx->game->dir_y * cos(rad)); */
 	
 
 /* 	if (mlx->game->ray->wall == 0) // vertical wall
@@ -190,7 +197,7 @@ int test_start(t_mlx *mlx)
 	draw_grid(mlx, T_WINDOW_WIDTH, T_WINDOW_HEIGHT);
 
 	mlx->game->pos_x = 5.0;
-	mlx->game->pos_y = 7.0;
+	mlx->game->pos_y = 4.0;
 	mlx->game->dir_x = 0;
 	mlx->game->dir_y = -1;
 	mlx->game->angle = atan2(mlx->game->dir_y, mlx->game->dir_x);

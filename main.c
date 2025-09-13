@@ -75,8 +75,16 @@ void save_screen_buffer(t_mlx *data, t_ray *ray)
 		while (y < ray->wall_end && y < WINDOW_HEIGHT) //also need to check N S W E
 		{
 			pos = y * data->screen_data->size_line + x * (data->screen_data->bits_per_pixel / 8);
-			int text_y = ray->img_start + ((y - ray->wall_start) * (TILE_SIZE - ray->img_start)) / (ray->wall_end - ray->wall_start);
-			img_pos = text_y * data->input->n_texture->size_line + x * (data->input->n_texture->bits_per_pixel / 8);
+
+			int text_y = ray->img_start + ((y - ray->wall_start) * (TILE_SIZE - ray->img_start)) / ray->wall_height;
+			int texture_x = (int)(ray->pixel_pos * TILE_SIZE) % TILE_SIZE;
+			
+			if (text_y >= data->input->n_texture->size_line) 
+				text_y = data->input->n_texture->size_line - 1;
+			if (text_y < 0)
+				text_y = 0;
+			
+			img_pos = text_y * data->input->n_texture->size_line + texture_x * (data->input->n_texture->bits_per_pixel / 8);
 			color = *(int *)(data->input->n_texture->data + img_pos);
 			*(int *)(data->screen_data->data + pos) = color;
 			
