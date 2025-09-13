@@ -19,7 +19,7 @@
 #define FOV 66	//change		//NOT USED SO FAR
 //#define PLANE 0,66	//change	//NOT USED SO FAR
 #define M_PI 3.14159265358979323846
-#define FOV_HALF_RAD 0.57596
+#define HALF_FOV 0.57596
 #define ROTATION 0.03
 #define MOVEMENT 0.07
 

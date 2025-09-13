@@ -2,9 +2,9 @@
 
 int is_wall(t_mlx *mlx, int x, int y)
 {
-	//("map [%d][%d] = %c\n", y, x, mlx->input->input_map[y][x]);
+	printf("map [%d][%d] = %c\n", y, x, mlx->input->input_map[y][x]);
 	//("posx: %d	posy: %d\n", x, y);
-	printf("x %d, y %d\n", x, y);
+	//printf("x %d, y %d\n", x, y);
 	if (mlx->input->input_map[y][x] == '1')
 		return (1);
 	return 0;
@@ -14,8 +14,8 @@ int up_down(int key, t_mlx *mlx)
 {
 	if (key == UP)
 	{
-		printf("posx: %f	posy: %f\n", mlx->game->pos_x, mlx->game->pos_y);
-		if (is_wall(mlx, (mlx->game->pos_x + mlx->game->dir_x * 0.1), (mlx->game->pos_y + mlx->game->dir_y * 0.1)) == 1)
+		//printf("posx: %f	posy: %f\n", mlx->game->pos_x, mlx->game->pos_y);
+		if (is_wall(mlx, (mlx->game->pos_x + mlx->game->dir_x * MOVEMENT), (mlx->game->pos_y + mlx->game->dir_y * MOVEMENT)) == 1)
 			return 0;
 		draw_back(mlx);
 		draw_grid(mlx, T_WINDOW_WIDTH, T_WINDOW_HEIGHT);
@@ -28,7 +28,7 @@ int up_down(int key, t_mlx *mlx)
 	if (key == DOWN)
 	{
 		//("posx: %f	posy: %f\n", mlx->game->pos_x, mlx->game->pos_y);
-		if (is_wall(mlx, (mlx->game->pos_x - mlx->game->dir_x * 0.1), (mlx->game->pos_y - mlx->game->dir_y * 0.1)) == 1)
+		if (is_wall(mlx, (mlx->game->pos_x - mlx->game->dir_x * MOVEMENT), (mlx->game->pos_y - mlx->game->dir_y * MOVEMENT)) == 1)
 			return 0;
 		draw_back(mlx);
 		draw_grid(mlx, T_WINDOW_WIDTH, T_WINDOW_HEIGHT);

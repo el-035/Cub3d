@@ -147,19 +147,19 @@ int calculate_rays(t_mlx *mlx)
 	draw_ray(mlx, mlx->game->ray, 0xFF0000, mlx->game->dir_x, mlx->game->dir_y);
 	
 
-	double rad = FOV_HALF_RAD;
+	double rad = HALF_FOV;
 
 	int i = 1;
 	while (i < 80)
 	{
-		rad = -FOV_HALF_RAD + i * ((2 * FOV_HALF_RAD) / (80 - 1));
+		rad = -HALF_FOV + i * ((2 * HALF_FOV) / (80 - 1));
 /* 		mlx->game->ray->ray_dir_x = mlx->game->dir_x * cos(rad) - mlx->game->dir_y * sin(rad);
 		mlx->game->ray->ray_dir_y = mlx->game->dir_x * sin(rad) + mlx->game->dir_y * cos(rad); */
 		calculate_dir(mlx->game, mlx->input, mlx->game->dir_x * cos(rad) - mlx->game->dir_y * sin(rad), mlx->game->dir_x * sin(rad) + mlx->game->dir_y * cos(rad));
 		draw_ray(mlx, mlx->game->ray, 0x000FF, mlx->game->dir_x * cos(rad) - mlx->game->dir_y * sin(rad), mlx->game->dir_x * sin(rad) + mlx->game->dir_y * cos(rad));
 		i++;
 	}
-	rad = -FOV_HALF_RAD;
+	rad = -HALF_FOV;
 
 /* 	mlx->game->ray->ray_dir_x = mlx->game->dir_x * cos(rad) - mlx->game->dir_y * sin(rad);
 	mlx->game->ray->ray_dir_y = mlx->game->dir_x * sin(rad) + mlx->game->dir_y * cos(rad); */
@@ -181,7 +181,7 @@ int calculate_rays(t_mlx *mlx)
 	} */
 
 	/* 
-	rad = FOV_HALF_RAD;
+	rad = HALF_FOV;
 
 	mlx->game->ray->ray_dir_x = mlx->game->dir_x * cos(rad) - mlx->game->dir_y * sin(rad);
 	mlx->game->ray->ray_dir_y = mlx->game->dir_x * sin(rad) + mlx->game->dir_y * cos(rad);
@@ -196,7 +196,7 @@ int test_start(t_mlx *mlx)
 	draw_back(mlx);
 	draw_grid(mlx, T_WINDOW_WIDTH, T_WINDOW_HEIGHT);
 
-	mlx->game->pos_x = 5.0;
+	mlx->game->pos_x = 3.0;
 	mlx->game->pos_y = 4.0;
 	mlx->game->dir_x = 0;
 	mlx->game->dir_y = -1;

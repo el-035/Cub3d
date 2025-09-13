@@ -24,8 +24,20 @@ t_input *init_stuff(t_mlx *data)
 
 int save_img(t_mlx *data)
 {
+	//allocation for the structs is hardcoded with the map
 	data->input->n_texture->img = mlx_xpm_file_to_image(data->mlx, "test_images/beer.xpm", &data->input->n_texture->width, &data->input->n_texture->height); //delete
 	data->input->n_texture->data = mlx_get_data_addr(data->input->n_texture->img, &data->input->n_texture->bits_per_pixel, &data->input->n_texture->size_line, &data->input->n_texture->endian);
+
+	data->input->s_texture->img = mlx_xpm_file_to_image(data->mlx, "test_images/s_texture.xpm", &data->input->s_texture->width, &data->input->s_texture->height); //delete
+	data->input->s_texture->data = mlx_get_data_addr(data->input->s_texture->img, &data->input->s_texture->bits_per_pixel, &data->input->s_texture->size_line, &data->input->n_texture->endian);
+
+	data->input->e_texture->img = mlx_xpm_file_to_image(data->mlx, "test_images/e_texture.xpm", &data->input->e_texture->width, &data->input->e_texture->height); //delete
+	data->input->e_texture->data = mlx_get_data_addr(data->input->e_texture->img, &data->input->e_texture->bits_per_pixel, &data->input->e_texture->size_line, &data->input->n_texture->endian);
+
+	data->input->w_texture->img = mlx_xpm_file_to_image(data->mlx, "test_images/w_texture.xpm", &data->input->w_texture->width, &data->input->w_texture->height); //delete
+	data->input->w_texture->data = mlx_get_data_addr(data->input->w_texture->img, &data->input->w_texture->bits_per_pixel, &data->input->w_texture->size_line, &data->input->n_texture->endian);
+	
+	
 	//protect
 	data->screen_data->img = mlx_new_image(data->mlx, WINDOW_WIDTH, WINDOW_HEIGHT);
 	data->screen_data->data = mlx_get_data_addr(data->screen_data->img, &data->screen_data->bits_per_pixel, &data->screen_data->size_line, &data->screen_data->endian);
@@ -37,8 +49,8 @@ int save_img(t_mlx *data)
 
 void find_dir(t_mlx *data, t_game *game, t_ray *ray, int x)
 {
-	game->plane_x = -game->dir_y * tan(FOV_HALF_RAD);
-	game->plane_y = game->dir_x * tan(FOV_HALF_RAD);
+	game->plane_x = -game->dir_y * tan(HALF_FOV);
+	game->plane_y = game->dir_x * tan(HALF_FOV);
 	/* printf("Player dir: (%f, %f)\n", game->dir_x, game->dir_y);
 	printf("Plane: (%f, %f)\n", game->plane_x, game->plane_y); */
 
@@ -49,13 +61,48 @@ void find_dir(t_mlx *data, t_game *game, t_ray *ray, int x)
 	calculate_dir(game, data->input, ray->ray_dir_x, ray->ray_dir_y);
 }
 
+void	put_wall(t_mlx *data, t_ray *ray, int y, int x)
+{
+	int pos = 0;
+	int img_pos;
+	int color;
+	t_texture *wall;
+
+	if (ray->wall == W)
+		wall = data->input->w_texture;
+	else if (ray->wall == E)
+		wall = data->input->e_texture;
+	else if (ray->wall == S)
+		wall = data->input->s_texture;
+	else
+		wall = data->input->n_texture;
+	
+
+	pos = y * data->screen_data->size_line + x * (data->screen_data->bits_per_pixel / 8);
+
+	int text_y = ray->img_start + ((y - ray->wall_start) * (wall->height - ray->img_start)) / ray->wall_height;
+	int texture_x = (int)(ray->pixel_pos * wall->height) % wall->height;
+	
+	if (text_y >= wall->size_line) 
+		text_y = wall->size_line - 1;
+	if (text_y < 0)
+		text_y = 0;
+	
+	img_pos = text_y * wall->size_line + texture_x * (wall->bits_per_pixel / 8);
+	color = *(int *)(wall->data + img_pos);
+	*(int *)(data->screen_data->data + pos) = color;
+	
+	y++; 
+
+}
+
 void save_screen_buffer(t_mlx *data, t_ray *ray)
 {
 	int y = 0;
 	int x = 0;
  	int pos = 0;
-	int img_pos = 0;
-	int color = 0;
+/* 	int img_pos = 0;
+	int color = 0; */
 	
 	while (x < WINDOW_WIDTH)
 	{
@@ -74,7 +121,8 @@ void save_screen_buffer(t_mlx *data, t_ray *ray)
 
 		while (y < ray->wall_end && y < WINDOW_HEIGHT) //also need to check N S W E
 		{
-			pos = y * data->screen_data->size_line + x * (data->screen_data->bits_per_pixel / 8);
+			put_wall(data, ray, y, x);
+			/* pos = y * data->screen_data->size_line + x * (data->screen_data->bits_per_pixel / 8);
 
 			int text_y = ray->img_start + ((y - ray->wall_start) * (TILE_SIZE - ray->img_start)) / ray->wall_height;
 			int texture_x = (int)(ray->pixel_pos * TILE_SIZE) % TILE_SIZE;
@@ -86,9 +134,9 @@ void save_screen_buffer(t_mlx *data, t_ray *ray)
 			
 			img_pos = text_y * data->input->n_texture->size_line + texture_x * (data->input->n_texture->bits_per_pixel / 8);
 			color = *(int *)(data->input->n_texture->data + img_pos);
-			*(int *)(data->screen_data->data + pos) = color;
+			*(int *)(data->screen_data->data + pos) = color; */
 			
-			y++; 
+			y++;
 		}
 
 		while (y < WINDOW_HEIGHT)

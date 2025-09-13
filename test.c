@@ -63,10 +63,26 @@ t_input *create_hardcoded_map(void)
     memset(input->n_texture, 0, sizeof(t_texture));
     input->n_texture->file_name = strdup("./test_images/beer.xpm");
 
+	input->e_texture = malloc(sizeof(t_texture));
+    if (!input->e_texture)
+        return (NULL);
+    memset(input->e_texture, 0, sizeof(t_texture));
+    input->e_texture->file_name = strdup("./test_images/e_texture.xpm");
+
+	input->w_texture = malloc(sizeof(t_texture));
+    if (!input->w_texture)
+        return (NULL);
+    memset(input->w_texture, 0, sizeof(t_texture));
+    input->w_texture->file_name = strdup("./test_images/w_texture.xpm");
+
+	input->s_texture = malloc(sizeof(t_texture));
+    if (!input->s_texture)
+        return (NULL);
+    memset(input->s_texture, 0, sizeof(t_texture));
+    input->s_texture->file_name = strdup("./test_images/s_texture.xpm");
+
     // Set unused textures to NULL
-    input->s_texture = NULL;
-    input->w_texture = NULL;
-    input->e_texture = NULL;
+
     
     // Set colors (random hex values)
     input->f_color = 0x654321; // Floor color (brownish)
