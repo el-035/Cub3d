@@ -91,7 +91,7 @@ t_input *create_hardcoded_map(void)
     // Set player position in the middle
     input->player_x = 5;
     input->player_y = 3;
-    print_map(input->input_map, input->line_count, input->line_length);
+    //print_map(input->input_map, input->line_count, input->line_length);
     return input;
 }
 

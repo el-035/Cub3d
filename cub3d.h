@@ -143,7 +143,6 @@ typedef struct s_mlx
 	void	*window;
 	t_texture *screen_data;
 
-
 	void 	*test_window;
 	void	*test_tile;
 	void	*test_back;

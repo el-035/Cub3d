@@ -1,11 +1,27 @@
 #include "cub3d.h"
 
-int is_wall(t_mlx *mlx, int x, int y)
+int is_wall(t_mlx *mlx, double x, double y)
 {
-	printf("map [%d][%d] = %c\n", y, x, mlx->input->input_map[y][x]);
+	printf("map [%f][%f]\n", y, x/* , mlx->input->input_map[y][x] */);
+
+	if (mlx->input->input_map[(int)y][(int)x] == '1')
+		return (1);
+	if (mlx->game->dir_x >= 0)
+		x += 0.1;
+	else
+		x -= 0.1;
+	if (mlx->game->dir_y >= 0)
+		y += 0.1;
+	else
+		y -= 0.1;
+
+
+
+	printf("map [%d][%d] = %c\n", (int)y, (int)x, mlx->input->input_map[(int)y][(int)x]);
+
 	//("posx: %d	posy: %d\n", x, y);
 	//printf("x %d, y %d\n", x, y);
-	if (mlx->input->input_map[y][x] == '1')
+	if (mlx->input->input_map[(int)y][(int)x] == '1')
 		return (1);
 	return 0;
 }
@@ -27,7 +43,7 @@ int up_down(int key, t_mlx *mlx)
 	}
 	if (key == DOWN)
 	{
-		//("posx: %f	posy: %f\n", mlx->game->pos_x, mlx->game->pos_y);
+		//printf("posx: %f	posy: %f\n", mlx->game->pos_x, mlx->game->pos_y);
 		if (is_wall(mlx, (mlx->game->pos_x - mlx->game->dir_x * MOVEMENT), (mlx->game->pos_y - mlx->game->dir_y * MOVEMENT)) == 1)
 			return 0;
 		draw_back(mlx);
