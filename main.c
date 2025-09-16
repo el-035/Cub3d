@@ -1,9 +1,3 @@
-/*  FUNCTIONS ALLOWED
-• open, close, read, write, printf, malloc, free, perror, strerror, exit, gettimeofday.
-• All functions of the math library (-lm man man 3 math).
-• gettimeofday()
-• All functions of the MinilibX library. */
-
 #include "cub3d.h"
 
 t_input *init_stuff(t_mlx *data)
@@ -130,21 +124,17 @@ void save_screen_buffer(t_mlx *data, t_ray *ray)
 	{
 		y = 0;
 		find_dir(data, data->game, ray, x);
-		//printf("%d\n", ray->wall_start);
 		while (y < ray->wall_start)
 		{
-
-			pos = y * data->screen_data->size_line + x * (data->screen_data->bits_per_pixel / 8);
+			pos = y++ * data->screen_data->size_line + x * (data->screen_data->bits_per_pixel / 8);
 			*(int *)(data->screen_data->data + pos) = data->input->c_color;
-			y++;
 		}
 		while (y < ray->wall_end && y < WINDOW_HEIGHT)
 			put_wall(data, ray, y++, x);
 		while (y < WINDOW_HEIGHT)
 		{
-			pos = y * data->screen_data->size_line + x * (data->screen_data->bits_per_pixel / 8);
+			pos = y++ * data->screen_data->size_line + x * (data->screen_data->bits_per_pixel / 8);
 			*(int *)(data->screen_data->data + pos) = data->input->f_color;
-			y++;
 		}
 		x++;
 	}
@@ -164,13 +154,12 @@ int main (void)
 	test_start(&data); //delete
 	save_screen_buffer(&data, data.game->ray);
 	calculate_rays(&data);
-	mlx_hook(data.test_window, 17, 0, destroy_everything, &data);
-	mlx_hook(data.test_window, 2, 1L<<0, &events, &data);
-	mlx_hook(data.test_window, 3, 1L<<1, &events, &data);
+	mlx_hook(data.test_window, 17, 0, destroy_everything, &data);	//DEL
+	mlx_hook(data.test_window, 2, 1L<<0, &events, &data);			//DEL
+	mlx_hook(data.test_window, 3, 1L<<1, &events, &data);			//DEL
 	
 	mlx_hook(data.window, 17, 0, destroy_everything, &data);
 	mlx_hook(data.window, 2, 1L<<0, &events, &data);
 	mlx_hook(data.window, 3, 1L<<1, &events, &data);
 	mlx_loop(data.mlx);
-	//execution();
 }
