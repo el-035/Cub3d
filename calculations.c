@@ -195,9 +195,9 @@ int test_start(t_mlx *mlx)
 	draw_2d_map_simple(mlx);
 	draw_back(mlx);
 	draw_grid(mlx, T_WINDOW_WIDTH, T_WINDOW_HEIGHT);
-
-	mlx->game->pos_x = 3.0;
-	mlx->game->pos_y = 4.0;
+	//always add 0.5 for both x and y from the position deom input
+	mlx->game->pos_x = 5.5;
+	mlx->game->pos_y = 5.5;
 	mlx->game->dir_x = 0;
 	mlx->game->dir_y = -1;
 	mlx->game->angle = atan2(mlx->game->dir_y, mlx->game->dir_x);

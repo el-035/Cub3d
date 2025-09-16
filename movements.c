@@ -3,26 +3,35 @@
 int is_wall(t_mlx *mlx, double x, double y)
 {
 	printf("map [%f][%f]\n", y, x/* , mlx->input->input_map[y][x] */);
-
+	double xx;
+	double yy;
+	double angle = 0;
+	double rad = 0.06;
 	if (mlx->input->input_map[(int)y][(int)x] == '1')
 		return (1);
-	if (mlx->game->dir_x >= 0)
-		x += 0.1;
-	else
-		x -= 0.1;
-	if (mlx->game->dir_y >= 0)
-		y += 0.1;
-	else
-		y -= 0.1;
+
+	while (angle < (2 * M_PI))
+	{
+		//printf("rad %f\n", rad);
+
+		xx = x + (cos(angle) * rad);
+		yy = y + (sin(angle) * rad);
+		angle += (M_PI / 4);
+		printf("map [%f][%f]\n", yy, xx/* , mlx->input->input_map[y][x] */);
+
+		printf("map [%d][%d] = %c\n", (int)yy, (int)xx, mlx->input->input_map[(int)yy][(int)xx]);
+
+		if (mlx->input->input_map[(int)yy][(int)xx] == '1')
+			return (1);
+	}
 
 
 
-	printf("map [%d][%d] = %c\n", (int)y, (int)x, mlx->input->input_map[(int)y][(int)x]);
 
-	//("posx: %d	posy: %d\n", x, y);
+	/* //("posx: %d	posy: %d\n", x, y);
 	//printf("x %d, y %d\n", x, y);
 	if (mlx->input->input_map[(int)y][(int)x] == '1')
-		return (1);
+		return (1); */
 	return 0;
 }
 
