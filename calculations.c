@@ -141,7 +141,7 @@ double calculate_dir(t_game *game, t_input *input, double dir_x, double dir_y) /
 }
 
 
-int calculate_rays(t_mlx *mlx)
+int calculate_rays(t_mlx *mlx)		//DEL
 {
 	calculate_dir(mlx->game, mlx->input, mlx->game->dir_x, mlx->game->dir_y);
 	draw_ray(mlx, mlx->game->ray, 0xFF0000, mlx->game->dir_x, mlx->game->dir_y);
@@ -188,6 +188,20 @@ int calculate_rays(t_mlx *mlx)
 	calculate_dir(mlx->game, mlx->input, mlx->game->ray->ray_dir_x, mlx->game->ray->ray_dir_y);
 	draw_ray(mlx, mlx->game->ray, 0xFF0000, mlx->game->ray->ray_dir_x, mlx->game->ray->ray_dir_y); */
 	return (0);
+}
+
+void find_dir(t_mlx *data, t_game *game, t_ray *ray, int x)
+{
+	game->plane_x = -game->dir_y * tan(HALF_FOV);
+	game->plane_y = game->dir_x * tan(HALF_FOV);
+	/* printf("Player dir: (%f, %f)\n", game->dir_x, game->dir_y);
+	printf("Plane: (%f, %f)\n", game->plane_x, game->plane_y); */
+
+	ray->camera = 2.0 * (double)x / (double)WINDOW_WIDTH - 1;
+	//printf("camera %f\nx %d\n", ray->camera, x);
+	ray->ray_dir_x = game->dir_x + game->plane_x * ray->camera;
+	ray->ray_dir_y = game->dir_y + game->plane_y * ray->camera;
+	calculate_dir(game, data->input, ray->ray_dir_x, ray->ray_dir_y);
 }
 
 int test_start(t_mlx *mlx)
