@@ -62,22 +62,15 @@ int save_img(t_mlx *data)
 
 	data->input->w_texture->img = mlx_xpm_file_to_image(data->mlx, data->input->w_texture->file_name, &data->input->w_texture->width, &data->input->w_texture->height); //delete
 	data->input->w_texture->data = mlx_get_data_addr(data->input->w_texture->img, &data->input->w_texture->bits_per_pixel, &data->input->w_texture->size_line, &data->input->n_texture->endian);
-	
-	
+
 	//protect
 	data->screen_data->img = mlx_new_image(data->mlx, WINDOW_WIDTH, WINDOW_HEIGHT);
 	data->screen_data->data = mlx_get_data_addr(data->screen_data->img, &data->screen_data->bits_per_pixel, &data->screen_data->size_line, &data->screen_data->endian);
-	//printf("height %d\n", data->input->n_texture->height);
-	//mlx_put_image_to_window(data->mlx, data->window, data->input->n_texture->img, 0, 0);
-	
 	return 0;
 }
 
 int init_game(t_mlx *mlx)
 {
-//	draw_2d_map_simple(mlx);
-//	draw_back(mlx);
-//	draw_grid(mlx, T_WINDOW_WIDTH, T_WINDOW_HEIGHT);
 	//always add 0.5 for both x and y from the position deom input
 	mlx->game->pos_x = 5.5; //mlx->input->player_x + 0.5;
 	mlx->game->pos_y = 5.5; //mlx->input->player_y + 0.5;
@@ -96,6 +89,5 @@ int init_game(t_mlx *mlx)
 			mlx->game->dir_x = -1;
 	}
 	mlx->game->angle = atan2(mlx->game->dir_y, mlx->game->dir_x);
-	//calculate_rays(mlx);
 	return (0);
 }

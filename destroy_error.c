@@ -6,8 +6,6 @@ int	destroy_everything(t_mlx *data)
 		mlx_destroy_image(data->mlx, data->input->n_texture->img);
 	if (data->window)
 		mlx_destroy_window(data->mlx, data->window);
-	/* if (data->test_window)		//DELETE!!
-		mlx_destroy_window(data->mlx, data->test_window); */
 	if (data->mlx)
 	{
 		mlx_destroy_display(data->mlx);

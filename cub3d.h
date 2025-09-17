@@ -16,22 +16,15 @@
 #define WINDOW_WIDTH 1280
 #define WINDOW_HEIGHT 720
 #define TILE_SIZE 128	//to be removed, use froom addr data
-//#define FOV 66	//change		//NOT USED SO FAR
-//#define PLANE 0,66	//change	//NOT USED SO FAR
 #define M_PI 3.14159265358979323846
 #define HALF_FOV 0.57596
 #define ROTATION 0.03
 #define MOVEMENT 0.07
 
-//#define V_WALL 0;
-//#define H_WALL 1;
-
 #define N 0
 #define S 1
 #define W 2
 #define E 3
-
-
 
 //KEYS
 #define ESC 65307  
@@ -41,13 +34,6 @@
 #define LEFT 97        
 #define DOWN 115       
 #define RIGHT 100       
-
-
-//delete
-//  #define GRAY 0x808080
-//  #define T_WINDOW_WIDTH 1300 //1280
-//  #define T_WINDOW_HEIGHT 800 //720
-//  #define T_TILE_SIZE 100// 90	//change
 
 
 typedef struct s_texture
@@ -83,16 +69,20 @@ typedef struct s_ray
 {
 	double ray_dir_x;
 	double ray_dir_y;
+
 	int	step_x;
 	int step_y;
+
 	double delta_dist_x;
 	double delta_dist_y;
+
 	double side_dist_y;
 	double side_dist_x;
+
 	int y;
 	int x;
 
-	double	pixel_pos;	//those could be merged into one
+	double	x_pos;
 
 	int wall;
 
@@ -102,9 +92,7 @@ typedef struct s_ray
 	int		wall_start;
 	int		wall_end;
 	int		img_start;
-	//int		img_end;
 	double		camera;
-
 }			t_ray;
 
 typedef struct s_game
@@ -118,12 +106,9 @@ typedef struct s_game
 	double plane_x;
 	double plane_y;
 
-
 	double angle;
 
 	t_ray *ray;
-	//char **map;
-
 }			t_game;
 
 typedef struct s_mlx
@@ -133,19 +118,15 @@ typedef struct s_mlx
 	void	*mlx;
 	void	*window;
 	t_texture *screen_data;
-
-	//void 	*test_window;
-	//void	*test_tile;
-	//void	*test_back;
-
 }			t_mlx;
 
 
 //main
 
 //visuals
-void	put_wall(t_mlx *data, t_ray *ray, int y, int x);
+void	put_wall(t_mlx *data, int y, int x, t_texture *wall);
 void save_screen_buffer(t_mlx *data, t_ray *ray);
+
 
 //init stuff
 t_input *init_stuff(t_mlx *data);
@@ -153,11 +134,16 @@ int save_img(t_mlx *data);
 int init_game(t_mlx *mlx);
 
 //calculations
-void	wall_calc(t_ray *ray);
 void dist_calc(t_game *game);
-//int calculate_rays(t_mlx *mlx);	//DEL
+void init_step_pos(t_game *game);
 void calculate_dir(t_game *game, t_input *input);
-void find_dir(t_mlx *data, t_game *game, t_ray *ray, int x);
+t_texture *find_dir(t_mlx *data, t_game *game, t_ray *ray, int x);
+
+//calculations utils
+int	side_dist_x(t_game *game, t_input *input);
+int	side_dist_y(t_game *game, t_input *input);
+t_texture	*wall_side(t_mlx *data, t_ray *ray);
+void	wall_height(t_ray *ray, t_texture *img);
 
 //movements
 int events(int key, t_mlx *mlx);
@@ -168,9 +154,9 @@ int	destroy_everything(t_mlx *data);
 
 //testing to be deleted afterwards
 t_input *create_hardcoded_map(void);
-void draw_2d_map_simple(t_mlx *mlx);
+/* void draw_2d_map_simple(t_mlx *mlx);
 void	draw_ray(t_mlx *mlx, t_ray *ray, int color, double dir_x, double dir_y);
 void	draw_grid(t_mlx *mlx, int win_width, int win_height);
-void draw_back(t_mlx *mlx);
+void draw_back(t_mlx *mlx); */
 
 #endif
