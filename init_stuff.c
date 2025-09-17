@@ -72,3 +72,30 @@ int save_img(t_mlx *data)
 	
 	return 0;
 }
+
+int init_game(t_mlx *mlx)
+{
+//	draw_2d_map_simple(mlx);
+//	draw_back(mlx);
+//	draw_grid(mlx, T_WINDOW_WIDTH, T_WINDOW_HEIGHT);
+	//always add 0.5 for both x and y from the position deom input
+	mlx->game->pos_x = 5.5; //mlx->input->player_x + 0.5;
+	mlx->game->pos_y = 5.5; //mlx->input->player_y + 0.5;
+	if (mlx->input->direction == 'S' || mlx->input->direction == 'N')
+	{
+		mlx->game->dir_x = 0;
+		mlx->game->dir_y = 1;
+		if (mlx->input->direction == 'N')
+			mlx->game->dir_y = -1;
+	}
+	else if (mlx->input->direction == 'E' || mlx->input->direction == 'W')
+	{
+		mlx->game->dir_x = 1;
+		mlx->game->dir_y = 0;
+		if (mlx->input->direction == 'W')
+			mlx->game->dir_x = -1;
+	}
+	mlx->game->angle = atan2(mlx->game->dir_y, mlx->game->dir_x);
+	//calculate_rays(mlx);
+	return (0);
+}

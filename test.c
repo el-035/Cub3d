@@ -21,6 +21,7 @@ void print_map(char **map, int line_count, int line_length)
     }
     printf("\n");
 }
+
 t_input *create_hardcoded_map(void)
 {
     t_input *input;
@@ -41,7 +42,7 @@ t_input *create_hardcoded_map(void)
         "1111111111111",
     };
 
-	input->direction = 'N';
+	input->direction = 'W';
 
     input->line_count = 8;
     input->line_length = 14;

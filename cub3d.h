@@ -159,12 +159,12 @@ void save_screen_buffer(t_mlx *data, t_ray *ray);
 //init stuff
 t_input *init_stuff(t_mlx *data);
 int save_img(t_mlx *data);
+int init_game(t_mlx *mlx);
 
 //calculations
 void	wall_calc(t_ray *ray);
-int test_start(t_mlx *mlx);		//DEL OR CHANGE
-int calculate_rays(t_mlx *mlx);	//DEL
-double calculate_dir(t_game *game, t_input *input, double dir_x, double dir_y);
+//int calculate_rays(t_mlx *mlx);	//DEL
+void calculate_dir(t_game *game, t_input *input, double dir_x, double dir_y);
 void find_dir(t_mlx *data, t_game *game, t_ray *ray, int x);
 
 //movements
