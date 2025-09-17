@@ -14,7 +14,7 @@ int is_wall(t_mlx *mlx, double x, double y)
 		xx = x + (cos(angle) * rad);
 		yy = y + (sin(angle) * rad);
 		angle += (M_PI / 4);
-		if (mlx->input->input_map[(int)yy][(int)xx] == '1')
+		if (mlx->input->map[(int)yy][(int)xx] == '1')
 			return (1);
 	}
 	return 0;

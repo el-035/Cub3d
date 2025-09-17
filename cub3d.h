@@ -16,7 +16,7 @@
 #define WINDOW_WIDTH 1280
 #define WINDOW_HEIGHT 720
 #define TILE_SIZE 128	//to be removed, use froom addr data
-#define FOV 66	//change		//NOT USED SO FAR
+//#define FOV 66	//change		//NOT USED SO FAR
 //#define PLANE 0,66	//change	//NOT USED SO FAR
 #define M_PI 3.14159265358979323846
 #define HALF_FOV 0.57596
@@ -44,10 +44,10 @@
 
 
 //delete
-#define GRAY 0x808080
-#define T_WINDOW_WIDTH 1300 //1280
-#define T_WINDOW_HEIGHT 800 //720
-#define T_TILE_SIZE 100// 90	//change
+//  #define GRAY 0x808080
+//  #define T_WINDOW_WIDTH 1300 //1280
+//  #define T_WINDOW_HEIGHT 800 //720
+//  #define T_TILE_SIZE 100// 90	//change
 
 
 typedef struct s_texture
@@ -65,7 +65,7 @@ typedef struct s_texture
 
 typedef struct s_input
 {
-    char **input_map;
+    char **map;
     t_texture *n_texture;
     t_texture *s_texture;
     t_texture *w_texture;
@@ -83,29 +83,20 @@ typedef struct s_ray
 {
 	double ray_dir_x;
 	double ray_dir_y;
-
 	int	step_x;
 	int step_y;
-
 	double delta_dist_x;
 	double delta_dist_y;
-
-	double dist_y;
-	double dist_x;
-
 	double side_dist_y;
 	double side_dist_x;
-
 	int y;
 	int x;
 
 	double	pixel_pos;	//those could be merged into one
-	int		pixel;		//and directly calculate texture x
 
 	int wall;
 
 	double distance;
-	double corr_dis;
 
 	int		wall_height;
 	int		wall_start;
@@ -143,9 +134,9 @@ typedef struct s_mlx
 	void	*window;
 	t_texture *screen_data;
 
-	void 	*test_window;
-	void	*test_tile;
-	void	*test_back;
+	//void 	*test_window;
+	//void	*test_tile;
+	//void	*test_back;
 
 }			t_mlx;
 
@@ -163,8 +154,9 @@ int init_game(t_mlx *mlx);
 
 //calculations
 void	wall_calc(t_ray *ray);
+void dist_calc(t_game *game);
 //int calculate_rays(t_mlx *mlx);	//DEL
-void calculate_dir(t_game *game, t_input *input, double dir_x, double dir_y);
+void calculate_dir(t_game *game, t_input *input);
 void find_dir(t_mlx *data, t_game *game, t_ray *ray, int x);
 
 //movements

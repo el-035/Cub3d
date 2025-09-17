@@ -1,6 +1,6 @@
 #include "cub3d.h"
 // Function to print the 2D map array
-void print_map(char **map, int line_count, int line_length)
+/* void print_map(char **map, int line_count, int line_length)
 {
     int i, j;
     
@@ -20,7 +20,7 @@ void print_map(char **map, int line_count, int line_length)
         printf("\n");
     }
     printf("\n");
-}
+} */
 
 t_input *create_hardcoded_map(void)
 {
@@ -47,16 +47,16 @@ t_input *create_hardcoded_map(void)
     input->line_count = 8;
     input->line_length = 14;
     
-    // Allocate memory for input_map array
-    input->input_map = malloc(sizeof(char *) * (input->line_count + 1));
+    // Allocate memory for map array
+    input->map = malloc(sizeof(char *) * (input->line_count + 1));
     
     // Copy each line and allocate memory
     for (i = 0; i < input->line_count; i++)
     {
-        input->input_map[i] = malloc(strlen(map_lines[i]) + 1);
-        strcpy(input->input_map[i], map_lines[i]);
+        input->map[i] = malloc(strlen(map_lines[i]) + 1);
+        strcpy(input->map[i], map_lines[i]);
     }
-    input->input_map[input->line_count] = NULL; // Null terminate the array
+    input->map[input->line_count] = NULL; // Null terminate the array
     
 	input->n_texture = malloc(sizeof(t_texture));
     if (!input->n_texture)
@@ -92,13 +92,61 @@ t_input *create_hardcoded_map(void)
     // Set player position in the middle
     input->player_x = 5;
     input->player_y = 3;
-    //print_map(input->input_map, input->line_count, input->line_length);
+    //print_map(input->map, input->line_count, input->line_length);
     return input;
 }
 
+// int calculate_rays(t_mlx *mlx)		//DEL
+// {
+// 	calculate_dir(mlx->game, mlx->input, mlx->game->dir_x, mlx->game->dir_y);
+// 	draw_ray(mlx, mlx->game->ray, 0xFF0000, mlx->game->dir_x, mlx->game->dir_y);
+	
+
+// 	double rad = HALF_FOV;
+
+// 	int i = 1;
+// 	while (i < 80)
+// 	{
+// 		rad = -HALF_FOV + i * ((2 * HALF_FOV) / (80 - 1));
+// /* 		mlx->game->ray->ray_dir_x = mlx->game->dir_x * cos(rad) - mlx->game->dir_y * sin(rad);
+// 		mlx->game->ray->ray_dir_y = mlx->game->dir_x * sin(rad) + mlx->game->dir_y * cos(rad); */
+// 		calculate_dir(mlx->game, mlx->input, mlx->game->dir_x * cos(rad) - mlx->game->dir_y * sin(rad), mlx->game->dir_x * sin(rad) + mlx->game->dir_y * cos(rad));
+// 		draw_ray(mlx, mlx->game->ray, 0x000FF, mlx->game->dir_x * cos(rad) - mlx->game->dir_y * sin(rad), mlx->game->dir_x * sin(rad) + mlx->game->dir_y * cos(rad));
+// 		i++;
+// 	}
+// 	rad = -HALF_FOV;
+
+// /* 	mlx->game->ray->ray_dir_x = mlx->game->dir_x * cos(rad) - mlx->game->dir_y * sin(rad);
+// 	mlx->game->ray->ray_dir_y = mlx->game->dir_x * sin(rad) + mlx->game->dir_y * cos(rad); */
+// 	/* calculate_dir(mlx->game, mlx->input, mlx->game->dir_x * cos(rad) - mlx->game->dir_y * sin(rad), mlx->game->dir_x * sin(rad) + mlx->game->dir_y * cos(rad));
+// 	draw_ray(mlx, mlx->game->ray, 0xFF0000, mlx->game->dir_x * cos(rad) - mlx->game->dir_y * sin(rad), mlx->game->dir_x * sin(rad) + mlx->game->dir_y * cos(rad)); */
+	
+
+// /* 	if (mlx->game->ray->wall == 0) // vertical wall
+// 	{
+// 		printf("y %d\n", mlx->game->ray->step_y);
+// 		for (int i = 0; i <= T_TILE_SIZE; i++)
+// 			mlx_pixel_put(mlx->mlx, mlx->test_window, (int)mlx->game->ray->pixel_x + (mlx->game->ray->step_x * i), (int)mlx->game->ray->pixel_y , 0xFF0000);
+// 	}
+// 	else if (mlx->game->ray->wall == 1) // horizontal wall
+// 	{
+// 		printf("x %d\n", mlx->game->ray->step_x);
+// 		for (int i = 0; i <= T_TILE_SIZE; i++)
+// 			mlx_pixel_put(mlx->mlx, mlx->test_window, (int)mlx->game->ray->pixel_x , (int)mlx->game->ray->pixel_y + (mlx->game->ray->step_y * i), 0xFF0000);
+// 	} */
+
+// 	/* 
+// 	rad = HALF_FOV;
+
+// 	mlx->game->ray->ray_dir_x = mlx->game->dir_x * cos(rad) - mlx->game->dir_y * sin(rad);
+// 	mlx->game->ray->ray_dir_y = mlx->game->dir_x * sin(rad) + mlx->game->dir_y * cos(rad);
+// 	calculate_dir(mlx->game, mlx->input, mlx->game->ray->ray_dir_x, mlx->game->ray->ray_dir_y);
+// 	draw_ray(mlx, mlx->game->ray, 0xFF0000, mlx->game->ray->ray_dir_x, mlx->game->ray->ray_dir_y); */
+// 	return (0);
+// }
 
 // Main function to draw the 2D map (simplified version)
-void draw_2d_map_simple(t_mlx *mlx)
+/* void draw_2d_map_simple(t_mlx *mlx)
 {
     int tile_w, tile_h;
     
@@ -113,16 +161,16 @@ void draw_2d_map_simple(t_mlx *mlx)
         for (int x = 0; x < mlx->input->line_length; x++)
         {
             // Only put the tile if the map has '1' at this position
-            if (mlx->input->input_map[y][x] == '1')
+            if (mlx->input->map[y][x] == '1')
             {
                 mlx_put_image_to_window(mlx->mlx, mlx->test_window, mlx->test_tile,
                                         x * T_TILE_SIZE, y * T_TILE_SIZE);
             }
         }
     }
-}
+} */
 
-void draw_back(t_mlx *mlx)
+/* void draw_back(t_mlx *mlx)
 {
     int tile_w, tile_h;
     
@@ -137,17 +185,17 @@ void draw_back(t_mlx *mlx)
         for (int x = 0; x < mlx->input->line_length; x++)
         {
             // Only put the tile if the map has '1' at this position
-            if (mlx->input->input_map[y][x] == '0')
+            if (mlx->input->map[y][x] == '0')
             {
                 mlx_put_image_to_window(mlx->mlx, mlx->test_window, mlx->test_back,
                                         x * T_TILE_SIZE, y * T_TILE_SIZE);
             }
         }
     }
-}
+} */
 
 
-void	draw_ray(t_mlx *mlx, t_ray *ray, int color, double dir_x, double dir_y)
+/* void	draw_ray(t_mlx *mlx, t_ray *ray, int color, double dir_x, double dir_y)
 {
 	
 	// Start point: player position in pixels
@@ -178,9 +226,9 @@ void	draw_ray(t_mlx *mlx, t_ray *ray, int color, double dir_x, double dir_y)
 		x += x_inc;
 		y += y_inc;
 	}
-}
+} */
 
-void	draw_grid(t_mlx *mlx, int win_width, int win_height)
+/* void	draw_grid(t_mlx *mlx, int win_width, int win_height)
 {
 	int x, y;
 
@@ -209,4 +257,4 @@ void	draw_grid(t_mlx *mlx, int win_width, int win_height)
 		}
 		y += T_TILE_SIZE;
 	}
-}
+} */
