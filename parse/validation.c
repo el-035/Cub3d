@@ -33,7 +33,7 @@ void	check_walls(t_mlx *data, char **map, int a, int b)
 
 void	dup_map(t_mlx *data) // malloc protections
 {
-	data->input->map_cpy = ft_calloc(data->input->line_count, sizeof(char *));
+	data->input->map_cpy = ft_calloc(data->input->line_count + 1, sizeof(char *));
 	int i = 0;
 	while (data->input->map[i])
 	{
@@ -44,7 +44,7 @@ void	dup_map(t_mlx *data) // malloc protections
 
 void	fill_grid(t_mlx *data, int x, int y, int *open)
 {
-	if (y <= 0 || x <= 0 || x >= ft_strlen(data->input->map_cpy[y]) || y >= data->input->line_count || data->input->map_cpy[y][x] == ' ')
+	if (y < 0 || x < 0 || x >= data->input->line_length || y >= data->input->line_count || data->input->map_cpy[y][x] == ' ')
 	{
 		(*open)++;
 		return ;
@@ -52,14 +52,10 @@ void	fill_grid(t_mlx *data, int x, int y, int *open)
 	if (data->input->map_cpy[y][x] == '1' || data->input->map_cpy[y][x] == 'F')
 		return ;
 	data->input->map_cpy[y][x] = 'F';
-	if (x + 1 < data->input->line_length)
-		fill_grid(data, x + 1, y, open);
-	if (x - 1 >= 0)
-		fill_grid(data, x - 1, y, open);
-	if (y + 1 < data->input->line_count)
-		fill_grid(data, x, y + 1, open);
-	if (y - 1 >= 0)
-		fill_grid(data, x, y - 1, open);
+	fill_grid(data, x + 1, y, open);
+	fill_grid(data, x - 1, y, open);
+	fill_grid(data, x, y + 1, open);
+	fill_grid(data, x, y - 1, open);
 }
 
 void	flood_fill(t_mlx *data)
@@ -80,6 +76,7 @@ void	flood_fill(t_mlx *data)
 				fill_grid(data, x, y, &open);
 				if (open)
 					parse_error(data, ERR_NO_WALL, 1);
+				return ;
 			}
 			x++;
 		}
