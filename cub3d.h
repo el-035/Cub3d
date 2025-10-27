@@ -16,6 +16,7 @@
 typedef struct s_input
 {
 	char	**map;
+	char	**map_cpy;
 	char	*n_texture;
 	char	*s_texture;
 	char	*e_texture;
@@ -63,6 +64,8 @@ void    alloc_map(t_mlx *data);
 void	validate_map(t_mlx *data, char **map);
 void	check_filename(t_mlx *data, char *file);
 void	validate_input(int argc, char *argv[], t_mlx *data);
+void	dup_map(t_mlx *data);
+void	flood_fill(t_mlx *data);
 
 // parsing
 void    parsing(t_mlx *data, int argc, char *argv[]);

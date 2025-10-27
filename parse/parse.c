@@ -106,7 +106,7 @@ void	print_info(t_input *input)
 	// printf("Player x: %d\n", input->player_x);
 	// printf("Player y: %d\n", input->player_y);
 	// printf("Direction: %c\n", input->direction);
-	print_map(input->map);
+	print_map(input->map_cpy);
 }
 
 void    parsing(t_mlx *data, int argc, char *argv[])
@@ -118,6 +118,8 @@ void    parsing(t_mlx *data, int argc, char *argv[])
 	read_file(argv[1], data, 1);
 	process_file(data, data->input);
 	validate_map(data, data->input->map);
+	dup_map(data);
+	flood_fill(data);
 	print_info(data->input);
 	free_exit(data, 0);
 }

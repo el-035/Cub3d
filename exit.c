@@ -14,7 +14,7 @@ void	free_arr(char **arr)
 	int	i;
 
 	i = 0;
-	while (arr[i])
+	while (arr && arr[i])
 		i++;
     i--;
 	while (i >= 0)
@@ -35,6 +35,8 @@ void    free_exit(t_mlx *data, int errnum)
         free_arr(data->input->file);
     if (data->input->map)
         free_arr(data->input->map);
+    if (data->input->map_cpy)
+        free_arr(data->input->map_cpy);
     if (data->input->n_texture)
         free(data->input->n_texture);
     if (data->input->s_texture)

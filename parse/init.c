@@ -9,7 +9,7 @@ void	init(t_mlx *data, int nb_lines)
 	if (!data->input->file)
 		parse_error(data, ERR_ALLOC, 1);
 	data->input->map = NULL;
-	data->input->map = NULL;
+	data->input->map_cpy = NULL;
 	data->input->n_texture = NULL;
 	data->input->s_texture = NULL;
 	data->input->e_texture = NULL;
