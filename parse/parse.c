@@ -64,12 +64,16 @@ int	process_pre_map(t_mlx *data, t_input *input, int i)
 		type = 3;
 	else if (ft_strncmp("WE", input->file[i], 2) == 0)
 		type = 4;
+	if (type > 0 && type <= 4 && !ft_isspace(input->file[i][2]))
+		parse_error(data, ERR_FILE_CONTENT, 1);
 	if (type > 0 && type <= 4)
 		parse_texture(data, input, input->file[i], type);
 	if (ft_strncmp("F", input->file[i], 1) == 0)
 		type = 5;
 	else if (ft_strncmp("C", input->file[i], 1) == 0)
 		type = 6;
+	if ((type == 5 || type == 6) && !ft_isspace(input->file[i][1]))
+		parse_error(data, ERR_FILE_CONTENT, 1);
 	if (type == 5 || type == 6)
 		parse_color(data, input, input->file[i], type);
 	if (type > 0)

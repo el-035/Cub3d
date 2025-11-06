@@ -1,1 +1,5 @@
-in check line: whitespace before text in any section other than map
+should this be valid?
+ 1111
+ 1N11
+ 1111
+      1111

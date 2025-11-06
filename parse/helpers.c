@@ -19,9 +19,12 @@ int empty_line(char *line)
 
 char	*skip_whitespace(char *line)
 {
-	while (line && *line && ft_isspace(*line))
-		line++;
-	return (line);
+	int i = 0;
+	while (line && line[i] && ft_isspace(line[i]))
+		i++;
+	char *tmp = ft_strdup(line+i);
+	free(line);
+	return (tmp);
 }
 
 void	print_map(char **map)

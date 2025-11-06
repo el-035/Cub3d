@@ -93,18 +93,18 @@ void		free_arr(char **arr);
 # define ERR_NO_COL "Floor or ceiling color missing" // 1
 # define ERR_INV_COL "Floor or ceiling color invalid" // 1
 # define ERR_NO_TEX "Texture path missing" // 1
+# define ERR_NO_SEP "No proper seperation between file contents" // 1
 # define ERR_FILE_CONTENT "Invalid file content or layout" // 1
-# define ERR_INV_TEX "Texture path invalid"
-# define ERR_FILE "Input file does not exist"
-# define ERR_PERM "Input file cannot be opened"
+# define ERR_INV_TEX "Texture path invalid" // 1
+# define ERR_PERM "Input file cannot be opened" // 1
 # define ERR_NO_MAP "Input file has no map contents"
 
 # define ERR_INV_MAP "Invalid map character" // 1
 # define ERR_MAP_SPACE "Invalid spaces in map"
-# define ERR_MAP_LINE "Empty line in map"
-# define ERR_START "Player surrounded by wall"
-# define ERR_PLAYER "Only 1 player allowed"
-# define ERR_NO_WALL "Map must be surrounded by walls"
+# define ERR_MAP_LINE "Empty line in map" // 1
+# define ERR_START "Player surrounded by wall" // should this be invalid?
+# define ERR_PLAYER "Map needs 1 player" // 1
+# define ERR_NO_WALL "Map must be surrounded by walls" // 1
 
 # define ERR_ALLOC "Allocation failure"
 # define ERR_READ "Read error"

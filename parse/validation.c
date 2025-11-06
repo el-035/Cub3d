@@ -23,11 +23,11 @@ void	check_walls(t_mlx *data, char **map, int a, int b)
 {
 	if (map[a][b] != '0')
 		return ;
-	if ((a - 1 >= 0 && map[a-1][b] == ' ') || \
+	if ((a == 0 || b == 0 || a == data->input->line_count - 1 || b == data->input->line_length) || \
+	(a - 1 >= 0 && map[a-1][b] == ' ') || \
 	(a + 1 < data->input->line_count && map[a-1][b] == ' ') ||
 	(b - 1 >= 0 && map[a][b-1] == ' ') || \
-	(b + 1 < data->input->line_length && map[a][b+1] == ' ') || \
-	(b == 0 || a == data->input->line_length))
+	(b + 1 < data->input->line_length && map[a][b+1] == ' '))
 		parse_error(data, ERR_NO_WALL, 1);
 }
 
@@ -44,7 +44,7 @@ void	dup_map(t_mlx *data) // malloc protections
 
 void	fill_grid(t_mlx *data, int x, int y, int *open)
 {
-	if (y < 0 || x < 0 || x >= data->input->line_length || y >= data->input->line_count || data->input->map_cpy[y][x] == ' ')
+	if (y < 0 || x < 0 || (data->input->map_cpy[y] && x >= ft_strlen(data->input->map_cpy[y])) || y >= data->input->line_count || data->input->map_cpy[y][x] == ' ') // correct to check for out of bounds here?
 	{
 		(*open)++;
 		return ;
@@ -56,6 +56,11 @@ void	fill_grid(t_mlx *data, int x, int y, int *open)
 	fill_grid(data, x - 1, y, open);
 	fill_grid(data, x, y + 1, open);
 	fill_grid(data, x, y - 1, open);
+	// diagonals
+	fill_grid(data, x - 1, y - 1, open);
+	fill_grid(data, x + 1, y + 1, open);
+	fill_grid(data, x - 1, y + 1, open);
+	fill_grid(data, x + 1, y - 1, open);
 }
 
 void	flood_fill(t_mlx *data)
@@ -66,6 +71,7 @@ void	flood_fill(t_mlx *data)
 
 	y = 0;
 	open = 0;
+
 	while (data->input->map_cpy[y])
 	{
 		x = 0;
@@ -109,14 +115,13 @@ void	check_chars(t_mlx *data, char **map)
 		{
 			if (map[a][b] && !is_validchar(map[a][b]))
 				parse_error(data, ERR_INV_MAP, 1);
-				// (printf("char: [%c]\n%s\n", map[a][b], map[a]), parse_error(data, ERR_INV_MAP));
 			if (map[a][b] && is_direction(map[a][b]))
 				player_count += set_player_info(data, a, b);
 			if (map[a][b] == '0')
 				check_walls(data, map, a, b);
 		}
 	}
-	if (player_count != 1)
+	if (player_count > 1)
 		parse_error(data, ERR_PLAYER, 1);
 }
 
