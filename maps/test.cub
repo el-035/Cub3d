@@ -1,9 +1,9 @@
-NO ./test_images/beer.xpm
-SO ./test_images/s_texture.xpm        
-WE ./test_images/w_texture.xpm
-EA ./test_images/e_texture.xpm
-F 255,100,100
-C 225,30,10
+NO ./test_images/N.xpm
+SO ./test_images/S.xpm        
+WE ./test_images/W.xpm
+EA ./test_images/E.xpm
+C 139, 90, 50
+F 90,58,30
         1111111111111111111111111
         1000000000110000000000001
         1011000001110000000000001

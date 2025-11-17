@@ -17,16 +17,12 @@ t_input *init_stuff(t_mlx *data)
 	if (!data->screen_data)
 		return (NULL);	//malloc error
 	memset(data->screen_data, 0, sizeof(t_texture));
-	//input = create_hardcoded_map();	//delet
 	
 	return NULL;
 }
 
 int save_img(t_mlx *data)
 {
-	//allocation for the structs is with the hardcoded map
-	printf("%s\n", data->input->n_texture->file_name);
-	printf("%p\n", data->mlx);
 
 	data->input->n_texture->img = mlx_xpm_file_to_image(data->mlx, data->input->n_texture->file_name, &data->input->n_texture->width, &data->input->n_texture->height); //delete
 	data->input->n_texture->data = mlx_get_data_addr(data->input->n_texture->img, &data->input->n_texture->bits_per_pixel, &data->input->n_texture->size_line, &data->input->n_texture->endian);
