@@ -2,7 +2,7 @@
 
 t_input *init_stuff(t_mlx *data)
 {
-	t_input		*input;
+	t_input		*input = NULL;
 
 	data->mlx = mlx_init();
 	if (!data->mlx)
@@ -42,8 +42,8 @@ t_input *init_stuff(t_mlx *data)
 		return (NULL);	//malloc error
 	memset(input->e_texture, 0, sizeof(t_texture)); */
 	
-	//data->input = data->input;
-	input = create_hardcoded_map();	//delet
+	data->input = input;
+	//input = create_hardcoded_map();	//delet
 	
 	return input;
 }
