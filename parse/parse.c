@@ -67,7 +67,7 @@ int	process_pre_map(t_mlx *data, t_input *input, int i)
 	if (type > 0 && type <= 4 && !ft_isspace(input->file[i][2]))
 		parse_error(data, ERR_FILE_CONTENT, 1);
 	if (type > 0 && type <= 4)
-		parse_texture(data, input, input->file[i], type);
+		parse_texture->file_name(data, input, input->file[i], type);
 	if (ft_strncmp("F", input->file[i], 1) == 0)
 		type = 5;
 	else if (ft_strncmp("C", input->file[i], 1) == 0)
@@ -101,10 +101,10 @@ void	process_file(t_mlx *data, t_input *input)
 
 void	print_info(t_input *input)
 {
-	printf("N: {%s}\n", input->n_texture);
-	printf("S: {%s}\n", input->s_texture);
-	printf("E: {%s}\n", input->e_texture);
-	printf("W: {%s}\n", input->w_texture);
+	printf("N: {%s}\n", input->n_texture->file_name);
+	printf("S: {%s}\n", input->s_texture->file_name);
+	printf("E: {%s}\n", input->e_texture->file_name);
+	printf("W: {%s}\n", input->w_texture->file_name);
 	printf("F: {%X}\n", input->f_color);
 	printf("C: {%X}\n", input->c_color);
 	// printf("Player x: %d\n", input->player_x);

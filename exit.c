@@ -38,14 +38,14 @@ void	free_exit(t_mlx *data, int errnum)
 		free_arr(data->input->map);
 	if (data->input->map_cpy)
 		free_arr(data->input->map_cpy);
-	if (data->input->n_texture)
-		free(data->input->n_texture);
-	if (data->input->s_texture)
-		free(data->input->s_texture);
-	if (data->input->e_texture)
-		free(data->input->e_texture);
-	if (data->input->w_texture)
-		free(data->input->w_texture);
+	if (data->input->n_texture->file_name)
+		free(data->input->n_texture->file_name);
+	if (data->input->s_texture->file_name)
+		free(data->input->s_texture->file_name);
+	if (data->input->e_texture->file_name)
+		free(data->input->e_texture->file_name);
+	if (data->input->w_texture->file_name)
+		free(data->input->w_texture->file_name);
 	if (data->input)
 		free(data->input);
 	// destroy_everything(data); // add errnum to this function

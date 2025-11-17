@@ -5,7 +5,7 @@ INCLUDES = -I libft -I .
 CFLAGS = -Wall -Werror -Wextra 
 
 SRC = main.c destroy_error.c exit.c parse/helpers.c \
-parse/init.c parse/map.c parse/parse.c parse/validation.c parse/parse_colors.c parse/parse_textures.c
+parse/init.c parse/map.c parse/parse.c parse/validation.c parse/parse_colors.c parse/parse_texture->file_names.c
 OBJ = $(patsubst %.c,obj/%.o,$(SRC))
 
 LIBFT = libft/libft.a

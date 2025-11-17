@@ -69,7 +69,7 @@ void	flood_fill(t_mlx *data);
 
 // parsing
 void    parsing(t_mlx *data, int argc, char *argv[]);
-void parse_texture(t_mlx *data, t_input *input, char *line, int type);
+void parse_texture->file_name(t_mlx *data, t_input *input, char *line, int type);
 void parse_color(t_mlx *data, t_input *input, char *line, int type);
 
 // helpers
