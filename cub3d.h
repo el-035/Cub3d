@@ -52,6 +52,7 @@ typedef struct s_texture
 typedef struct s_input
 {
     char **map;
+	char **map_cpy;
     t_texture *n_texture;
     t_texture *s_texture;
     t_texture *w_texture;
@@ -63,6 +64,8 @@ typedef struct s_input
 	char direction;
     int line_length;
     int line_count;
+	char **file;
+	int info_count;
 }           t_input;
 
 typedef struct s_ray
