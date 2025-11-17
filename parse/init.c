@@ -14,7 +14,8 @@ void	init(t_mlx *data, int nb_lines)
 	if (!data->input->n_texture)
 		return;	//malloc error
 	memset(data->input->n_texture, 0, sizeof(t_texture));
-	//data->input->n_texture->file_name = NULL;
+
+
 	data->input->s_texture = malloc(sizeof(t_texture));
 	if (!data->input->s_texture)
 		return;	//malloc error

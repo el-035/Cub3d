@@ -49,7 +49,7 @@ void	wall_height(t_ray *ray, t_texture *img)
 		ray->img_start = 0;
 	ray->wall_end = (WINDOW_HEIGHT + ray->wall_height) / 2;
 	if (ray->wall_end >= WINDOW_HEIGHT)
-		ray->wall_end = WINDOW_HEIGHT -1;
+		ray->wall_end = WINDOW_HEIGHT;
 
 }
 

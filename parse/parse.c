@@ -124,6 +124,6 @@ void    parsing(t_mlx *data, int argc, char *argv[])
 	validate_map(data, data->input->map);
 	dup_map(data);
 	flood_fill(data);
-	print_info(data->input);
-	free_exit(data, 0);
+	// print_info(data->input);
+	// free_exit(data, 0);
 }

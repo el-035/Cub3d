@@ -50,11 +50,11 @@ void	parse_texture(t_mlx *data, t_input *input, char *line, int type)
 	char    *extract;
 
 	extract = extract_filename(data, line);
-	// if (access(extract, F_OK) != 0)
-	// {
-	// 	free(extract);
-	// 	parse_error(data, ERR_INV_TEX, 1);
-	// }
+	if (access(extract, F_OK) != 0)
+	{
+		free(extract);
+		parse_error(data, ERR_INV_TEX, 1);
+	}
 	if (type == 1)
 		input->n_texture->file_name = ft_strdup(extract);
 	else if (type == 2)

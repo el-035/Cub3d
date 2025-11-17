@@ -15,7 +15,7 @@
 
 #define WINDOW_WIDTH 1280
 #define WINDOW_HEIGHT 720
-#define TILE_SIZE 128	//to be removed, use froom addr data
+
 #define M_PI 3.14159265358979323846
 #define HALF_FOV 0.57596
 #define ROTATION 0.03
