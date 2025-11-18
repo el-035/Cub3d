@@ -1,4 +1,17 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   parse.c                                            :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: nrumpfhu <nrumpfhu@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/11/18 19:29:30 by nrumpfhu          #+#    #+#             */
+/*   Updated: 2025/11/18 19:29:30 by nrumpfhu         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../cub3d.h"
+
 
 // open, close, read, write,
 // printf, malloc, free, perror,
@@ -10,7 +23,6 @@
 // no empty lines in map content
 // map has to be last
 // check textures exist and have permissions
-
 
 int	add_line(t_mlx *data, char *next_line, int fd, int i)
 {
@@ -51,10 +63,10 @@ int	add_line(t_mlx *data, char *next_line, int fd, int i)
 
 int	read_file(char *path, t_mlx *data, int process)
 {
-	int		fd;
-	int		i;
-	char	*next_line;
-	int		nb_lines = 0;
+	int fd;
+	int i;
+	char *next_line;
+	int nb_lines = 0;
 
 	i = 0;
 	fd = open(path, O_RDONLY);
@@ -70,8 +82,9 @@ int	read_file(char *path, t_mlx *data, int process)
 		if (!next_line)
 		{
 			if (read(fd, prev, 1) < 0)
-				(free(prev), parse_error(data, ERR_READ, process)); // return (free(prev), 1);
-			free(prev);	
+				(free(prev), parse_error(data, ERR_READ, process));
+			// return (free(prev), 1);
+			free(prev);
 			break ;
 		}
 		free(prev);
@@ -89,7 +102,7 @@ int	read_file(char *path, t_mlx *data, int process)
 
 int	process_pre_map(t_mlx *data, t_input *input, int i)
 {
-	int	type;
+	int type;
 
 	type = 0;
 	if (input->info_count < 6)
@@ -121,12 +134,14 @@ int	process_pre_map(t_mlx *data, t_input *input, int i)
 
 void	process_file(t_mlx *data, t_input *input)
 {
-	int	i;
+	int i;
 
 	i = 0;
-	while (input->file && input->file[i] && (input->info_count < 6 || empty_line(input->file[i])))
+	while (input->file && input->file[i] && (input->info_count < 6
+			|| empty_line(input->file[i])))
 	{
-		if (!empty_line(input->file[i]) && process_pre_map(data, input, i) == 0)
+		if (!empty_line(input->file[i]) && process_pre_map(data, input,
+				i) == 0)
 			parse_error(data, ERR_FILE_CONTENT, 1);
 		i++;
 	}
@@ -151,7 +166,7 @@ void	print_info(t_input *input)
 	print_map(input->map_cpy);
 }
 
-void    parsing(t_mlx *data, int argc, char *argv[])
+void	parsing(t_mlx *data, int argc, char *argv[])
 {
 	int nb_lines;
 	validate_input(argc, argv, data);

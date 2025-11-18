@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   exit.c                                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: nrumpfhu <nrumpfhu@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/11/18 19:29:50 by nrumpfhu          #+#    #+#             */
+/*   Updated: 2025/11/18 19:29:50 by nrumpfhu         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "cub3d.h"
 
 
@@ -17,8 +29,6 @@ void	free_arr(char **arr)
 	i = 0;
 	if (!arr)
 		return ;
-	// while (arr && arr[i])
-	// 	i++;
 	while (arr && arr[i])
 	{
 		free(arr[i]);
@@ -32,8 +42,8 @@ void	free_exit(t_mlx *data, int errnum)
 {
 	if (!data->input)
 		exit(errnum);
-	if (data->input->file) // && data->input->file[0])
-		free_arr(data->input->file); // invalid free sometimes
+	if (data->input->file)
+		free_arr(data->input->file);
 	if (data->input->map)
 		free_arr(data->input->map);
 	if (data->input->map_cpy)

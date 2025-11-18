@@ -1,12 +1,16 @@
-#include "../cub3d.h"
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   validation.c                                       :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: nrumpfhu <nrumpfhu@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/11/18 19:29:35 by nrumpfhu          #+#    #+#             */
+/*   Updated: 2025/11/18 19:29:35 by nrumpfhu         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
-// surrounded by walls
-// 6 valid chars (0, 1, NSEW once)
-// check if player can move
-// ◦ Except for the map,
-// each type of information from an element can be separated
-// by one or more spaces
-// -> check no extra spaces that are not on the outside
+#include "../cub3d.h"
 
 int	is_validchar(char c)
 {

@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   map.c                                              :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: nrumpfhu <nrumpfhu@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/11/18 19:29:19 by nrumpfhu          #+#    #+#             */
+/*   Updated: 2025/11/18 19:29:19 by nrumpfhu         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../cub3d.h"
 
 void	check_map_dimensions(t_mlx *data, t_input *input, char **arr)
@@ -7,8 +19,6 @@ void	check_map_dimensions(t_mlx *data, t_input *input, char **arr)
 
 	a = 0;
 	b = 0;
-	// if (!ft_strncmp("\n", line, 1)) // need new empty line check, right now empty lines are not in arr
-	//     (free(line), parse_error(data, ERR_MAP_LINE));
 	while (arr && arr[a])
 	{
 		b = 0;
@@ -30,10 +40,6 @@ void	fill_map(t_input *input, char **arr)
 	a = 0;
 	while (arr && arr[a])
 	{
-		// len = ft_strlen(arr[a]);
-		// if (len > 0 && arr[a][len - 1] == '\n')
-		// 	len--;
-		// ft_strlcpy(input->map[a], arr[a], len + 1);
 		b = 0;
 		while (arr && arr[a] && arr[a][b] && arr[a][b] != '\n' && arr[a][b] != '\r')
 		{
