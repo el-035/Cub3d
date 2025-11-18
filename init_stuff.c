@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   init_stuff.c                                       :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: efittant <efittant@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/11/18 18:40:20 by efittant          #+#    #+#             */
+/*   Updated: 2025/11/18 18:45:13 by efittant         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "cub3d.h"
 
 void	init_stuff(t_mlx *data)
@@ -52,6 +64,7 @@ int	save_screen(t_mlx *data, t_texture *screen_data)
 		return (parse_error(data, MLX_FAIL, 1), 1);
 	return (0);
 }
+
 int	save_img_ns(t_mlx *data, t_texture *n_texture, t_texture *s_texture)
 {
 	n_texture->img = mlx_xpm_file_to_image(data->mlx, n_texture->file_name,
@@ -72,16 +85,6 @@ int	save_img_ns(t_mlx *data, t_texture *n_texture, t_texture *s_texture)
 			&s_texture->endian);
 	if (!s_texture->data)
 		return (parse_error(data, MLX_FAIL, 1), 1);
-	return (0);
-}
-int	save_img(t_mlx *data, t_input *input)
-{
-	if (save_img_ns(data, input->n_texture, input->s_texture) == 1)
-		return (1);
-	if (save_img_ew(data, input->e_texture, input->w_texture) == 1)
-		return (1);
-	if (save_screen(data, data->screen_data) == 1)
-		return (1);
 	return (0);
 }
 
