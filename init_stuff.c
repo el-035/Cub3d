@@ -1,29 +1,27 @@
 #include "cub3d.h"
 
-t_input *init_stuff(t_mlx *data)
+void init_stuff(t_mlx *data)
 {
 	data->mlx = mlx_init();
 	if (!data->mlx)
-		return NULL; //errors("Allocation failed", data);
-	data->game = malloc(sizeof(t_game));	//protect
+		return (parse_error(data, ERR_ALLOC, 1));
+	data->game = malloc(sizeof(t_game));
 	if (!data->game)
-		return (NULL);	//malloc error
+		return (parse_error(data, ERR_ALLOC, 1));
 
-	data->game->ray = malloc(sizeof(t_ray));//protect
+	data->game->ray = malloc(sizeof(t_ray));
 	if (!data->game->ray)
-		return (NULL);	//malloc error
+		return (parse_error(data, ERR_ALLOC, 1));
 
 	data->screen_data = malloc(sizeof(t_texture));
 	if (!data->screen_data)
-		return (NULL);	//malloc error
+		return (parse_error(data, ERR_ALLOC, 1));
 	memset(data->screen_data, 0, sizeof(t_texture));
-	
-	return NULL;
 }
 
 int save_img(t_mlx *data)
 {
-
+	//protect???
 	data->input->n_texture->img = mlx_xpm_file_to_image(data->mlx, data->input->n_texture->file_name, &data->input->n_texture->width, &data->input->n_texture->height); //delete
 	data->input->n_texture->data = mlx_get_data_addr(data->input->n_texture->img, &data->input->n_texture->bits_per_pixel, &data->input->n_texture->size_line, &data->input->n_texture->endian);
 
@@ -42,9 +40,8 @@ int save_img(t_mlx *data)
 	return 0;
 }
 
-int init_game(t_mlx *mlx)
+void init_game(t_mlx *mlx)
 {
-	//always add 0.5 for both x and y from the position deom input
 	mlx->game->pos_x = mlx->input->player_x + 0.5;
 	mlx->game->pos_y = mlx->input->player_y + 0.5;
 	if (mlx->input->direction == 'S' || mlx->input->direction == 'N')
@@ -62,5 +59,4 @@ int init_game(t_mlx *mlx)
 			mlx->game->dir_x = -1;
 	}
 	mlx->game->angle = atan2(mlx->game->dir_y, mlx->game->dir_x);
-	return (0);
 }

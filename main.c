@@ -5,11 +5,11 @@ int main (int argc, char **argv)
 	t_mlx		data;
 
 	if (argc != 2)
-		return (1); //ERROR
+		return (parse_error(&data, ERR_ARG, 0), 1);
 
 	parsing(&data, argc, argv);
 	init_stuff(&data);
-	data.window = mlx_new_window(data.mlx, WINDOW_WIDTH, WINDOW_HEIGHT, "cub3d");
+	data.window = mlx_new_window(data.mlx, WINDOW_WIDTH, WINDOW_HEIGHT, "cub3d");	//protectc???
 	save_img(&data);
 	init_game(&data);
 	save_screen_buffer(&data, data.game->ray);

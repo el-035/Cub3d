@@ -132,9 +132,9 @@ void save_screen_buffer(t_mlx *data, t_ray *ray);
 
 
 //init stuff
-t_input *init_stuff(t_mlx *data);
+void init_stuff(t_mlx *data);
 int save_img(t_mlx *data);
-int init_game(t_mlx *mlx);
+void init_game(t_mlx *mlx);
 
 //calculations
 void dist_calc(t_game *game);
@@ -223,5 +223,7 @@ void		free_arr(char **arr);
 
 # define ERR_ALLOC "Allocation failure"
 # define ERR_READ "Read error"
+
+# define ERR_ARG "Invalid argument"
 
 #endif

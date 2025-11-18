@@ -15,10 +15,7 @@ int	destroy_everything(t_mlx *data)
 	if (data->window)
 		mlx_destroy_window(data->mlx, data->window);
 	if (data->mlx)
-	{
 		mlx_destroy_display(data->mlx);
-		//free(data->mlx);
-	}
 
 	if (data->screen_data)
 		free(data->screen_data);
@@ -29,12 +26,6 @@ int	destroy_everything(t_mlx *data)
 		free(data->game);
 	free(data->mlx);
 	free_exit(data, 0);
-/* 	if (data->map)
-		free_map(data->map); */
+
 	exit (0);
 }
-
-/* int errors(char *msg, t_mlx *data)
-{
-
-} */
