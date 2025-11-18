@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nrumpfhu <nrumpfhu@student.42.fr>          +#+  +:+       +#+        */
+/*   By: efittant <efittant@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/30 15:14:14 by efittant          #+#    #+#             */
-/*   Updated: 2025/11/18 15:56:30 by nrumpfhu         ###   ########.fr       */
+/*   Updated: 2025/11/18 18:31:09 by efittant         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,6 +87,7 @@ char	*get_next_line(int fd, int *flag)
 {
 	static char	*temp = NULL;
 	char		*line;
+
 	*flag = 0;
 	line = NULL;
 	if (fd < 0 || BUFFER_SIZE <= 0)

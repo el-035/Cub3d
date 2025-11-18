@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   libft.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nrumpfhu <nrumpfhu@student.42.fr>          +#+  +:+       +#+        */
+/*   By: efittant <efittant@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/19 17:43:02 by nrumpfhu          #+#    #+#             */
-/*   Updated: 2025/11/18 14:46:31 by nrumpfhu         ###   ########.fr       */
+/*   Updated: 2025/11/18 18:31:21 by efittant         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,8 +90,8 @@ int					convert_ptr(void *deco);
 
 // get next line
 char				*get_next_line(int fd, int *flag);
-char	*ft_strchr_gnl(char *s, int c);
-char	*ft_strjoin_gnl(char *s1, char *s2, int *flag);
-char	*ft_strdup_gnl(char *s, int *flag);
-void	*ft_calloc_gnl(size_t nmemb, size_t size, int *flag);
+char				*ft_strchr_gnl(char *s, int c);
+char				*ft_strjoin_gnl(char *s1, char *s2, int *flag);
+char				*ft_strdup_gnl(char *s, int *flag);
+void				*ft_calloc_gnl(size_t nmemb, size_t size, int *flag);
 #endif
