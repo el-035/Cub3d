@@ -36,8 +36,8 @@ int	read_file(char *path, t_mlx *data, int process)
 	while (1)
 	{
 		next_line = get_next_line(fd, &flag); // add flag
-		// if (flag == 1)
-		// 	parse_error(data, ERR_READ, process);
+		if (flag == 1)
+			parse_error(data, ERR_READ, process);
 		if (!next_line)
 			break ;
 		nb_lines++;

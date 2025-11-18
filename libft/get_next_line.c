@@ -6,7 +6,7 @@
 /*   By: nrumpfhu <nrumpfhu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/30 15:14:14 by efittant          #+#    #+#             */
-/*   Updated: 2025/11/18 14:53:47 by nrumpfhu         ###   ########.fr       */
+/*   Updated: 2025/11/18 15:56:30 by nrumpfhu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,6 @@ char	*read_content(int fd, char *temp, int *flag)
 	buffer = (char *)ft_calloc_gnl((BUFFER_SIZE + 1), sizeof(char), flag);
 	if (!buffer)
 		return (*flag = 1, free(temp), temp = NULL, NULL);
-	int i = 0;
 	while (bytes > 0 && !ft_strchr_gnl(buffer, '\n'))
 	{
 		bytes = read(fd, buffer, BUFFER_SIZE);
@@ -30,12 +29,9 @@ char	*read_content(int fd, char *temp, int *flag)
 		buffer[bytes] = '\0';
 		if (bytes == 0)
 			break ;
-		if (i == 5)
-			return (*flag = 1, free(buffer), NULL);
 		temp = ft_strjoin_gnl(temp, buffer, flag);
 		if (!temp)
 			return (*flag = 1, free(buffer), NULL);
-		i++;
 	}
 	if (!temp || (temp && !*temp))
 		return (free(buffer), free(temp), temp = NULL, NULL);
