@@ -154,15 +154,6 @@ int events(int key, t_mlx *mlx);
 //destroy and errors
 int	destroy_everything(t_mlx *data);
 
-
-//testing to be deleted afterwards
-t_input *create_hardcoded_map(void);
-/* void draw_2d_map_simple(t_mlx *mlx);
-void	draw_ray(t_mlx *mlx, t_ray *ray, int color, double dir_x, double dir_y);
-void	draw_grid(t_mlx *mlx, int win_width, int win_height);
-void draw_back(t_mlx *mlx); */
-
-
 // destroy and errors
 int			destroy_everything(t_mlx *data);
 

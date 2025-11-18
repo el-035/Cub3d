@@ -3,153 +3,128 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nrumpfhu <nrumpfhu@student.42.fr>          +#+  +:+       +#+        */
+/*   By: efittant <efittant@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/10/15 12:57:04 by codespace         #+#    #+#             */
-/*   Updated: 2024/11/14 12:33:02 by nrumpfhu         ###   ########.fr       */
+/*   Created: 2024/10/30 15:14:14 by efittant          #+#    #+#             */
+/*   Updated: 2025/11/18 14:30:06 by efittant         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-char	*ft_free(char *dest, char *buf, int join_temp)
+char	*read_content(int fd, char *temp)
 {
-	char	*temp;
+	char		*buffer;
+	int			bytes;
 
-	if (join_temp == 1)
+	bytes = 1;
+	buffer = (char *)ft_calloc_gnl((BUFFER_SIZE + 1), sizeof(char));
+	if (!buffer)
+		return (free(temp), temp = NULL, NULL);
+	while (bytes > 0 && !ft_strchr_gnl(buffer, '\n'))
 	{
-		temp = ft_strjoin(dest, buf);
+		bytes = read(fd, buffer, BUFFER_SIZE);
+		if (bytes == -1)
+			return (free(buffer), free(temp), temp = NULL, NULL);
+		buffer[bytes] = '\0';
+		if (bytes == 0)
+			break ;
+		temp = ft_strjoin_gnl(temp, buffer);
 		if (!temp)
-		{
-			free(buf);
-			return (NULL);
-		}
-		free(dest);
-		return (temp);
+			return (free(buffer), NULL);
 	}
-	if (dest)
-		free(dest);
-	if (buf)
-		free(buf);
-	return (NULL);
+	if (!temp || (temp && !*temp))
+		return (free(buffer), free(temp), temp = NULL, NULL);
+	return (free(buffer), temp);
 }
 
-char	*ft_remainder(char *dest)
+char	*current_line(char *temp)
 {
-	char	*rem;
 	int		i;
-	int		n;
+	char	*line;
+	int		len;
 
-	i = 0;
-	n = 0;
-	while (dest[i] && dest[i] != '\n')
-		i++;
-	if (dest[i] == '\0')
-		return (ft_free(dest, NULL, 0));
-	i++;
-	rem = malloc(ft_strlen(dest) - i + 1);
-	if (!rem)
-		return (ft_free(dest, NULL, 0));
-	while (dest[i])
-		rem[n++] = dest[i++];
-	rem[n] = '\0';
-	ft_free(dest, NULL, 0);
-	return (rem);
+	line = NULL;
+	i = -1;
+	len = 0;
+	while (temp[len] && temp[len] != '\n')
+		len++;
+	if (temp[len] == '\n')
+		len++;
+	line = (char *) ft_calloc_gnl((len + 1), sizeof(char));
+	if (!line)
+		return (NULL);
+	while (++i < len)
+		line[i] = temp[i];
+	return (line);
 }
 
-char	*create_line(char *dest)
+char	*saveline(char *str)
 {
-	int		i;
 	char	*temp;
+	size_t	len;
+	char	*nl;
 
-	i = 0;
-	while (dest[i] && dest[i] != '\n')
-		i++;
-	temp = malloc(i + 2);
+	len = 0;
+	nl = ft_strchr_gnl(str, '\n');
+	if (!nl)
+		return (free(str), str = NULL, ft_strdup_gnl(""));
+	nl++;
+	while (nl[len])
+		len++;
+	temp = (char *) malloc((len + 1) * sizeof(char));
 	if (!temp)
-		return (ft_free(dest, NULL, 0));
-	i = 0;
-	while (dest[i] && dest[i] != '\n')
-	{
-		temp[i] = dest[i];
-		i++;
-	}
-	if (dest[i] == '\n')
-		temp[i++] = '\n';
-	temp[i] = '\0';
+		return (free(str), str = NULL, NULL);
+	temp[len] = '\0';
+	while (len-- > 0)
+		temp[len] = nl[len];
+	free (str);
+	str = NULL;
 	return (temp);
-}
-
-char	*read_lines(int fd, char *dest, char *buf)
-{
-	int		check;
-
-	check = 1;
-	buf = malloc(BUFFER_SIZE + 1);
-	if (!buf)
-		return (ft_free(dest, NULL, 0));
-	while (1)
-	{
-		check = read(fd, buf, BUFFER_SIZE);
-		if (check < 0)
-			return (ft_free(dest, buf, 0));
-		buf[check] = '\0';
-		if (check == 0)
-		{
-			if (*dest == '\0' || !dest)
-				return (ft_free(dest, buf, 0));
-			break ;
-		}
-		dest = ft_free(dest, buf, 1);
-		if (ft_strchr(buf, '\n') || (check < BUFFER_SIZE && *dest))
-			break ;
-	}
-	free(buf);
-	return (dest);
 }
 
 char	*get_next_line(int fd)
 {
-	static char	*dest;
-	char		*ret_line;
-	char		*buf;
+	static char	*temp = NULL;
+	char		*line;
 
-	buf = NULL;
+	line = NULL;
 	if (fd < 0 || BUFFER_SIZE <= 0)
 		return (NULL);
-	if (!dest)
-	{
-		dest = ft_strdup("");
-		if (!dest)
-			return (NULL);
-	}
-	dest = read_lines(fd, dest, buf);
-	if (!dest)
+	temp = read_content(fd, temp);
+	if (!temp)
 		return (NULL);
-	ret_line = create_line(dest);
-	if (!ret_line)
-		return (ft_free(dest, NULL, 0));
-	dest = ft_remainder(dest);
-	return (ret_line);
+	line = current_line(temp);
+	if (!line)
+		return (free(temp), temp = NULL, NULL);
+	temp = saveline(temp);
+	if (!temp)
+		return (free(line), NULL);
+	return (line);
 }
 
-/* #include <stdio.h>
+/* 
 
-int	main(void)
+#include <stdio.h>
+#include <fcntl.h>
+
+int main()
 {
-	int fd;
-	char *next_line;
+    char    *line;
+    int fd;
+	int i;
 
-	fd = open("file.txt", O_RDONLY);
-	if (fd < 0)
-		return (0);
-	while (1)
-	{
-		next_line = get_next_line(fd);
-		if (!next_line)
-			break ;
-		ft_printf("%s", next_line);
-		free(next_line);
-	}
-	close(fd);
+    fd = open("divina_commedia.txt", O_RDONLY);
+	i = 0;
+    while (1)
+    {
+		line = get_next_line(fd);
+		printf("%s", line);
+		if (!line)
+			return (close(fd), 0);
+		free(line);
+		i++;
+    }
+    close(fd);
+    return 0;
 } */

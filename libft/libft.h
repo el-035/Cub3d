@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   libft.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nrumpfhu <nrumpfhu@student.42.fr>          +#+  +:+       +#+        */
+/*   By: efittant <efittant@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/19 17:43:02 by nrumpfhu          #+#    #+#             */
-/*   Updated: 2024/11/25 20:54:14 by nrumpfhu         ###   ########.fr       */
+/*   Updated: 2025/11/18 14:27:35 by efittant         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,11 +89,9 @@ void				convert_ptr_hex(unsigned long dec_a);
 int					convert_ptr(void *deco);
 
 // get next line
-char				*ft_remainder(char *dest);
-char				*create_line(char *dest);
-char				*ft_free(char *dest, char *buf, int join_temp);
-char				*read_lines(int fd, char *dest, char *buf);
 char				*get_next_line(int fd);
-char				*get_next_line_bonus(int fd);
-
+char	*ft_strchr_gnl(char *s, int c);
+char	*ft_strjoin_gnl(char *s1, char *s2);
+char	*ft_strdup_gnl(char *s);
+void	*ft_calloc_gnl(size_t nmemb, size_t size);
 #endif
