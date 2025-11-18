@@ -20,6 +20,35 @@ int	add_line(t_mlx *data, char *next_line, int fd, int i)
 	return (1);
 }
 
+// int	create_map(int fd, t_map *map)
+// {
+// 	while (1)
+// 	{
+// 		map->temp = get_next_line(fd);
+// 		if (!map->temp)
+// 		{
+// 			if (read(fd, map->txt, 1) < 0)
+// 				return (free(map->txt), 1);
+// 			break ;
+// 		}
+// 		map->new_txt = ft_strjoin(map->txt, map->temp);
+// 		free(map->txt);
+// 		free(map->temp);
+// 		if (!map->new_txt)
+// 			return (free(map->txt), 1);
+// 		map->txt = map->new_txt;
+// 	}
+// 	close(fd);
+// 	if (empty_lines(map) == 1)
+// 		return (1);
+// 	map->content = ft_split(map->txt, '\n');
+// 	map->cpy = ft_split(map->txt, '\n');
+// 	free(map->new_txt);
+// 	if (!map->content || !map->cpy || !map->content[0])
+// 		return (1);
+// 	return (0);
+// }
+
 int	read_file(char *path, t_mlx *data, int process)
 {
 	int		fd;
@@ -30,19 +59,28 @@ int	read_file(char *path, t_mlx *data, int process)
 	i = 0;
 	fd = open(path, O_RDONLY);
 	int flag = 0;
-
+	char *prev = NULL;
 	if (fd < 0)
 		parse_error(data, ERR_PERM, process);
 	while (1)
 	{
 		next_line = get_next_line(fd, &flag); // add flag
-		if (flag == 1)
-			parse_error(data, ERR_READ, process);
+		// if (flag == 1)
+		// 	parse_error(data, ERR_READ, process);
+		if (!next_line)
+		{
+			if (read(fd, prev, 1) < 0)
+				(free(prev), parse_error(data, ERR_READ, process)); // return (free(prev), 1);
+			free(prev);	
+			break ;
+		}
+		free(prev);
 		if (!next_line)
 			break ;
 		nb_lines++;
 		if (process)
 			i += add_line(data, next_line, fd, i);
+		prev = ft_strdup(next_line);
 		free(next_line);
 	}
 	close(fd);

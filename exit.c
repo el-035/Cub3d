@@ -32,28 +32,36 @@ void	free_exit(t_mlx *data, int errnum)
 {
 	if (!data->input)
 		exit(errnum);
-	if (data->input->file && data->input->file[0])
+	if (data->input->file) // && data->input->file[0])
 		free_arr(data->input->file); // invalid free sometimes
 	if (data->input->map)
 		free_arr(data->input->map);
 	if (data->input->map_cpy)
 		free_arr(data->input->map_cpy);
-	if (data->input->n_texture->file_name)
-		free(data->input->n_texture->file_name);
-	if (data->input->s_texture->file_name)
-		free(data->input->s_texture->file_name);
-	if (data->input->e_texture->file_name)
-		free(data->input->e_texture->file_name);
-	if (data->input->w_texture->file_name)
-		free(data->input->w_texture->file_name);
 	if (data->input->n_texture)
+	{
+		if (data->input->n_texture->file_name)
+			free(data->input->n_texture->file_name);
 		free(data->input->n_texture);
+	}
 	if (data->input->s_texture)
+	{
+		if (data->input->s_texture->file_name)
+			free(data->input->s_texture->file_name);
 		free(data->input->s_texture);
+	}
 	if (data->input->e_texture)
+	{
+		if (data->input->e_texture->file_name)
+			free(data->input->e_texture->file_name);
 		free(data->input->e_texture);
+	}
 	if (data->input->w_texture)
+	{
+		if (data->input->w_texture->file_name)
+			free(data->input->w_texture->file_name);
 		free(data->input->w_texture);
+	}
 	if (data->input)
 		free(data->input);
 
