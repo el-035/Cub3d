@@ -1,46 +1,91 @@
 #include "cub3d.h"
 
-void init_stuff(t_mlx *data)
+void	init_stuff(t_mlx *data)
 {
 	data->mlx = mlx_init();
 	if (!data->mlx)
-		return (parse_error(data, ERR_ALLOC, 1));
+		return (parse_error(data, MLX_FAIL, 1));
 	data->game = malloc(sizeof(t_game));
 	if (!data->game)
 		return (parse_error(data, ERR_ALLOC, 1));
-
 	data->game->ray = malloc(sizeof(t_ray));
 	if (!data->game->ray)
 		return (parse_error(data, ERR_ALLOC, 1));
-
 	data->screen_data = malloc(sizeof(t_texture));
 	if (!data->screen_data)
 		return (parse_error(data, ERR_ALLOC, 1));
 	memset(data->screen_data, 0, sizeof(t_texture));
 }
 
-int save_img(t_mlx *data)
+int	save_img_ew(t_mlx *data, t_texture *e_texture, t_texture *w_texture)
 {
-	//protect???
-	data->input->n_texture->img = mlx_xpm_file_to_image(data->mlx, data->input->n_texture->file_name, &data->input->n_texture->width, &data->input->n_texture->height); //delete
-	data->input->n_texture->data = mlx_get_data_addr(data->input->n_texture->img, &data->input->n_texture->bits_per_pixel, &data->input->n_texture->size_line, &data->input->n_texture->endian);
-
-	data->input->s_texture->img = mlx_xpm_file_to_image(data->mlx, data->input->s_texture->file_name, &data->input->s_texture->width, &data->input->s_texture->height); //delete
-	data->input->s_texture->data = mlx_get_data_addr(data->input->s_texture->img, &data->input->s_texture->bits_per_pixel, &data->input->s_texture->size_line, &data->input->s_texture->endian);
-
-	data->input->e_texture->img = mlx_xpm_file_to_image(data->mlx, data->input->e_texture->file_name, &data->input->e_texture->width, &data->input->e_texture->height); //delete
-	data->input->e_texture->data = mlx_get_data_addr(data->input->e_texture->img, &data->input->e_texture->bits_per_pixel, &data->input->e_texture->size_line, &data->input->e_texture->endian);
-
-	data->input->w_texture->img = mlx_xpm_file_to_image(data->mlx, data->input->w_texture->file_name, &data->input->w_texture->width, &data->input->w_texture->height); //delete
-	data->input->w_texture->data = mlx_get_data_addr(data->input->w_texture->img, &data->input->w_texture->bits_per_pixel, &data->input->w_texture->size_line, &data->input->w_texture->endian);
-
-	//protect
-	data->screen_data->img = mlx_new_image(data->mlx, WINDOW_WIDTH, WINDOW_HEIGHT);
-	data->screen_data->data = mlx_get_data_addr(data->screen_data->img, &data->screen_data->bits_per_pixel, &data->screen_data->size_line, &data->screen_data->endian);
-	return 0;
+	e_texture->img = mlx_xpm_file_to_image(data->mlx, e_texture->file_name,
+			&e_texture->width, &e_texture->height);
+	if (!e_texture->img)
+		return (parse_error(data, MLX_FAIL, 1), 1);
+	e_texture->data = mlx_get_data_addr(e_texture->img,
+			&e_texture->bits_per_pixel, &e_texture->size_line,
+			&e_texture->endian);
+	if (!e_texture->data)
+		return (parse_error(data, MLX_FAIL, 1), 1);
+	w_texture->img = mlx_xpm_file_to_image(data->mlx, w_texture->file_name,
+			&w_texture->width, &w_texture->height);
+	if (!w_texture->img)
+		return (parse_error(data, MLX_FAIL, 1), 1);
+	w_texture->data = mlx_get_data_addr(w_texture->img,
+			&w_texture->bits_per_pixel, &w_texture->size_line,
+			&w_texture->endian);
+	if (!w_texture->data)
+		return (parse_error(data, MLX_FAIL, 1), 1);
+	return (0);
 }
 
-void init_game(t_mlx *mlx)
+int	save_screen(t_mlx *data, t_texture *screen_data)
+{
+	screen_data->img = mlx_new_image(data->mlx, WINDOW_WIDTH, WINDOW_HEIGHT);
+	if (!screen_data->img)
+		return (parse_error(data, MLX_FAIL, 1), 1);
+	screen_data->data = mlx_get_data_addr(screen_data->img,
+			&screen_data->bits_per_pixel, &screen_data->size_line,
+			&screen_data->endian);
+	if (!screen_data->data)
+		return (parse_error(data, MLX_FAIL, 1), 1);
+	return (0);
+}
+int	save_img_ns(t_mlx *data, t_texture *n_texture, t_texture *s_texture)
+{
+	n_texture->img = mlx_xpm_file_to_image(data->mlx, n_texture->file_name,
+			&n_texture->width, &n_texture->height);
+	if (!n_texture->img)
+		return (parse_error(data, MLX_FAIL, 1), 1);
+	n_texture->data = mlx_get_data_addr(n_texture->img,
+			&n_texture->bits_per_pixel, &n_texture->size_line,
+			&n_texture->endian);
+	if (!n_texture->data)
+		return (parse_error(data, MLX_FAIL, 1), 1);
+	s_texture->img = mlx_xpm_file_to_image(data->mlx, s_texture->file_name,
+			&s_texture->width, &s_texture->height);
+	if (!s_texture->img)
+		return (parse_error(data, MLX_FAIL, 1), 1);
+	s_texture->data = mlx_get_data_addr(s_texture->img,
+			&s_texture->bits_per_pixel, &s_texture->size_line,
+			&s_texture->endian);
+	if (!s_texture->data)
+		return (parse_error(data, MLX_FAIL, 1), 1);
+	return (0);
+}
+int	save_img(t_mlx *data, t_input *input)
+{
+	if (save_img_ns(data, input->n_texture, input->s_texture) == 1)
+		return (1);
+	if (save_img_ew(data, input->e_texture, input->w_texture) == 1)
+		return (1);
+	if (save_screen(data, data->screen_data) == 1)
+		return (1);
+	return (0);
+}
+
+void	init_game(t_mlx *mlx)
 {
 	mlx->game->pos_x = mlx->input->player_x + 0.5;
 	mlx->game->pos_y = mlx->input->player_y + 0.5;

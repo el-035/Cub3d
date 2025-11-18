@@ -133,7 +133,7 @@ void save_screen_buffer(t_mlx *data, t_ray *ray);
 
 //init stuff
 void init_stuff(t_mlx *data);
-int save_img(t_mlx *data);
+int save_img(t_mlx *data, t_input *input);
 void init_game(t_mlx *mlx);
 
 //calculations
@@ -225,5 +225,6 @@ void		free_arr(char **arr);
 # define ERR_READ "Read error"
 
 # define ERR_ARG "Invalid argument"
+# define MLX_FAIL "MLX failed"
 
 #endif

@@ -9,8 +9,10 @@ int main (int argc, char **argv)
 
 	parsing(&data, argc, argv);
 	init_stuff(&data);
-	data.window = mlx_new_window(data.mlx, WINDOW_WIDTH, WINDOW_HEIGHT, "cub3d");	//protectc???
-	save_img(&data);
+	data.window = mlx_new_window(data.mlx, WINDOW_WIDTH, WINDOW_HEIGHT, "cub3d");
+	if (!data.window)
+		return (parse_error(&data, MLX_FAIL, 1), 1);
+	save_img(&data, data.input);
 	init_game(&data);
 	save_screen_buffer(&data, data.game->ray);
 	mlx_put_image_to_window(data.mlx, data.window, data.screen_data->img, 0, 0);
@@ -18,5 +20,4 @@ int main (int argc, char **argv)
 	mlx_hook(data.window, 2, 1L<<0, &events, &data);
 	mlx_hook(data.window, 3, 1L<<1, &events, &data);
 	mlx_loop(data.mlx);
-	free_exit(&data, 0);
 }
