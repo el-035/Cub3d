@@ -3,42 +3,46 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: efittant <efittant@student.42.fr>          +#+  +:+       +#+        */
+/*   By: nrumpfhu <nrumpfhu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/30 15:14:14 by efittant          #+#    #+#             */
-/*   Updated: 2025/11/18 14:30:06 by efittant         ###   ########.fr       */
+/*   Updated: 2025/11/18 14:53:47 by nrumpfhu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-char	*read_content(int fd, char *temp)
+char	*read_content(int fd, char *temp, int *flag)
 {
 	char		*buffer;
 	int			bytes;
 
 	bytes = 1;
-	buffer = (char *)ft_calloc_gnl((BUFFER_SIZE + 1), sizeof(char));
+	buffer = (char *)ft_calloc_gnl((BUFFER_SIZE + 1), sizeof(char), flag);
 	if (!buffer)
-		return (free(temp), temp = NULL, NULL);
+		return (*flag = 1, free(temp), temp = NULL, NULL);
+	int i = 0;
 	while (bytes > 0 && !ft_strchr_gnl(buffer, '\n'))
 	{
 		bytes = read(fd, buffer, BUFFER_SIZE);
 		if (bytes == -1)
-			return (free(buffer), free(temp), temp = NULL, NULL);
+			return (*flag = 1, free(buffer), free(temp), temp = NULL, NULL);
 		buffer[bytes] = '\0';
 		if (bytes == 0)
 			break ;
-		temp = ft_strjoin_gnl(temp, buffer);
+		if (i == 5)
+			return (*flag = 1, free(buffer), NULL);
+		temp = ft_strjoin_gnl(temp, buffer, flag);
 		if (!temp)
-			return (free(buffer), NULL);
+			return (*flag = 1, free(buffer), NULL);
+		i++;
 	}
 	if (!temp || (temp && !*temp))
 		return (free(buffer), free(temp), temp = NULL, NULL);
 	return (free(buffer), temp);
 }
 
-char	*current_line(char *temp)
+char	*current_line(char *temp, int *flag)
 {
 	int		i;
 	char	*line;
@@ -51,15 +55,15 @@ char	*current_line(char *temp)
 		len++;
 	if (temp[len] == '\n')
 		len++;
-	line = (char *) ft_calloc_gnl((len + 1), sizeof(char));
+	line = (char *) ft_calloc_gnl((len + 1), sizeof(char), flag);
 	if (!line)
-		return (NULL);
+		return (*flag = 1, NULL);
 	while (++i < len)
 		line[i] = temp[i];
 	return (line);
 }
 
-char	*saveline(char *str)
+char	*saveline(char *str, int *flag)
 {
 	char	*temp;
 	size_t	len;
@@ -68,13 +72,13 @@ char	*saveline(char *str)
 	len = 0;
 	nl = ft_strchr_gnl(str, '\n');
 	if (!nl)
-		return (free(str), str = NULL, ft_strdup_gnl(""));
+		return (free(str), str = NULL, ft_strdup_gnl("", flag));
 	nl++;
 	while (nl[len])
 		len++;
 	temp = (char *) malloc((len + 1) * sizeof(char));
 	if (!temp)
-		return (free(str), str = NULL, NULL);
+		return (*flag = 1, free(str), str = NULL, NULL);
 	temp[len] = '\0';
 	while (len-- > 0)
 		temp[len] = nl[len];
@@ -83,22 +87,22 @@ char	*saveline(char *str)
 	return (temp);
 }
 
-char	*get_next_line(int fd)
+char	*get_next_line(int fd, int *flag)
 {
 	static char	*temp = NULL;
 	char		*line;
-
+	*flag = 0;
 	line = NULL;
 	if (fd < 0 || BUFFER_SIZE <= 0)
 		return (NULL);
-	temp = read_content(fd, temp);
-	if (!temp)
+	temp = read_content(fd, temp, flag);
+	if (!temp || *flag)
 		return (NULL);
-	line = current_line(temp);
-	if (!line)
+	line = current_line(temp, flag);
+	if (!line || *flag)
 		return (free(temp), temp = NULL, NULL);
-	temp = saveline(temp);
-	if (!temp)
+	temp = saveline(temp, flag);
+	if (!temp || *flag)
 		return (free(line), NULL);
 	return (line);
 }

@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line_utils.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: efittant <efittant@student.42.fr>          +#+  +:+       +#+        */
+/*   By: nrumpfhu <nrumpfhu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/30 15:14:32 by efittant          #+#    #+#             */
-/*   Updated: 2025/11/18 14:27:11 by efittant         ###   ########.fr       */
+/*   Updated: 2025/11/18 14:53:10 by nrumpfhu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-void	*ft_calloc_gnl(size_t nmemb, size_t size)
+void	*ft_calloc_gnl(size_t nmemb, size_t size, int *flag)
 {
 	unsigned char	*mem;
 	size_t			temp;
@@ -24,7 +24,7 @@ void	*ft_calloc_gnl(size_t nmemb, size_t size)
 		return (NULL);
 	mem = malloc(nmemb * size);
 	if (mem == NULL)
-		return (NULL);
+		return (*flag = 1, NULL);
 	while (i < temp)
 		mem[i++] = '\0';
 	return ((void *)mem);
@@ -48,7 +48,7 @@ char	*ft_strchr_gnl(char *s, int c)
 	return (NULL);
 }
 
-char	*ft_strjoin_gnl(char *s1, char *s2)
+char	*ft_strjoin_gnl(char *s1, char *s2, int *flag)
 {
 	char	*join;
 	int		len1;
@@ -66,7 +66,7 @@ char	*ft_strjoin_gnl(char *s1, char *s2)
 		len2++;
 	join = (char *)malloc((len1 + len2 + 1) * sizeof (char));
 	if (!join)
-		return (free (s1), s1 = NULL, NULL);
+		return (*flag = 1, free (s1), s1 = NULL, NULL);
 	while (ptr && len1-- > 0)
 		join[i++] = *ptr++;
 	while (len2-- > 0)
@@ -75,7 +75,7 @@ char	*ft_strjoin_gnl(char *s1, char *s2)
 	return (free(s1), s1 = NULL, join);
 }
 
-char	*ft_strdup_gnl(char *s)
+char	*ft_strdup_gnl(char *s, int *flag)
 {
 	int		i;
 	char	*str;
@@ -85,9 +85,9 @@ char	*ft_strdup_gnl(char *s)
 	len = 0;
 	while (s[len])
 		len++;
-	str = (char *) ft_calloc((len + 1), sizeof(char));
+	str = (char *) ft_calloc_gnl((len + 1), sizeof(char), flag);
 	if (str == NULL)
-		return (NULL);
+		return (*flag = 1, NULL);
 	while (s[i])
 	{
 		str[i] = s[i];

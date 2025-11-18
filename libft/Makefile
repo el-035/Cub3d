@@ -15,7 +15,7 @@ BCFILES = 	ft_lstnew_bonus.c ft_lstadd_front_bonus.c ft_lstsize_bonus.c\
 OFILES = $(CFILES:.c=.o)
 BOFILES = $(BCFILES:.c=.o)
 
-CFLAGS = -Wall -Werror -Wextra
+CFLAGS = -Wall -Werror -Wextra -g
 
 all: $(NAME)
 
