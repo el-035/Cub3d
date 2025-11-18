@@ -1,9 +1,9 @@
-NO ./test_images/beer.xxpm
-SO ./test_images/s_texture.xpm        
-WE ./test_images/w_texture.xpm
-EA ./test_images/e_texture.xpm
+NO ./test_images/N.xpm
+SO ./test_images/S.xpm        
+WE ./test_images/W.xpm
+EA ./test_images/E.xpm
 F 255,100,100
 C 225,30,10
  1111
- 1N01
+ 1N01      
  1111
