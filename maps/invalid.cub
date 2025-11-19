@@ -3,7 +3,7 @@ C 255,100,101
 NO ./test_images/N.xpm
 
 SO ./test_images/S.xpm  
-            SO ./test_images/W.xpm
+            WE ./test_images/W.xxpm
 
 
 

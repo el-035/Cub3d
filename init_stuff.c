@@ -6,7 +6,7 @@
 /*   By: nrumpfhu <nrumpfhu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/18 18:40:20 by efittant          #+#    #+#             */
-/*   Updated: 2025/11/19 15:44:40 by nrumpfhu         ###   ########.fr       */
+/*   Updated: 2025/11/19 18:24:21 by nrumpfhu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ void	init_stuff(t_mlx *data)
 	data->screen_data = malloc(sizeof(t_texture));
 	if (!data->screen_data)
 		return (parse_error(data, ERR_ALLOC, 1));
-	memset(data->screen_data, 0, sizeof(t_texture));
+	ft_memset(data->screen_data, 0, sizeof(t_texture));
 }
 
 int	save_img_ew(t_mlx *data, t_texture *e_texture, t_texture *w_texture)

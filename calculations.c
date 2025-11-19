@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   calculations.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: efittant <efittant@student.42.fr>          +#+  +:+       +#+        */
+/*   By: nrumpfhu <nrumpfhu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/18 18:34:14 by efittant          #+#    #+#             */
-/*   Updated: 2025/11/19 17:12:33 by efittant         ###   ########.fr       */
+/*   Updated: 2025/11/19 18:24:25 by nrumpfhu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,7 +87,7 @@ t_texture	*find_dir(t_mlx *data, t_game *game, t_ray *ray, int x)
 
 	game->plane_x = -game->dir_y * tan(HALF_FOV);
 	game->plane_y = game->dir_x * tan(HALF_FOV);
-	memset(ray, 0, sizeof(t_ray));
+	ft_memset(ray, 0, sizeof(t_ray));
 	ray->camera = 2.0 * (double)x / (double)WINDOW_WIDTH - 1;
 	ray->ray_dir_x = game->dir_x + game->plane_x * ray->camera;
 	ray->ray_dir_y = game->dir_y + game->plane_y * ray->camera;

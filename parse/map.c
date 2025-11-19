@@ -63,12 +63,12 @@ void	alloc_map(t_mlx *data)
 	int	i;
 
 	i = 0;
-	data->input->map = calloc(data->input->line_count + 1, sizeof(char *));
+	data->input->map = ft_calloc(data->input->line_count + 1, sizeof(char *));
 	if (!data->input->map)
 		parse_error(data, ERR_ALLOC, 1);
 	while (i < data->input->line_count)
 	{
-		data->input->map[i] = calloc(data->input->line_length + 1,
+		data->input->map[i] = ft_calloc(data->input->line_length + 1,
 				sizeof(char));
 		if (!data->input->map[i])
 			parse_error(data, ERR_ALLOC, 1);

@@ -17,22 +17,22 @@ void	init_textures(t_mlx *data)
 	data->input->n_texture = malloc(sizeof(t_texture));
 	if (!data->input->n_texture)
 		return (parse_error(data, ERR_ALLOC, 1));
-	memset(data->input->n_texture, 0, sizeof(t_texture));
+	ft_memset(data->input->n_texture, 0, sizeof(t_texture));
 	data->input->n_texture->file_name = NULL;
 	data->input->s_texture = malloc(sizeof(t_texture));
 	if (!data->input->s_texture)
 		return (parse_error(data, ERR_ALLOC, 1));
-	memset(data->input->s_texture, 0, sizeof(t_texture));
+	ft_memset(data->input->s_texture, 0, sizeof(t_texture));
 	data->input->s_texture->file_name = NULL;
 	data->input->w_texture = malloc(sizeof(t_texture));
 	if (!data->input->w_texture)
 		return (parse_error(data, ERR_ALLOC, 1));
-	memset(data->input->w_texture, 0, sizeof(t_texture));
+	ft_memset(data->input->w_texture, 0, sizeof(t_texture));
 	data->input->w_texture->file_name = NULL;
 	data->input->e_texture = malloc(sizeof(t_texture));
 	if (!data->input->e_texture)
 		return (parse_error(data, ERR_ALLOC, 1));
-	memset(data->input->e_texture, 0, sizeof(t_texture));
+	ft_memset(data->input->e_texture, 0, sizeof(t_texture));
 	data->input->e_texture->file_name = NULL;
 }
 
