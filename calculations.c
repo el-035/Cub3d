@@ -6,7 +6,7 @@
 /*   By: efittant <efittant@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/18 18:34:14 by efittant          #+#    #+#             */
-/*   Updated: 2025/11/18 18:37:01 by efittant         ###   ########.fr       */
+/*   Updated: 2025/11/19 17:12:33 by efittant         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,6 @@ void	dist_calc(t_game *game)
 
 void	init_step_pos(t_game *game)
 {
-	// CALCULATE STEP (in which direction it takes a step)
 	if (game->ray->ray_dir_y < 0)
 		game->ray->step_y = -1;
 	else if (game->ray->ray_dir_y > 0)
@@ -48,7 +47,6 @@ void	init_step_pos(t_game *game)
 		game->ray->step_x = -1;
 	else if (game->ray->ray_dir_x > 0)
 		game->ray->step_x = 1;
-	// CALCULATE START POS IN THE GRID
 	game->ray->y = (int)game->pos_y;
 	game->ray->x = (int)game->pos_x;
 	if (game->pos_y == (int)game->pos_y && game->ray->ray_dir_y < 0)

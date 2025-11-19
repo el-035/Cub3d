@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nrumpfhu <nrumpfhu@student.42.fr>          +#+  +:+       +#+        */
+/*   By: efittant <efittant@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/18 18:48:54 by efittant          #+#    #+#             */
-/*   Updated: 2025/11/19 13:49:03 by nrumpfhu         ###   ########.fr       */
+/*   Updated: 2025/11/19 17:11:02 by efittant         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 # define CUB3D_H
 
 # include "libft/libft.h"
-# include "mlx_linux/mlx.h"
+# include "mlx.h"
 # include <errno.h>
 # include <fcntl.h>
 # include <math.h>
