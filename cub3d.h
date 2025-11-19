@@ -6,7 +6,7 @@
 /*   By: nrumpfhu <nrumpfhu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/18 18:48:54 by efittant          #+#    #+#             */
-/*   Updated: 2025/11/19 17:14:01 by nrumpfhu         ###   ########.fr       */
+/*   Updated: 2025/11/19 17:59:19 by nrumpfhu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,6 @@
 # include <fcntl.h>
 # include <math.h>
 # include <mlx.h>
-# include <stdio.h>
 # include <stdlib.h>
 # include <string.h>
 # include <sys/time.h>
@@ -202,25 +201,25 @@ void			free_arr(char **arr);
 
 // define errors
 
-# define ERR_FILENAME "File must end with '.cub'" // 1
-# define ERR_CUB "Something must preceed '.cub'" // 1
-# define ERR_ARG_NB "Argument number invalid" // 1
-# define ERR_NO_COL "Floor or ceiling color missing" // 1
-# define ERR_INV_COL "Floor or ceiling color invalid" // 1
-# define ERR_NO_TEX "Texture path missing" // 1
-# define ERR_NO_SEP "No proper seperation between file contents" // 1
-# define ERR_FILE_CONTENT "Invalid file content or layout" // 1
-# define ERR_INV_TEX "Texture path invalid" // 1
-# define ERR_PERM "Input file cannot be opened" // 1
+# define ERR_FILENAME "File must end with '.cub'"
+# define ERR_CUB "Something must preceed '.cub'"
+# define ERR_ARG_NB "Argument number invalid"
+# define ERR_NO_COL "Floor or ceiling color missing"
+# define ERR_INV_COL "Floor or ceiling color invalid"
+# define ERR_NO_TEX "Texture path missing"
+# define ERR_NO_SEP "No proper seperation between file contents"
+# define ERR_FILE_CONTENT "Invalid file content or layout"
+# define ERR_INV_TEX "Texture path invalid"
+# define ERR_PERM "Input file cannot be opened"
 # define ERR_NO_MAP "Input file has no map contents"
-# define ERR_DOUBLE_TEX "Player direction mentioned twice"
+# define ERR_DOUBLE_TEX "Direction texture mentioned twice"
 # define ERR_DOUBLE_COL "Floor or Ceiling color mentioned twice"
-# define ERR_INV_MAP "Invalid map character" // 1
+# define ERR_INV_MAP "Invalid map character"
 # define ERR_MAP_SPACE "Invalid spaces in map"
-# define ERR_MAP_LINE "Empty line in map" // 1
-# define ERR_START "Player surrounded by wall" // should this be invalid?
-# define ERR_PLAYER "Map needs 1 player" // 1
-# define ERR_NO_WALL "Map must be surrounded by walls" // 1
+# define ERR_MAP_LINE "Empty line in map"
+# define ERR_START "Player surrounded by wall"
+# define ERR_PLAYER "Map needs 1 player"
+# define ERR_NO_WALL "Map must be surrounded by walls"
 # define ERR_OVERFLOW "Integer overflow"
 
 # define ERR_ALLOC "Allocation failure"

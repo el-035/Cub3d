@@ -54,20 +54,11 @@ void	flood_fill(t_mlx *data)
 			{
 				fill_grid(data, x, y, &open);
 				if (open)
-				{
-					int a = 0;
-					while (data->input->map_cpy[a])
-					{
-						printf("%s\n", data->input->map_cpy[a]);
-						a++;
-					}
 					parse_error(data, ERR_NO_WALL, 1);
-				}
 				return ;
 			}
 			x++;
 		}
 		y++;
 	}
-
 }

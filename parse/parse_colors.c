@@ -95,12 +95,13 @@ void	parse_color(t_mlx *data, t_input *input, char *line, int type)
 {
 	char	**hex;
 
-	if ((type == 5 && input->f_color != -1) || (type == 6 && input->f_color != -1))
+	if ((type == 5 && input->f_color != -1)
+		|| (type == 6 && input->c_color != -1))
 		parse_error(data, ERR_DOUBLE_COL, 1);
 	hex = extract_color(data, line);
 	if (type == 5 && input->f_color == -1)
 		input->f_color = rgb_to_hex(data, hex);
-	else if (type == 6 && input->f_color == -1)
+	else if (type == 6 && input->c_color == -1)
 		input->c_color = rgb_to_hex(data, hex);
 	free_arr(hex);
 }

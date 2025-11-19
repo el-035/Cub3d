@@ -2,9 +2,12 @@
 /*                                                                            */
 /*                                                        :::      ::::::::   */
 /*   validation.c                                       :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: nrumpfhu <nrumpfhu@student.42.fr>          +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
+/*                                                    +:+ +:+        
+	+:+     */
+/*   By: nrumpfhu <nrumpfhu@student.42.fr>          +#+  +:+      
+	+#+        */
+/*                                                +#+#+#+#+#+  
+	+#+           */
 /*   Created: 2025/11/18 19:29:35 by nrumpfhu          #+#    #+#             */
 /*   Updated: 2025/11/18 19:29:35 by nrumpfhu         ###   ########.fr       */
 /*                                                                            */
@@ -12,45 +15,20 @@
 
 #include "../cub3d.h"
 
-// void	check_walls(t_mlx *data, char **map, int a, int b)
-// {
-// 	if (map[a][b] != '0')
-// 		return ;
-// 	if ((a == 0 || b == 0 
-// 		|| a == data->input->line_count - 1
-// 		|| b == data->input->line_length - 1)
-// 		|| (a - 1 >= 0 && map[a - 1][b] == ' ')
-// 		|| (a + 1 < data->input->line_count
-// 			&& map[a + 1][b] == ' ') || (b - 1 >= 0 && map[a][b - 1] == ' ')
-// 			|| (b + 1 < data->input->line_length && map[a][b + 1] == ' '))
-// 		parse_error(data, ERR_NO_WALL, 1);
-// }
-
-void    check_walls(t_mlx *data, char **map, int a, int b)
+void	check_walls(t_mlx *data, char **map, int a, int b)
 {
-    if (map[a][b] != '0')
-        return;
-
-    if (a == 0 || b == 0
-        || a == data->input->line_count - 1
-        || b == data->input->line_length - 1)
-        parse_error(data, ERR_NO_WALL, 1);
-
-    // Up, down, left, right
-    if ((a - 1 >= 0 && map[a - 1][b] == ' ') ||
-        (a + 1 < data->input->line_count && map[a + 1][b] == ' ') ||
-        (b - 1 >= 0 && map[a][b - 1] == ' ') ||
-        (b + 1 < data->input->line_length && map[a][b + 1] == ' '))
-        parse_error(data, ERR_NO_WALL, 1);
-
-    // Diagonals
-    if ((a - 1 >= 0 && b - 1 >= 0 && map[a - 1][b - 1] == ' ') ||
-        (a - 1 >= 0 && b + 1 < data->input->line_length && map[a - 1][b + 1] == ' ') ||
-        (a + 1 < data->input->line_count && b - 1 >= 0 && map[a + 1][b - 1] == ' ') ||
-        (a + 1 < data->input->line_count && b + 1 < data->input->line_length && map[a + 1][b + 1] == ' '))
-        parse_error(data, ERR_NO_WALL, 1);
+	if (map[a][b] != '0')
+		return ;
+	if (a == 0 || b == 0 || a == data->input->line_count - 1
+		|| b == data->input->line_length - 1)
+		parse_error(data, ERR_NO_WALL, 1);
+	if (map[a - 1][b] == ' ' || map[a + 1][b] == ' ' || map[a][b - 1] == ' '
+		|| map[a][b + 1] == ' ')
+		parse_error(data, ERR_NO_WALL, 1);
+	if (map[a - 1][b - 1] == ' ' || map[a - 1][b + 1] == ' ' || map[a + 1][b
+		- 1] == ' ' || map[a + 1][b + 1] == ' ')
+		parse_error(data, ERR_NO_WALL, 1);
 }
-
 
 void	dup_map(t_mlx *data)
 {
@@ -106,8 +84,18 @@ void	check_chars(t_mlx *data, char **map)
 
 void	check_filename(t_mlx *data, char *file)
 {
-	if (ft_strncmp(file, ".cub", 5) == 0)
-		parse_error(data, ERR_CUB, 0);
+	int	i;
+
+	i = 0;
+	while (file[i])
+	{
+		if (file[i] == '.')
+		{
+			if (i == 0 || (i - 1 > 0 && !ft_isalnum(file[i - 1])))
+				parse_error(data, ERR_CUB, 0);
+		}
+		i++;
+	}
 	if (!ft_strrchr(file, '.') || ft_strncmp(ft_strrchr(file, '.'), ".cub",
 			1) != 0)
 		parse_error(data, ERR_FILENAME, 0);

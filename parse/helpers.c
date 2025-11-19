@@ -46,18 +46,6 @@ char	*skip_whitespace(char *line)
 	return (tmp);
 }
 
-void	print_map(char **map)
-{
-	int	i;
-
-	i = 0;
-	while (map && map[i] && map[i][0])
-	{
-		printf("[%s]\n", map[i]);
-		i++;
-	}
-}
-
 int	find_start(char *s)
 {
 	int	i;
