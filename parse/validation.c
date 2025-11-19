@@ -97,6 +97,6 @@ void	check_filename(t_mlx *data, char *file)
 		i++;
 	}
 	if (!ft_strrchr(file, '.') || ft_strncmp(ft_strrchr(file, '.'), ".cub",
-			1) != 0)
+			5) != 0)
 		parse_error(data, ERR_FILENAME, 0);
 }
