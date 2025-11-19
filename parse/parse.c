@@ -30,25 +30,15 @@ int	read_file(char *path, t_mlx *data, int process)
 	{
 		next_line = get_next_line(fd, &flag);
 		if (flag == 1)
-			parse_error(data, ERR_READ, process);
-		if (!next_line)
-		{
-			// if (read(fd, prev, 1) < 0)
-			// 	(free(prev), parse_error(data, ERR_READ, process));
-			// free(prev);
-			break ;
-		}
-		// free(prev);
+			(close(fd), parse_error(data, ERR_READ, process));
 		if (!next_line)
 			break ;
 		nb_lines++;
 		if (process)
 			i += add_line(data, next_line, fd, i);
-		// prev = ft_strdup(next_line);
 		free(next_line);
 	}
-	close(fd);
-	return (nb_lines);
+	return (close(fd), nb_lines);
 }
 
 int	determine_type(char *direction)

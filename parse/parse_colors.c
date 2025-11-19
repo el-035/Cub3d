@@ -41,38 +41,26 @@ char	**check_hex_format(t_mlx *data, char **rgb)
 	return (rgb);
 }
 
-void	check_overflow(t_mlx *data, char **rgb)
-{
-	int	i;
-	int	a;
-	int	len;
-
-	i = 0;
-	while (rgb[i])
-	{
-		a = 0;
-		len = 0;
-		while (rgb[i][a+len])
-		{
-			if (ft_isdigit(rgb[i][a+len]))
-				len++;
-			else
-				a++;
-		}
-		if (len > 3)
-			(free_arr(rgb), parse_error(data, ERR_OVERFLOW, 1));
-		i++;
-	}
-}
-
 char	**extract_color(t_mlx *data, char *line)
 {
 	int		start;
 	char	**rgb;
+	int		comma;
+	int		i;
 
 	start = find_start(line);
 	if (start < 0)
 		parse_error(data, ERR_NO_COL, 1);
+	comma = 0;
+	i = 0;
+	while (line[i])
+	{
+		if (line[i] == ',')
+			comma++;
+		i++;
+	}
+	if (comma != 2)
+		parse_error(data, ERR_INV_COL, 1);
 	rgb = ft_split(line + start, ',');
 	if (!rgb)
 		parse_error(data, ERR_ALLOC, 1);
@@ -107,10 +95,12 @@ void	parse_color(t_mlx *data, t_input *input, char *line, int type)
 {
 	char	**hex;
 
+	if ((type == 5 && input->f_color != -1) || (type == 6 && input->f_color != -1))
+		parse_error(data, ERR_DOUBLE_COL, 1);
 	hex = extract_color(data, line);
-	if (type == 5)
+	if (type == 5 && input->f_color == -1)
 		input->f_color = rgb_to_hex(data, hex);
-	else if (type == 6)
+	else if (type == 6 && input->f_color == -1)
 		input->c_color = rgb_to_hex(data, hex);
 	free_arr(hex);
 }

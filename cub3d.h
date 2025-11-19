@@ -6,7 +6,7 @@
 /*   By: nrumpfhu <nrumpfhu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/18 18:48:54 by efittant          #+#    #+#             */
-/*   Updated: 2025/11/19 13:49:03 by nrumpfhu         ###   ########.fr       */
+/*   Updated: 2025/11/19 16:54:57 by nrumpfhu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 # define CUB3D_H
 
 # include "libft/libft.h"
-# include "mlx_linux/mlx.h"
+# include "mlx.h"
 # include <errno.h>
 # include <fcntl.h>
 # include <math.h>
@@ -192,6 +192,8 @@ char			*skip_whitespace(char *line);
 void			print_map(char **map);
 int				find_start(char *s);
 int				add_line(t_mlx *data, char *next_line, int fd, int i);
+void			check_overflow(t_mlx *data, char **rgb);
+void			map_empty_line(t_mlx *data, char **map, int a);
 
 // free & errors
 void			parse_error(t_mlx *data, char *msg, int free_check);
@@ -211,7 +213,8 @@ void			free_arr(char **arr);
 # define ERR_INV_TEX "Texture path invalid" // 1
 # define ERR_PERM "Input file cannot be opened" // 1
 # define ERR_NO_MAP "Input file has no map contents"
-
+# define ERR_DOUBLE_TEX "Player direction mentioned twice"
+# define ERR_DOUBLE_COL "Floor or Ceiling color mentioned twice"
 # define ERR_INV_MAP "Invalid map character" // 1
 # define ERR_MAP_SPACE "Invalid spaces in map"
 # define ERR_MAP_LINE "Empty line in map" // 1

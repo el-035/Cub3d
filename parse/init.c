@@ -49,6 +49,8 @@ void	init(t_mlx *data, int nb_lines)
 	data->input->e_texture = NULL;
 	data->input->s_texture = NULL;
 	data->input->w_texture = NULL;
+	data->input->c_color = -1;
+	data->input->f_color = -1;
 	data->input->file = ft_calloc(nb_lines + 1, sizeof(char *));
 	if (!data->input->file)
 		parse_error(data, ERR_ALLOC, 1);

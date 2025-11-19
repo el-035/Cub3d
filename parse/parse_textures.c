@@ -56,6 +56,7 @@ char	*extract_filename(t_mlx *data, char *line)
 void	parse_texture(t_mlx *data, t_input *input, char *line, int type)
 {
 	char	*extract;
+	char	*filename;
 
 	extract = extract_filename(data, line);
 	if (access(extract, F_OK) != 0)
@@ -63,13 +64,18 @@ void	parse_texture(t_mlx *data, t_input *input, char *line, int type)
 		free(extract);
 		parse_error(data, ERR_INV_TEX, 1);
 	}
-	if (type == 1)
-		input->n_texture->file_name = ft_strdup(extract);
-	else if (type == 2)
-		input->s_texture->file_name = ft_strdup(extract);
-	else if (type == 3)
-		input->e_texture->file_name = ft_strdup(extract);
-	else if (type == 4)
-		input->w_texture->file_name = ft_strdup(extract);
+	filename = ft_strdup(extract);
 	free(extract);
+	if (!filename)
+		parse_error(data, ERR_ALLOC, 1);
+	if (type == 1 && !input->n_texture->file_name)
+		input->n_texture->file_name = filename;
+	else if (type == 2 && !input->s_texture->file_name)
+		input->s_texture->file_name = filename;
+	else if (type == 3 && !input->e_texture->file_name)
+		input->e_texture->file_name = filename;
+	else if (type == 4 && !input->w_texture->file_name)
+		input->w_texture->file_name = filename;
+	else
+		(free(filename), parse_error(data, ERR_DOUBLE_TEX, 1));
 }

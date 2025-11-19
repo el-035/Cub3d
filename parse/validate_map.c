@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   validate_map.c                                     :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: nrumpfhu <nrumpfhu@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/11/19 15:21:57 by nrumpfhu          #+#    #+#             */
+/*   Updated: 2025/11/19 15:21:57 by nrumpfhu         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../cub3d.h"
 
 void	fill_grid(t_mlx *data, int x, int y, int *open)
@@ -42,11 +54,20 @@ void	flood_fill(t_mlx *data)
 			{
 				fill_grid(data, x, y, &open);
 				if (open)
+				{
+					int a = 0;
+					while (data->input->map_cpy[a])
+					{
+						printf("%s\n", data->input->map_cpy[a]);
+						a++;
+					}
 					parse_error(data, ERR_NO_WALL, 1);
+				}
 				return ;
 			}
 			x++;
 		}
 		y++;
 	}
+
 }
