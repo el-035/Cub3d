@@ -101,8 +101,11 @@ void	process_file(t_mlx *data, t_input *input)
 	while (input->file && input->file[i] && (input->info_count < 6
 			|| empty_line(input->file[i])))
 	{
-		if (!empty_line(input->file[i]) && process_pre_map(data, input, i) == 0)
-			parse_error(data, ERR_FILE_CONTENT, 1);
+		if (!empty_line(input->file[i]))
+		{
+			if (process_pre_map(data, input, i) == 0)
+				parse_error(data, ERR_FILE_CONTENT, 1);
+		}
 		i++;
 	}
 	check_map_dimensions(data, data->input, input->file + i);

@@ -51,6 +51,19 @@ int	set_player_info(t_mlx *data, int a, int b)
 	return (1);
 }
 
+void	map_empty_line(t_mlx *data, char **map, int a)
+{
+	if (empty_line(map[a]))
+	{
+		while (map[a])
+		{
+			if (!empty_line(map[a]))
+				parse_error(data, ERR_MAP_LINE, 1);
+			a++;
+		}
+	}
+}
+
 void	check_chars(t_mlx *data, char **map)
 {
 	int	player_count;
@@ -61,8 +74,7 @@ void	check_chars(t_mlx *data, char **map)
 	a = -1;
 	while (map[++a])
 	{
-		if (empty_line(map[a]))
-			parse_error(data, ERR_MAP_LINE, 1);
+		map_empty_line(data, map, a);
 		b = -1;
 		while (map[a][++b])
 		{
@@ -74,7 +86,7 @@ void	check_chars(t_mlx *data, char **map)
 				check_walls(data, map, a, b);
 		}
 	}
-	if (player_count > 1)
+	if (player_count != 1)
 		parse_error(data, ERR_PLAYER, 1);
 }
 

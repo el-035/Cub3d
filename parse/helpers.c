@@ -22,8 +22,10 @@ int	empty_line(char *line)
 	int	i;
 
 	i = 0;
-	while (line[i])
+	while (line && line[i])
 	{
+		if (line[i] == '\n')
+			return (1);
 		if (!ft_isspace(line[i]))
 			return (0);
 		i++;

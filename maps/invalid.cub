@@ -1,9 +1,23 @@
+F 255,100,101
+
 NO ./test_images/N.xpm
-SO ./test_images/S.xpm        
+
+SO ./test_images/S.xpm  
 WE ./test_images/W.xpm
-EA ./test_images/E.xpm
-F 255,100,100
-C 225,30,10
+
+
+
+EA                ./test_images/E.xpm
+
+
+
+C 225,30,100
+
  1111
- 1N010     
+ 1N11
  1111
+
+
+
+
+

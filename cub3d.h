@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
+/*   By: nrumpfhu <nrumpfhu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/18 18:48:54 by efittant          #+#    #+#             */
-/*   Updated: 2025/11/19 01:33:56 by marvin           ###   ########.fr       */
+/*   Updated: 2025/11/19 13:49:03 by nrumpfhu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -218,6 +218,7 @@ void			free_arr(char **arr);
 # define ERR_START "Player surrounded by wall" // should this be invalid?
 # define ERR_PLAYER "Map needs 1 player" // 1
 # define ERR_NO_WALL "Map must be surrounded by walls" // 1
+# define ERR_OVERFLOW "Integer overflow"
 
 # define ERR_ALLOC "Allocation failure"
 # define ERR_READ "Read error"

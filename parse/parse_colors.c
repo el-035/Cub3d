@@ -41,6 +41,30 @@ char	**check_hex_format(t_mlx *data, char **rgb)
 	return (rgb);
 }
 
+void	check_overflow(t_mlx *data, char **rgb)
+{
+	int	i;
+	int	a;
+	int	len;
+
+	i = 0;
+	while (rgb[i])
+	{
+		a = 0;
+		len = 0;
+		while (rgb[i][a+len])
+		{
+			if (ft_isdigit(rgb[i][a+len]))
+				len++;
+			else
+				a++;
+		}
+		if (len > 3)
+			(free_arr(rgb), parse_error(data, ERR_OVERFLOW, 1));
+		i++;
+	}
+}
+
 char	**extract_color(t_mlx *data, char *line)
 {
 	int		start;
@@ -52,6 +76,7 @@ char	**extract_color(t_mlx *data, char *line)
 	rgb = ft_split(line + start, ',');
 	if (!rgb)
 		parse_error(data, ERR_ALLOC, 1);
+	check_overflow(data, rgb);
 	return (check_hex_format(data, rgb));
 }
 
