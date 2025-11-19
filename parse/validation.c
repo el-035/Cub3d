@@ -74,7 +74,7 @@ void	check_chars(t_mlx *data, char **map)
 				check_walls(data, map, a, b);
 		}
 	}
-	if (player_count > 1)
+	if (player_count != 1)
 		parse_error(data, ERR_PLAYER, 1);
 }
 
