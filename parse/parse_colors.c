@@ -12,16 +12,12 @@
 
 #include "../cub3d.h"
 
-char	**check_hex_format(t_mlx *data, char *txt)
+char	**check_hex_format(t_mlx *data, char **rgb)
 {
-	char	**rgb;
 	int		a;
 	int		b;
 	int		color_present;
 
-	rgb = ft_split(txt, ',');
-	if (!rgb)
-		parse_error(data, ERR_ALLOC, 1);
 	a = 0;
 	while (rgb[a])
 	{
@@ -29,8 +25,8 @@ char	**check_hex_format(t_mlx *data, char *txt)
 		while (rgb[a][b] && ft_isspace(rgb[a][b]))
 			b++;
 		color_present = b;
-		while (rgb[a][b] && !ft_isspace(rgb[a][b]) && (rgb[a][b] >= '0'
-				&& rgb[a][b] <= '9'))
+		while (rgb[a][b] && !ft_isspace(rgb[a][b]) &&
+		(rgb[a][b] >= '0' && rgb[a][b] <= '9'))
 			b++;
 		if (color_present == b)
 			(free_arr(rgb), parse_error(data, ERR_INV_COL, 1));
@@ -47,12 +43,16 @@ char	**check_hex_format(t_mlx *data, char *txt)
 
 char	**extract_color(t_mlx *data, char *line)
 {
-	int	start;
+	int		start;
+	char	**rgb;
 
 	start = find_start(line);
 	if (start < 0)
 		parse_error(data, ERR_NO_COL, 1);
-	return (check_hex_format(data, line + start));
+	rgb = ft_split(line + start, ',');
+	if (!rgb)
+		parse_error(data, ERR_ALLOC, 1);
+	return (check_hex_format(data, rgb));
 }
 
 int	rgb_to_hex_conversion(int r, int g, int b)

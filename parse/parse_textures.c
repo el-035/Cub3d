@@ -45,12 +45,8 @@ char	*extract_filename(t_mlx *data, char *line)
 	int	len;
 
 	start = find_start(line);
-	if (start < 0) // goes in here
-	{
-		// free(line);
-		// line =  NULL;
+	if (start < 0)
 		parse_error(data, ERR_NO_TEX, 1);
-	}
 	len = find_filename_len(line + start);
 	if (len < 0)
 		parse_error(data, ERR_INV_TEX, 1);
@@ -59,7 +55,7 @@ char	*extract_filename(t_mlx *data, char *line)
 
 void	parse_texture(t_mlx *data, t_input *input, char *line, int type)
 {
-	char    *extract;
+	char	*extract;
 
 	extract = extract_filename(data, line);
 	if (access(extract, F_OK) != 0)

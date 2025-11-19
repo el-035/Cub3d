@@ -12,7 +12,6 @@
 
 #include "cub3d.h"
 
-
 void	parse_error(t_mlx *data, char *msg, int free_check)
 {
 	ft_putendl_fd("Error", 2);
@@ -24,7 +23,7 @@ void	parse_error(t_mlx *data, char *msg, int free_check)
 
 void	free_arr(char **arr)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	if (!arr)
@@ -38,16 +37,8 @@ void	free_arr(char **arr)
 	arr = NULL;
 }
 
-void	free_exit(t_mlx *data, int errnum)
+void	free_textures(t_mlx *data)
 {
-	if (!data->input)
-		exit(errnum);
-	if (data->input->file)
-		free_arr(data->input->file);
-	if (data->input->map)
-		free_arr(data->input->map);
-	if (data->input->map_cpy)
-		free_arr(data->input->map_cpy);
 	if (data->input->n_texture)
 	{
 		if (data->input->n_texture->file_name)
@@ -72,10 +63,21 @@ void	free_exit(t_mlx *data, int errnum)
 			free(data->input->w_texture->file_name);
 		free(data->input->w_texture);
 	}
+}
+
+void	free_exit(t_mlx *data, int errnum)
+{
+	if (!data->input)
+		exit(errnum);
+	if (data->input->file)
+		free_arr(data->input->file);
+	if (data->input->map)
+		free_arr(data->input->map);
+	if (data->input->map_cpy)
+		free_arr(data->input->map_cpy);
+	free_textures(data);
 	if (data->input)
 		free(data->input);
-
-	// destroy_everything(data); // add errnum to this function
 }
 
 int	destroy_everything(t_mlx *data)

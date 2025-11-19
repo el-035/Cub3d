@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: efittant <efittant@student.42.fr>          +#+  +:+       +#+        */
+/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/18 18:48:54 by efittant          #+#    #+#             */
-/*   Updated: 2025/11/18 18:49:38 by efittant         ###   ########.fr       */
+/*   Updated: 2025/11/19 01:33:56 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -172,9 +172,8 @@ void			fill_map(t_input *input, char **arr);
 void			alloc_map(t_mlx *data);
 
 // validation
-void			validate_map(t_mlx *data, char **map);
+void			check_chars(t_mlx *data, char **map);
 void			check_filename(t_mlx *data, char *file);
-void			validate_input(int argc, char *argv[], t_mlx *data);
 void			dup_map(t_mlx *data);
 void			flood_fill(t_mlx *data);
 
@@ -185,11 +184,14 @@ void			parse_texture(t_mlx *data, t_input *input, char *line,
 void			parse_color(t_mlx *data, t_input *input, char *line, int type);
 
 // helpers
+int				is_validchar(char c);
+int				is_direction(char c);
 int				ft_isspace(int c);
 int				empty_line(char *line);
 char			*skip_whitespace(char *line);
 void			print_map(char **map);
 int				find_start(char *s);
+int				add_line(t_mlx *data, char *next_line, int fd, int i);
 
 // free & errors
 void			parse_error(t_mlx *data, char *msg, int free_check);

@@ -19,7 +19,9 @@ int	ft_isspace(int c)
 
 int	empty_line(char *line)
 {
-	int i = 0;
+	int	i;
+
+	i = 0;
 	while (line[i])
 	{
 		if (!ft_isspace(line[i]))
@@ -31,17 +33,20 @@ int	empty_line(char *line)
 
 char	*skip_whitespace(char *line)
 {
-	int i = 0;
+	int		i;
+	char	*tmp;
+
+	i = 0;
 	while (line && line[i] && ft_isspace(line[i]))
 		i++;
-	char *tmp = ft_strdup(line + i);
+	tmp = ft_strdup(line + i);
 	free(line);
 	return (tmp);
 }
 
 void	print_map(char **map)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	while (map && map[i] && map[i][0])
@@ -53,7 +58,7 @@ void	print_map(char **map)
 
 int	find_start(char *s)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	while (s && s[i] && ft_isspace(s[i]))
