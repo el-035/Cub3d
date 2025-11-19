@@ -72,9 +72,11 @@ int	process_pre_map(t_mlx *data, t_input *input, int i)
 	int	type;
 
 	if (input->info_count < 6)
+	{
 		input->file[i] = skip_whitespace(input->file[i]);
-	if (!input->file[i])
-		parse_error(data, ERR_ALLOC, 1);
+		if (!input->file[i])
+			parse_error(data, ERR_ALLOC, 1);
+	}
 	type = determine_type(input->file[i]);
 	if (type > 0 && type <= 4 && !ft_isspace(input->file[i][2]))
 		parse_error(data, ERR_FILE_CONTENT, 1);
