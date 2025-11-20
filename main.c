@@ -25,7 +25,7 @@ int	save_img(t_mlx *data, t_input *input)
 
 int	main(int argc, char **argv)
 {
-	t_mlx	data;
+	t_mlx	data;	//init data->key[6] to 0;
 
 	if (argc != 2)
 		return (parse_error(&data, ERR_ARG, 0), 1);
@@ -40,7 +40,8 @@ int	main(int argc, char **argv)
 	save_screen_buffer(&data, data.game->ray);
 	mlx_put_image_to_window(data.mlx, data.window, data.screen_data->img, 0, 0);
 	mlx_hook(data.window, 17, 0, destroy_everything, &data);
-	mlx_hook(data.window, 2, 1L << 0, &events, &data);
-	mlx_hook(data.window, 3, 1L << 1, &events, &data);
-	mlx_loop(data.mlx);
+	mlx_hook(data.window, 2, 1L << 0, &key_press, &data);	//key press
+	mlx_hook(data.window, 3, 1L << 1, &key_release, &data);	//key release
+	mlx_loop_hook(data.mlx, &events, &data);
+	mlx_loop(data.mlx);	
 }

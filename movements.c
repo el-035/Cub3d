@@ -108,16 +108,3 @@ int	rotate(int key, t_mlx *mlx)
 	}
 	return (0);
 }
-
-int	events(int key, t_mlx *mlx)
-{
-	if (key == ESC)
-		destroy_everything(mlx);
-	if (key == ROT_LEFT || key == ROT_RIGHT)
-		rotate(key, mlx);
-	if (key == UP || key == DOWN)
-		up_down(key, mlx);
-	if (key == LEFT || key == RIGHT)
-		left_right(key, mlx);
-	return (0);
-}

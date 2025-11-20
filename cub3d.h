@@ -14,7 +14,7 @@
 # define CUB3D_H
 
 # include "libft/libft.h"
-# include "mlx.h"
+
 # include <errno.h>
 # include <fcntl.h>
 # include <math.h>
@@ -29,8 +29,8 @@
 
 # define M_PI 3.14159265358979323846
 # define HALF_FOV 0.57596
-# define ROTATION 0.03
-# define MOVEMENT 0.07
+# define ROTATION 0.01
+# define MOVEMENT 0.025
 
 # define N 0
 # define S 1
@@ -45,6 +45,16 @@
 # define LEFT 97
 # define DOWN 115
 # define RIGHT 100
+
+enum e_key
+{
+	K_ROT_LEFT,
+	K_ROT_RIGHT,
+	K_UP,
+	K_LEFT,
+	K_DOWN,
+	K_RIGHT,
+};
 
 typedef struct s_texture
 {
@@ -118,6 +128,7 @@ typedef struct s_mlx
 	void		*mlx;
 	void		*window;
 	t_texture	*screen_data;
+	int			keys[6];
 }				t_mlx;
 
 // main
@@ -148,8 +159,16 @@ int				side_dist_y(t_game *game, t_input *input);
 t_texture		*wall_side(t_mlx *data, t_ray *ray);
 void			wall_height(t_ray *ray, t_texture *img);
 
+//keys
+int	key_press(int key, t_mlx *data);
+int	key_release(int key, t_mlx *data);
+int				events(t_mlx *mlx);
+
 // movements
-int				events(int key, t_mlx *mlx);
+int	is_wall(t_mlx *mlx, double x, double y);
+int	up_down(int key, t_mlx *mlx);
+int	left_right(int key, t_mlx *mlx);
+int	rotate(int key, t_mlx *mlx);
 
 // destroy and errors
 int				destroy_everything(t_mlx *data);
