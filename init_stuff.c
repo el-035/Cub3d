@@ -27,6 +27,12 @@ void	init_stuff(t_mlx *data)
 	if (!data->screen_data)
 		return (parse_error(data, ERR_ALLOC, 1));
 	ft_memset(data->screen_data, 0, sizeof(t_texture));
+	data->mini_map = malloc(sizeof(t_texture));
+	if (!data->mini_map)
+		return (parse_error(data, ERR_ALLOC, 1));
+	ft_memset(data->mini_map, 0, sizeof(t_texture));
+	ft_memset(data->keys, 0, sizeof(data->keys));
+	data->is_map = 0;
 }
 
 int	save_img_ew(t_mlx *data, t_texture *e_texture, t_texture *w_texture)
@@ -52,7 +58,7 @@ int	save_img_ew(t_mlx *data, t_texture *e_texture, t_texture *w_texture)
 	return (0);
 }
 
-int	save_screen(t_mlx *data, t_texture *screen_data)
+int	save_screen(t_mlx *data, t_texture *screen_data, t_texture *map)
 {
 	screen_data->img = mlx_new_image(data->mlx, WINDOW_WIDTH, WINDOW_HEIGHT);
 	if (!screen_data->img)
@@ -61,6 +67,12 @@ int	save_screen(t_mlx *data, t_texture *screen_data)
 			&screen_data->bits_per_pixel, &screen_data->size_line,
 			&screen_data->endian);
 	if (!screen_data->data)
+		return (parse_error(data, MLX_FAIL, 1), 1);
+	map->img = mlx_new_image(data->mlx, data->input->line_length * TILE_SIZE, data->input->line_count * TILE_SIZE);
+	if (!map->img)
+		return (parse_error(data, MLX_FAIL, 1), 1);
+	map->data = mlx_get_data_addr(map->img, &map->bits_per_pixel, &map->size_line, &map->endian);
+	if (!map->data)
 		return (parse_error(data, MLX_FAIL, 1), 1);
 	return (0);
 }

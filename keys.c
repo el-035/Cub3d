@@ -1,5 +1,5 @@
 #include "cub3d.h"
-
+#include <stdio.h>
 int key_press(int key, t_mlx *data)
 {
 	if (key == ESC)
@@ -16,13 +16,21 @@ int key_press(int key, t_mlx *data)
 		data->keys[K_LEFT] = 1;
 	if (key == RIGHT)
 		data->keys[K_RIGHT] = 1;
+	if (key == M)
+	{
+		if (data->is_map == 0)
+			init_map(data, data->input);
+	}
+	if (key == Q)
+	{
+		if (data->is_map == 1)
+			data->kill_map = 1;
+	}
 	return 0;
 }
 
 int key_release(int key, t_mlx *data)
 {
-	/* if (key == ESC)	//not needed
-		destroy_everything(data); */
 	if (key == ROT_LEFT)
 		data->keys[K_ROT_LEFT] = 0;
 	if (key == ROT_RIGHT)
@@ -40,6 +48,8 @@ int key_release(int key, t_mlx *data)
 
 int	events(t_mlx *mlx)
 {
+	if (mlx->kill_map == 1)
+		kill_map(mlx);
 	if (mlx->keys[K_ROT_LEFT] == 1)
 		rotate(ROT_LEFT, mlx);
 	if (mlx->keys[K_ROT_RIGHT] == 1)

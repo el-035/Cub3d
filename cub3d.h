@@ -27,6 +27,13 @@
 # define WINDOW_WIDTH 1280
 # define WINDOW_HEIGHT 720
 
+# define TILE_SIZE 15
+# define GRAY 0x808080
+# define WHITE 0xFFFFFF
+# define BLACK 0x000000
+# define BLUE 0x0000FF
+# define RED 0xFF0000
+
 # define M_PI 3.14159265358979323846
 # define HALF_FOV 0.57596
 # define ROTATION 0.01
@@ -45,6 +52,8 @@
 # define LEFT 97
 # define DOWN 115
 # define RIGHT 100
+# define M 109
+# define Q 113
 
 enum e_key
 {
@@ -128,6 +137,10 @@ typedef struct s_mlx
 	void		*mlx;
 	void		*window;
 	t_texture	*screen_data;
+	t_texture	*mini_map;
+	void		*window_map;
+	int			is_map;
+	int			kill_map;
 	int			keys[6];
 }				t_mlx;
 
@@ -143,7 +156,7 @@ void			init_stuff(t_mlx *data);
 void			init_game(t_mlx *mlx);
 int				save_img_ew(t_mlx *data, t_texture *e_texture,
 					t_texture *w_texture);
-int				save_screen(t_mlx *data, t_texture *screen_data);
+int				save_screen(t_mlx *data, t_texture *screen_data, t_texture *map);
 int				save_img_ns(t_mlx *data, t_texture *n_texture,
 					t_texture *s_texture);
 
@@ -170,9 +183,12 @@ int	up_down(int key, t_mlx *mlx);
 int	left_right(int key, t_mlx *mlx);
 int	rotate(int key, t_mlx *mlx);
 
+//map
+void init_map(t_mlx *data, t_input *input);
+
 // destroy and errors
 int				destroy_everything(t_mlx *data);
-
+int				kill_map(t_mlx * data);
 // PARSING
 // init
 void			init(t_mlx *data, int nb_lines);

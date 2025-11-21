@@ -80,6 +80,19 @@ void	free_exit(t_mlx *data, int errnum)
 		free(data->input);
 }
 
+int	kill_map(t_mlx *data)
+{
+	if(!data)
+		return (0);
+	if (data->is_map == 0)
+		return (0);
+	data->is_map = 0;
+	if (data->window_map)
+		mlx_destroy_window(data->mlx, data->window_map);
+	data->kill_map = 0;
+	return (0);
+}
+
 int	destroy_everything(t_mlx *data)
 {
 	if (data->input->n_texture->img)
@@ -102,6 +115,13 @@ int	destroy_everything(t_mlx *data)
 		free(data->game->ray);
 	if (data->game)
 		free(data->game);
+	kill_map(data);
+	if (data->mini_map)
+	{
+		if (data->mini_map->img)
+			mlx_destroy_image(data->mlx, data->mini_map->img);
+		data->mini_map = NULL;
+	}
 	free(data->mlx);
 	free_exit(data, 0);
 	exit(0);
