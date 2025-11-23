@@ -28,9 +28,9 @@
 # define WINDOW_HEIGHT 720
 
 # define TILE_SIZE 15
-# define GRAY 0x808080
+# define NO_CLR 0
 # define WHITE 0xFFFFFF
-# define BLACK 0x000000
+# define BLACK 0xFF000000
 # define BLUE 0x0000FF
 # define RED 0xFF0000
 
@@ -137,10 +137,7 @@ typedef struct s_mlx
 	void		*mlx;
 	void		*window;
 	t_texture	*screen_data;
-	t_texture	*mini_map;
-	void		*window_map;
 	int			is_map;
-	int			kill_map;
 	int			keys[6];
 }				t_mlx;
 
@@ -156,7 +153,7 @@ void			init_stuff(t_mlx *data);
 void			init_game(t_mlx *mlx);
 int				save_img_ew(t_mlx *data, t_texture *e_texture,
 					t_texture *w_texture);
-int				save_screen(t_mlx *data, t_texture *screen_data, t_texture *map);
+int				save_screen(t_mlx *data, t_texture *screen_data/* , t_texture *map */);
 int				save_img_ns(t_mlx *data, t_texture *n_texture,
 					t_texture *s_texture);
 
@@ -182,13 +179,14 @@ int	is_wall(t_mlx *mlx, double x, double y);
 int	up_down(int key, t_mlx *mlx);
 int	left_right(int key, t_mlx *mlx);
 int	rotate(int key, t_mlx *mlx);
+void put_img(t_mlx *data, t_ray *ray);
 
 //map
-void init_map(t_mlx *data, t_input *input);
+void map_buffer(t_mlx *data, t_input *input/* , t_ray *ray */);
 
 // destroy and errors
 int				destroy_everything(t_mlx *data);
-int				kill_map(t_mlx * data);
+/* int				kill_map(t_mlx * data); */
 // PARSING
 // init
 void			init(t_mlx *data, int nb_lines);

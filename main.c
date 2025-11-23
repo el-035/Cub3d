@@ -18,11 +18,11 @@ int	save_img(t_mlx *data, t_input *input)
 		return (1);
 	if (save_img_ew(data, input->e_texture, input->w_texture) == 1)
 		return (1);
-	if (save_screen(data, data->screen_data, data->mini_map) == 1)
+	if (save_screen(data, data->screen_data) == 1)
 		return (1);
 	return (0);
 }
-
+/* 
 #include <stdio.h>
 
 void	print_2d(char **arr)
@@ -34,7 +34,7 @@ void	print_2d(char **arr)
 		printf("|%s|\n", arr[y]);
 		y++;
 	}
-}
+} */
 
 int	main(int argc, char **argv)
 {
@@ -43,7 +43,7 @@ int	main(int argc, char **argv)
 	if (argc != 2)
 		return (parse_error(&data, ERR_ARG, 0), 1);
 	parsing(&data, argc, argv);
-	print_2d(data.input->map);
+	//print_2d(data.input->map);
 	init_stuff(&data);
 	data.window = mlx_new_window(data.mlx, WINDOW_WIDTH, WINDOW_HEIGHT,
 			"cub3d");

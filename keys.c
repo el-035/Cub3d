@@ -18,13 +18,13 @@ int key_press(int key, t_mlx *data)
 		data->keys[K_RIGHT] = 1;
 	if (key == M)
 	{
-		if (data->is_map == 0)
-			init_map(data, data->input);
+		data->is_map = 1;
+		put_img(data, data->game->ray);
 	}
 	if (key == Q)
 	{
-		if (data->is_map == 1)
-			data->kill_map = 1;
+		data->is_map = 0;
+		put_img(data, data->game->ray);
 	}
 	return 0;
 }
@@ -48,8 +48,6 @@ int key_release(int key, t_mlx *data)
 
 int	events(t_mlx *mlx)
 {
-	if (mlx->kill_map == 1)
-		kill_map(mlx);
 	if (mlx->keys[K_ROT_LEFT] == 1)
 		rotate(ROT_LEFT, mlx);
 	if (mlx->keys[K_ROT_RIGHT] == 1)

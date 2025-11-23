@@ -12,6 +12,18 @@
 
 #include "cub3d.h"
 
+void put_img(t_mlx *data, t_ray *ray)
+{
+	save_screen_buffer(data, ray);
+	if (data->is_map == 1)
+	{
+		map_buffer(data, data->input);
+		//rays
+	}
+	mlx_put_image_to_window(data->mlx, data->window, data->screen_data->img, 0, 0);
+}
+
+
 int	is_wall(t_mlx *mlx, double x, double y)
 {
 	double	xx;
@@ -41,9 +53,10 @@ int	up_down(int key, t_mlx *mlx)
 			return (0);
 		mlx->game->pos_x += mlx->game->dir_x * MOVEMENT;
 		mlx->game->pos_y += mlx->game->dir_y * MOVEMENT;
-		save_screen_buffer(mlx, mlx->game->ray);
-		mlx_put_image_to_window(mlx->mlx, mlx->window, mlx->screen_data->img, 0,
-			0);
+		put_img(mlx, mlx->game->ray);
+		//save_screen_buffer(mlx, mlx->game->ray);
+		//mlx_put_image_to_window(mlx->mlx, mlx->window, mlx->screen_data->img, 0,
+		//	0);
 	}
 	if (key == DOWN)
 	{
@@ -52,9 +65,11 @@ int	up_down(int key, t_mlx *mlx)
 			return (0);
 		mlx->game->pos_x -= mlx->game->dir_x * MOVEMENT;
 		mlx->game->pos_y -= mlx->game->dir_y * MOVEMENT;
-		save_screen_buffer(mlx, mlx->game->ray);
-		mlx_put_image_to_window(mlx->mlx, mlx->window, mlx->screen_data->img, 0,
-			0);
+		put_img(mlx, mlx->game->ray);
+
+		//save_screen_buffer(mlx, mlx->game->ray);
+		//mlx_put_image_to_window(mlx->mlx, mlx->window, mlx->screen_data->img, 0,
+		//	0);
 	}
 	return (0);
 }
@@ -68,9 +83,11 @@ int	left_right(int key, t_mlx *mlx)
 			return (0);
 		mlx->game->pos_x -= (-mlx->game->dir_y) * MOVEMENT;
 		mlx->game->pos_y -= mlx->game->dir_x * MOVEMENT;
-		save_screen_buffer(mlx, mlx->game->ray);
-		mlx_put_image_to_window(mlx->mlx, mlx->window, mlx->screen_data->img, 0,
-			0);
+		put_img(mlx, mlx->game->ray);
+
+		//save_screen_buffer(mlx, mlx->game->ray);
+		//mlx_put_image_to_window(mlx->mlx, mlx->window, mlx->screen_data->img, 0,
+		//	0);
 	}
 	if (key == RIGHT)
 	{
@@ -79,9 +96,11 @@ int	left_right(int key, t_mlx *mlx)
 			return (0);
 		mlx->game->pos_x += (-mlx->game->dir_y) * MOVEMENT;
 		mlx->game->pos_y += mlx->game->dir_x * MOVEMENT;
-		save_screen_buffer(mlx, mlx->game->ray);
-		mlx_put_image_to_window(mlx->mlx, mlx->window, mlx->screen_data->img, 0,
-			0);
+		put_img(mlx, mlx->game->ray);
+
+		//save_screen_buffer(mlx, mlx->game->ray);
+		//mlx_put_image_to_window(mlx->mlx, mlx->window, mlx->screen_data->img, 0,
+		//	0);
 	}
 	return (0);
 }
@@ -93,18 +112,22 @@ int	rotate(int key, t_mlx *mlx)
 		mlx->game->angle -= ROTATION;
 		mlx->game->dir_x = cos(mlx->game->angle);
 		mlx->game->dir_y = sin(mlx->game->angle);
-		save_screen_buffer(mlx, mlx->game->ray);
-		mlx_put_image_to_window(mlx->mlx, mlx->window, mlx->screen_data->img, 0,
-			0);
+		put_img(mlx, mlx->game->ray);
+
+		//save_screen_buffer(mlx, mlx->game->ray);
+		//mlx_put_image_to_window(mlx->mlx, mlx->window, mlx->screen_data->img, 0,
+		//	0);
 	}
 	if (key == ROT_RIGHT)
 	{
 		mlx->game->angle += ROTATION;
 		mlx->game->dir_x = cos(mlx->game->angle);
 		mlx->game->dir_y = sin(mlx->game->angle);
-		save_screen_buffer(mlx, mlx->game->ray);
-		mlx_put_image_to_window(mlx->mlx, mlx->window, mlx->screen_data->img, 0,
-			0);
+		put_img(mlx, mlx->game->ray);
+
+		//save_screen_buffer(mlx, mlx->game->ray);
+		//mlx_put_image_to_window(mlx->mlx, mlx->window, mlx->screen_data->img, 0,
+		//	0);
 	}
 	return (0);
 }
