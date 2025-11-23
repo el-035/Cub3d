@@ -52,7 +52,43 @@ void map_buffer(t_mlx *data, t_input *input/* , t_ray *ray */)
 	}
 }
 
+/* void draw_ray(t_mlx *data, t_ray *ray)
+{
+	int start_x = data->game->pos_x * TILE_SIZE;
+	int start_y = data->game->pos_y * TILE_SIZE;
+	int end_x = (data->game->pos_x + ray->ray_dir_x * ray->distance) * TILE_SIZE;
+	int end_y = (data->game->pos_y + ray->ray_dir_y * ray->distance) * TILE_SIZE;
+
+	double dx = end_x - start_x;
+    double dy = end_y - start_y;
+    double steps = fmax(fabs(dx), fabs(dy));
+    double step_x = dx / steps;
+    double step_y = dy / steps;
+
+    double x = start_x;
+    double y = start_y;
+
+    for (int i = 0; i <= (int)steps; i++)
+    {
+        mlx_pixel_put(data->mlx, data->window, (int)x, (int)y, BLUE);
+        x += step_x;
+        y += step_y;
+    }
+} */
+
 void put_rays(t_mlx *data, t_ray *ray)
 {
-	
+	int i = 0;
+	int offset;
+
+	while(i < N_RAYS)
+	{
+		offset = -HALF_FOV + i * ((2*HALF_FOV) / (N_RAYS - 1));
+		ray->ray_dir_x = data->game->dir_x * cos(offset) - data->game->dir_y * sin(offset);
+		ray->ray_dir_y = data->game->dir_x * sin(offset) + data->game->dir_y * cos(offset);
+		calculate_dir(data->game, data->input);
+		//draw actual ray on 2d map
+		draw_ray(data, ray);
+		i++;
+	}
 }

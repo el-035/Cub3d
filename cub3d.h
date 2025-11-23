@@ -28,11 +28,12 @@
 # define WINDOW_HEIGHT 720
 
 # define TILE_SIZE 15
+# define N_RAYS 20
 # define NO_CLR 0
 # define WHITE 0xFFFFFF
-# define BLACK 0xFF000000
+//# define BLACK 0xFF000000
 # define BLUE 0x0000FF
-# define RED 0xFF0000
+//# define RED 0xFF0000
 
 # define M_PI 3.14159265358979323846
 # define HALF_FOV 0.57596
@@ -180,6 +181,7 @@ int	up_down(int key, t_mlx *mlx);
 int	left_right(int key, t_mlx *mlx);
 int	rotate(int key, t_mlx *mlx);
 void put_img(t_mlx *data, t_ray *ray);
+void put_rays(t_mlx *data, t_ray *ray);
 
 //map
 void map_buffer(t_mlx *data, t_input *input/* , t_ray *ray */);
