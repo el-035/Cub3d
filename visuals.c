@@ -25,10 +25,16 @@ void	put_wall(t_mlx *data, int y, int x, t_texture *wall)
 			* (wall->height - data->game->ray->img_start))
 		/ data->game->ray->wall_height;
 	text_x = (int)(data->game->ray->x_pos * wall->height) % wall->height;
-	if (text_y >= wall->size_line)
+/* 	if (text_y >= wall->size_line)
 		text_y = wall->size_line - 1;
 	if (text_y < 0)
 		text_y = 0;
+	if (text_x >= wall->width)
+	    text_x = wall->width - 1;
+	if (text_x < 0)
+	    text_x = 0; */
+	if ((data->game->ray->wall == W) || (data->game->ray->wall == S))
+		text_x = wall->width - text_x - 1;
 	img_pos = text_y * wall->size_line + text_x * (wall->bits_per_pixel / 8);
 	*(int *)(data->screen_data->data + pos) = *(int *)(wall->data + img_pos);
 }
