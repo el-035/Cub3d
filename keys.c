@@ -1,6 +1,18 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   keys.c                                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: efittant <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/11/25 18:23:44 by efittant          #+#    #+#             */
+/*   Updated: 2025/11/25 18:23:47 by efittant         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "cub3d.h"
 
-int key_press(int key, t_mlx *data)
+int	key_press(int key, t_mlx *data)
 {
 	if (key == ESC)
 		destroy_everything(data);
@@ -16,13 +28,11 @@ int key_press(int key, t_mlx *data)
 		data->keys[K_LEFT] = 1;
 	if (key == RIGHT)
 		data->keys[K_RIGHT] = 1;
-	return 0;
+	return (0);
 }
 
-int key_release(int key, t_mlx *data)
+int	key_release(int key, t_mlx *data)
 {
-	/* if (key == ESC)	//not needed
-		destroy_everything(data); */
 	if (key == ROT_LEFT)
 		data->keys[K_ROT_LEFT] = 0;
 	if (key == ROT_RIGHT)
@@ -35,7 +45,7 @@ int key_release(int key, t_mlx *data)
 		data->keys[K_LEFT] = 0;
 	if (key == RIGHT)
 		data->keys[K_RIGHT] = 0;
-	return 0;
+	return (0);
 }
 
 int	events(t_mlx *mlx)
