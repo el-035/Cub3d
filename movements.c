@@ -19,7 +19,8 @@ void put_img(t_mlx *data, t_ray *ray)
 		map_buffer(data, data->input);
 	mlx_put_image_to_window(data->mlx, data->window, data->screen_data->img, 0, 0);
 	if (data->is_map == 1)
-		put_rays(data, data->game->ray);
+		draw_char(data, data->game);
+		//put_rays(data, data->game->ray);
 }
 
 

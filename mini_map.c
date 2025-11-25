@@ -52,43 +52,62 @@ void map_buffer(t_mlx *data, t_input *input/* , t_ray *ray */)
 	}
 }
 
+void draw_char(t_mlx *data, t_game *game)
+{
+	int x = game->pos_x * TILE_SIZE - 1;
+	int y = game->pos_y * TILE_SIZE - 1;
+	int i = 0;
+	while (i < 3)
+	{
+		int j = 0;
+		y = game->pos_y * TILE_SIZE - 1;
+		while (j < 3)
+		{
+			x = game->pos_x * TILE_SIZE - 1;
+			mlx_pixel_put(data->mlx, data->window, x, y, RED);
+			j++;
+			y++;
+		}
+		i++;
+		x++;
+	}
+}
+
 /* void draw_ray(t_mlx *data, t_ray *ray)
 {
-	int start_x = data->game->pos_x * TILE_SIZE;
-	int start_y = data->game->pos_y * TILE_SIZE;
-	int end_x = (data->game->pos_x + ray->ray_dir_x * ray->distance) * TILE_SIZE;
-	int end_y = (data->game->pos_y + ray->ray_dir_y * ray->distance) * TILE_SIZE;
-
-	double dx = end_x - start_x;
-    double dy = end_y - start_y;
-    double steps = fmax(fabs(dx), fabs(dy));
-    double step_x = dx / steps;
-    double step_y = dy / steps;
-
-    double x = start_x;
-    double y = start_y;
-
-    for (int i = 0; i <= (int)steps; i++)
-    {
-        mlx_pixel_put(data->mlx, data->window, (int)x, (int)y, BLUE);
-        x += step_x;
-        y += step_y;
-    }
-} */
+	double start[2] = {data->game->pos_x * TILE_SIZE, data->game->pos_y * TILE_SIZE};
+	double end[2] = {start[0] + ray->ray_dir_x * (ray->distance * TILE_SIZE), start[1] + ray->ray_dir_y * (ray->distance * TILE_SIZE)};
+	double delta[2] = {end[0] - start[0], end[1] - start[1]};
+	double steps;
+	if (fabs(delta[0]) > fabs(delta[1]))
+		steps = fabs(delta[0]);
+	else
+		steps = fabs(delta[1]);
+	double inc[2] = {delta[0] / steps, delta[1] / steps};
+	
+	int i = 0;
+	while(i <= steps)
+	{
+		mlx_pixel_put(data->mlx, data->window, (int)(start[0]), (int)(start[1]), BLUE);
+		start[0] += inc[0];
+		start[1] += inc[1];
+		i++;
+	}
+}
 
 void put_rays(t_mlx *data, t_ray *ray)
 {
 	int i = 0;
 	int offset;
-
+	
 	while(i < N_RAYS)
 	{
-		offset = -HALF_FOV + i * ((2*HALF_FOV) / (N_RAYS - 1));
+		offset = -HALF_FOV + (2*HALF_FOV) /(i*  (N_RAYS - 1));
 		ray->ray_dir_x = data->game->dir_x * cos(offset) - data->game->dir_y * sin(offset);
 		ray->ray_dir_y = data->game->dir_x * sin(offset) + data->game->dir_y * cos(offset);
 		calculate_dir(data->game, data->input);
-		//draw actual ray on 2d map
 		draw_ray(data, ray);
 		i++;
 	}
-}
+
+} */
