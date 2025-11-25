@@ -1,0 +1,11 @@
+NO ./test_images/N.xpm
+SO ./test_images/S.xpm        
+WE ./test_images/W.xpm
+EA ./test_images/E.xpm
+C 139, 90,21
+F 90,58,30
+11111
+10001
+10N01
+10001
+11111
