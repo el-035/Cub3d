@@ -42,8 +42,10 @@ void	check_overflow(t_mlx *data, char **rgb)
 	{
 		a = 0;
 		len = 0;
-		while (rgb[i][a + len] && rgb[i][a + len] == '0')
+		while (rgb[i][a + len] && (rgb[i][a + len] == '0' || ft_isspace(rgb[i][a + len])))
 			a++;
+		if (rgb[i][a] == '-')
+			(free_arr(rgb), parse_error(data, ERR_NEG, 1));
 		while (rgb[i][a + len])
 		{
 			if (ft_isdigit(rgb[i][a + len]))
@@ -52,7 +54,7 @@ void	check_overflow(t_mlx *data, char **rgb)
 				a++;
 		}
 		if (len > 3)
-			(free_arr(rgb), parse_error(data, ERR_OVERFLOW, 1));
+			(free_arr(rgb), parse_error(data, ERR_INV_COL, 1));
 		i++;
 	}
 }

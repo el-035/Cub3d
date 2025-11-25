@@ -221,9 +221,11 @@ void			free_arr(char **arr);
 // define errors
 
 # define ERR_FILENAME "File must end with '.cub'"
+# define ERR_INV_FILENAME "Invalid filename"
 # define ERR_CUB "Something must preceed '.cub'"
 # define ERR_ARG_NB "Argument number invalid"
 # define ERR_NO_COL "Floor or ceiling color missing"
+# define ERR_NO_INFO "Missing information in file"
 # define ERR_INV_COL "Floor or ceiling color invalid"
 # define ERR_NO_TEX "Texture path missing"
 # define ERR_NO_SEP "No proper seperation between file contents"
@@ -239,7 +241,7 @@ void			free_arr(char **arr);
 # define ERR_START "Player surrounded by wall"
 # define ERR_PLAYER "Map needs 1 player"
 # define ERR_NO_WALL "Map must be surrounded by walls"
-# define ERR_OVERFLOW "Integer overflow"
+# define ERR_NEG "Integer should be positive"
 
 # define ERR_ALLOC "Allocation failure"
 # define ERR_READ "Read error"

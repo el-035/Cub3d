@@ -100,6 +100,8 @@ void	process_file(t_mlx *data, t_input *input)
 		}
 		i++;
 	}
+	if (input->info_count < 6)
+		parse_error(data, ERR_NO_INFO, 1);
 	check_map_dimensions(data, data->input, input->file + i);
 	alloc_map(data);
 	fill_map(data->input, input->file + i);

@@ -25,8 +25,7 @@ char	**check_hex_format(t_mlx *data, char **rgb)
 		while (rgb[a][b] && ft_isspace(rgb[a][b]))
 			b++;
 		color_present = b;
-		while (rgb[a][b] && !ft_isspace(rgb[a][b]) &&
-		(rgb[a][b] >= '0' && rgb[a][b] <= '9'))
+		while (rgb[a][b] && (rgb[a][b] >= '0' && rgb[a][b] <= '9'))
 			b++;
 		if (color_present == b)
 			(free_arr(rgb), parse_error(data, ERR_INV_COL, 1));
@@ -38,6 +37,7 @@ char	**check_hex_format(t_mlx *data, char **rgb)
 	}
 	if (a != 3)
 		(free_arr(rgb), parse_error(data, ERR_INV_COL, 1));
+	check_overflow(data, rgb);
 	return (rgb);
 }
 
@@ -64,7 +64,7 @@ char	**extract_color(t_mlx *data, char *line)
 	rgb = ft_split(line + start, ',');
 	if (!rgb)
 		parse_error(data, ERR_ALLOC, 1);
-	check_overflow(data, rgb);
+	// check_overflow(data, rgb);
 	return (check_hex_format(data, rgb));
 }
 

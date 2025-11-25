@@ -25,9 +25,9 @@ void	check_walls(t_mlx *data, char **map, int a, int b)
 	if (map[a - 1][b] == ' ' || map[a + 1][b] == ' ' || map[a][b - 1] == ' '
 		|| map[a][b + 1] == ' ')
 		parse_error(data, ERR_NO_WALL, 1);
-	if (map[a - 1][b - 1] == ' ' || map[a - 1][b + 1] == ' ' || map[a + 1][b
-		- 1] == ' ' || map[a + 1][b + 1] == ' ')
-		parse_error(data, ERR_NO_WALL, 1);
+	// if (map[a - 1][b - 1] == ' ' || map[a - 1][b + 1] == ' ' || map[a + 1][b
+	// 	- 1] == ' ' || map[a + 1][b + 1] == ' ')
+	// 	parse_error(data, ERR_NO_WALL, 1);
 }
 
 void	dup_map(t_mlx *data)
