@@ -28,10 +28,6 @@ void	fill_grid(t_mlx *data, int x, int y, int *open)
 	fill_grid(data, x - 1, y, open);
 	fill_grid(data, x, y + 1, open);
 	fill_grid(data, x, y - 1, open);
-	// fill_grid(data, x - 1, y - 1, open);
-	// fill_grid(data, x + 1, y + 1, open);
-	// fill_grid(data, x - 1, y + 1, open);
-	// fill_grid(data, x + 1, y - 1, open);
 }
 
 void	flood_fill(t_mlx *data)

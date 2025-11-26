@@ -64,7 +64,6 @@ char	**extract_color(t_mlx *data, char *line)
 	rgb = ft_split(line + start, ',');
 	if (!rgb)
 		parse_error(data, ERR_ALLOC, 1);
-	// check_overflow(data, rgb);
 	return (check_hex_format(data, rgb));
 }
 
