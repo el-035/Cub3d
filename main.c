@@ -6,7 +6,7 @@
 /*   By: efittant <efittant@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/18 18:47:07 by efittant          #+#    #+#             */
-/*   Updated: 2025/11/18 18:47:18 by efittant         ###   ########.fr       */
+/*   Updated: 2025/11/25 18:31:20 by efittant         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ int	save_img(t_mlx *data, t_input *input)
 
 int	main(int argc, char **argv)
 {
-	t_mlx	data;	//init data->key[6] to 0;
+	t_mlx	data;
 
 	if (argc != 2)
 		return (parse_error(&data, ERR_ARG, 0), 1);
@@ -40,8 +40,8 @@ int	main(int argc, char **argv)
 	save_screen_buffer(&data, data.game->ray);
 	mlx_put_image_to_window(data.mlx, data.window, data.screen_data->img, 0, 0);
 	mlx_hook(data.window, 17, 0, destroy_everything, &data);
-	mlx_hook(data.window, 2, 1L << 0, &key_press, &data);	//key press
-	mlx_hook(data.window, 3, 1L << 1, &key_release, &data);	//key release
+	mlx_hook(data.window, 2, 1L << 0, &key_press, &data);
+	mlx_hook(data.window, 3, 1L << 1, &key_release, &data);
 	mlx_loop_hook(data.mlx, &events, &data);
-	mlx_loop(data.mlx);	
+	mlx_loop(data.mlx);
 }

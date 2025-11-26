@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nrumpfhu <nrumpfhu@student.42.fr>          +#+  +:+       +#+        */
+/*   By: efittant <efittant@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/18 18:48:54 by efittant          #+#    #+#             */
-/*   Updated: 2025/11/19 17:59:19 by nrumpfhu         ###   ########.fr       */
+/*   Updated: 2025/11/25 18:28:48 by efittant         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,6 @@
 # define CUB3D_H
 
 # include "libft/libft.h"
-
 # include <errno.h>
 # include <fcntl.h>
 # include <math.h>
@@ -46,7 +45,7 @@
 # define DOWN 115
 # define RIGHT 100
 
-enum e_key
+enum			e_key
 {
 	K_ROT_LEFT,
 	K_ROT_RIGHT,
@@ -159,16 +158,16 @@ int				side_dist_y(t_game *game, t_input *input);
 t_texture		*wall_side(t_mlx *data, t_ray *ray);
 void			wall_height(t_ray *ray, t_texture *img);
 
-//keys
-int	key_press(int key, t_mlx *data);
-int	key_release(int key, t_mlx *data);
+// keys
+int				key_press(int key, t_mlx *data);
+int				key_release(int key, t_mlx *data);
 int				events(t_mlx *mlx);
 
 // movements
-int	is_wall(t_mlx *mlx, double x, double y);
-int	up_down(int key, t_mlx *mlx);
-int	left_right(int key, t_mlx *mlx);
-int	rotate(int key, t_mlx *mlx);
+int				is_wall(t_mlx *mlx, double x, double y);
+int				up_down(int key, t_mlx *mlx);
+int				left_right(int key, t_mlx *mlx);
+int				rotate(int key, t_mlx *mlx);
 
 // destroy and errors
 int				destroy_everything(t_mlx *data);

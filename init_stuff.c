@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init_stuff.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nrumpfhu <nrumpfhu@student.42.fr>          +#+  +:+       +#+        */
+/*   By: efittant <efittant@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/18 18:40:20 by efittant          #+#    #+#             */
-/*   Updated: 2025/11/19 18:24:21 by nrumpfhu         ###   ########.fr       */
+/*   Updated: 2025/11/25 18:26:23 by efittant         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,7 @@ void	init_stuff(t_mlx *data)
 	if (!data->screen_data)
 		return (parse_error(data, ERR_ALLOC, 1));
 	ft_memset(data->screen_data, 0, sizeof(t_texture));
+	ft_memset(data->keys, 0, sizeof(data->keys));
 }
 
 int	save_img_ew(t_mlx *data, t_texture *e_texture, t_texture *w_texture)
